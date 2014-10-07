@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>The L Blog</title><link>/</link><description></description><atom:link href="/feeds/leta-montopoli.rss.xml" rel="self"></atom:link><lastBuildDate>Sat, 06 Dec 2014 06:30:00 +0100</lastBuildDate><item><title>Hello and Welcome to my blog!</title><link>/hello-and-welcome-to-my-blog.html</link><description>&lt;p&gt;This blog is mostly made for the purpose of my own learning,
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>The L Blog</title><link>/</link><description></description><atom:link href="/feeds/leta-montopoli.rss.xml" rel="self"></atom:link><lastBuildDate>Sat, 06 Dec 2014 06:30:00 +0100</lastBuildDate><item><title>Hello and Welcome to my blog!</title><link>/hello-and-welcome-to-my-blog.html</link><description>&lt;p&gt;HELLOOOOOOO&lt;/p&gt;
+&lt;p&gt;This blog is mostly made for the purpose of my own learning,
 but if it helps you in anyway, great! I will be writing about my time at hacker school, and
 the wonderful things I'll be learning.  If you haven't heard of hacker school, you should
 check it out&lt;a href="https://www.hackerschool.com"&gt;here&lt;/a&gt;.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Leta Montopoli</dc:creator><pubDate>Sat, 06 Dec 2014 06:30:00 +0100</pubDate><guid>tag:,2014-12-06:hello-and-welcome-to-my-blog.html</guid><category>pelican</category><category>publishing</category><category>coding</category></item></channel></rss>
