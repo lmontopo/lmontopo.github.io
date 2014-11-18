@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Interpreting the Interpreter: Episode 0</title>
+
+    <link rel="stylesheet" href="./theme/css/normalize.css" />
+    <link rel="stylesheet" href="./theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="./theme/css/style.css" />
+    <link rel="stylesheet" href="./theme/css/pygments.css" />	
+    <script src="./theme/js/modernizr.js"></script>
+</head>
+
+<body>
+
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href=".">The L Blog</a></h1>
+    </div>
+</div>
+</div>
+
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
+
+            <li><a href="./pages/about.html" class="button secondary small">About</a></li>
+            <li><a href="./pages/contact.html" class="button secondary small">Contact</a></li>
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+<article>
+    <header>
+        <h3 class="article-title"><a href="./interpreting-the-interpreter-episode-0.html" rel="bookmark"
+        title="Permalink to Interpreting the Interpreter: Episode 0">Interpreting the Interpreter:  Episode 0</a></h3>
+    </header>
+
+<h6 class="subheader" title="2014-10-17T00:00:00">Fri 17 October 2014
+</h6>
+
+
+    <p>For a while now, I have been perplexed by the land of compilers and interpreters. Thinking of 
+these things sparks all sorts of questions in my mind.  For instance, if a compiler compiles my program, 
+but the compiler is itself a program, doesn't something need to compile the compiler?  If so, 
+wouldn't this chain just go on forever? And, if I were to write my own computer language (which I could,theoretically, do)
+how would I go about doing so? And what's the difference between a compiler and an interpreter? 
+Are interpreters and compilers things that I can write?!</p>
+<p>In this episode, I will begin by trying to answer some of these questions. In later episodes 
+I will describe my experiences writing a Lisp Interpreter.  When I have the interpreter all 
+set up and running, I'll present it, and explain it.  But before we get to that, I think its 
+worth while exploring what an interpreter IS, and how it differs from a compiler.  </p>
+<p>Compilers and interpreters serve a similar purpose: they take
+a piece of code written in some language that is foreign to your computer, and they turn it into something that can
+be executed on your machine. It's the way in which these two programs work that differentiates them.</p>
+<p>A <strong>compiler</strong> works by taking the inputed piece of code (this is called the <strong>source code</strong>) and translating the
+entire document into <strong>machine code</strong> (ie your machines native code, written in 0s and 1s).  The 
+compiler produces a new file, called the <strong>object file</strong> which can be run directly on the machine, 
+without any intermediate translation.   So, if I write a piece of code in C++, for example, 
+then my compiler will read through the whole document, and will re-write the set of instructions 
+I've written in C++ into machine language instructions. (Usually some sort of optimization 
+is also involved, but we don't have to concern ourselves with that just yet.) Since the code is 
+then executed from the object file, and no longer interacts with the initial C++ document, 
+the C++ document could be deleted from your computer, and the code could still be executed. </p>
+<p>An <strong>interpreter</strong> on the other hand, executes the code directly as it reads it.  It doesn't create
+another translated file first.  An interpreter will just read a line of code, will transform it into something it understands, 
+and then it it will execute it.  I realize that this might all sound a little vague, especially the part where I say the interpreter "transforms it into
+something it understands".  What does <em>it</em> understand, anyhow?  Well, lets say we are writing 
+a lisp interpreter in python (as I will be doing soon!) and the interpreter comes across a line of
+code that reads "( + 1 1 )".  Well, python doesn't understand this, but if the interpreter changes
+it to "1 + 1", then python does understand this.  Hopefully that clarifies things a little. 
+Of course, the discussion I provide of my experience writing an interpreter should also help clarify things. </p>
+<p>Another thing I'd like to mention is that languages are not always either "interpreted" or 
+"compiled".  Some languages, Python is one of them, are actually implemented with both a compiler
+and an interpreter.  Although people often refer to Python as an 'interpreted language', its implementation has 2 parts:  First, the python code is
+compiled into something called "byte-code".  Then, an interpreter reads and executes the byte-code!
+Cool, eh?  Big thanks goes to <a href="http://akaptur.github.io">Allison Kaptur</a> for explaining this to me and discussing interpreters 
+and compilers with me!  You rock! </p>
+<p class="subheader">Category: <a href="./category/blog.html">Blog</a>
+
+</p>
+
+
+
+
+</article>
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="./archives.html">Archives</a>
+            <li><a href="./tags.html">Tags</a>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="./category/blog.html">Blog</a></li>
+   
+        </ul>
+
+		
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <!--                  <p>The L Blog by Leta Montopoli</p> -->
+            </div>
+            </div>
+    </div>
+</footer>
+</body>
+</html>

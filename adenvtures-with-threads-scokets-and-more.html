@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Adenvtures with threads, scokets and more!</title>
+
+    <link rel="stylesheet" href="./theme/css/normalize.css" />
+    <link rel="stylesheet" href="./theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="./theme/css/style.css" />
+    <link rel="stylesheet" href="./theme/css/pygments.css" />	
+    <script src="./theme/js/modernizr.js"></script>
+</head>
+
+<body>
+
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href=".">The L Blog</a></h1>
+    </div>
+</div>
+</div>
+
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
+
+            <li><a href="./pages/about.html" class="button secondary small">About</a></li>
+            <li><a href="./pages/contact.html" class="button secondary small">Contact</a></li>
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+<article>
+    <header>
+        <h3 class="article-title"><a href="./adenvtures-with-threads-scokets-and-more.html" rel="bookmark"
+        title="Permalink to Adenvtures with threads, scokets and more!">Adenvtures with threads, scokets and more!</a></h3>
+    </header>
+
+<h6 class="subheader" title="2014-11-11T00:00:00">Tue 11 November 2014
+</h6>
+
+
+    <p>For a while now, I have wanted to learn more about the internet, servers, and how web apps work.  Last week I finished a small flaks tutorial, which I did enjoy, but it wasn't really hitting the spot.  I was learning cool things, but they weren't the things I was hoping to learn.  I wasn't really sure what I was after, but I knew it was something deeper.  Yesterday, I discovered sockets, and it was dead on. </p>
+<p>Yesterday I decided to forget about web frameworks for Python, and to go straight to built in Python functions like SimplehttpServer and BaseHttpServer.  But, looking at these, I realized I wanted to go deeper still.  I wanted to learn about SOCKETS! </p>
+<h4>What's a socket?</h4>
+<p>This is a quesiton I spent a great deal of time trying to answer yesterday.  The answer I am settling on, is that a socket is just some sort of abstract object like that of a "file" on your computer.  It is built into your operating system and you can create them when you want.  Sockets are used as the endpoints of any bidirectional communication channel.  You can think about it as plugging chords into the wall on the two ends of your communcation channel.   </p>
+<h4>How does my computer communicate with my router?</h4>
+<p>If I am using wireless internet, then my computer is connecting to my router (which is itself a computer), via radio signals.  Modern computers have a wireless adapter which is able to translate data from your comptuer into radio waves, so that it can send these waves to router.  It can work the other way as well - the router can send you radio waves and your comptuer can translate those waves back into 0s and 1s to receive a message. </p>
+<p>????????</p>
+<h4>Can older computers connect to the internet?</h4>
+<p>Yes, moderately old computers that don't have wireless network capabilities built in can still be connected to the internet via a modem.  A modem is a translator between radio signals and information that your computer can understand. </p>
+<p>There are certain aspects of your opperating system that are designed to be able to connect with other computers.</p>
+<h4>Chat room Code</h4>
+<p>Susan and I ended up writing the following code to communicate between our computers via our terminal!  In other words, we set up a sort of chat room thing between our computers. </p>
+<div class="highlight"><pre><span class="cp">###SERVER</span>
+<span class="n">serversocket</span> <span class="o">=</span> <span class="n">socket</span><span class="p">.</span><span class="n">socket</span><span class="p">()</span>
+<span class="n">port</span> <span class="o">=</span> <span class="mi">9999</span>
+
+<span class="cp"># This clears the port right away preventing &quot;address already in use&quot; errors</span>
+<span class="n">serversocket</span><span class="p">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">socket</span><span class="p">.</span><span class="n">SOL_SOCKET</span><span class="p">,</span> <span class="n">socket</span><span class="p">.</span><span class="n">SO_REUSEADDR</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">my_ip</span> <span class="o">=</span> <span class="mf">10.0.7.65</span>
+<span class="n">serversocket</span><span class="p">.</span><span class="n">bind</span><span class="p">((</span><span class="n">my_ip</span> <span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+
+<span class="cp"># queue up to 5 requests:</span>
+<span class="n">serversocket</span><span class="p">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+
+<span class="n">clientsocket</span><span class="p">,</span> <span class="n">addr</span> <span class="o">=</span> <span class="n">serversocket</span><span class="p">.</span><span class="n">accept</span><span class="p">()</span>
+
+<span class="n">def</span> <span class="n">listen</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span><span class="o">:</span>
+    <span class="k">while</span> <span class="n">True</span><span class="o">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">clientsocket</span><span class="p">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">not</span> <span class="n">msg</span><span class="o">:</span>
+            <span class="k">break</span>
+        <span class="nl">else:</span>
+            <span class="n">print</span> <span class="err">&#39;</span><span class="n">friend</span> <span class="n">says</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">msg</span>
+
+
+<span class="n">def</span> <span class="n">write</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span><span class="o">:</span>
+    <span class="k">while</span> <span class="n">True</span><span class="o">:</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">raw_input</span><span class="p">(</span><span class="err">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">clientsocket</span><span class="p">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="n">clientsocket</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="p">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span> <span class="o">=</span> <span class="n">write</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">clientsocket</span><span class="p">])</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">threading</span><span class="p">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span> <span class="o">=</span> <span class="n">listen</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">clientsocket</span><span class="p">])</span>
+
+<span class="n">t</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">r</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<h4>What is happening when I write "socket.listen"?</h4>
+<h4>What is TCP? What is IP?  Are they related?</h4>
+<p>TCP stands for Transmission Control Protocoll.  IP stands for Internet Protocol.  Both are "protcols" in the sense that they outline the standards by which machines are supposed to communicate with each other.  The difference between the two is that the TCP specifies the protocol for communication between two hosts via either a local network or a remote network (ie talking to your router.)  When different routers accross different networks communicate, they use the IP protocol.  So, in summary, when my computer talks to my router, the TCP is followed.  When my router talks to other routers in other networks, IP is followed. </p>
+<h4>What is a thread?</h4>
+<p>Have you ever heard the term "multi-threaded programming" and wondered what the heck people were talking about?  If so, read on! Lets think about how a good chat server works.  In a good chat server, I can type a message to my friend, and I can be listening to receive a message at the same time.  So my computer can simultaneously be waiting for me to type a message to Susan, and listen to messages from Susan.  In terms of my program, the threading is allowing my write function and my read function to occur simultaneously.  Had we not used threadding in this program, then my chat server would kind of suck.  If I just wrote and sent a message to Susan, then my computer would be in "listen" mode, not in write mode, and so I wouldn't be able to write another one to her until she had responded.  The moment Susan responded, my computer would switch to "write" mode, and would stop listening for any messages from Susan.  And this is why threads rock! </p>
+<h4>How do I set up a server to be on another computer?</h4>
+<p>1 - sending all the files you want to the other server
+2 - you set it up a file on another computer which says "hey, when someone comes looking for this stuff, come find me!"
+The second way is useless if I have a very small site, say, this blog.  It would be very silly of me to, instead of pushing all my files to github, I wrote files which instructed github to then come find my computer for the files.  This would mean that everytime I turned off my computer, it wouldn't be able to find me and answer the request.   BUT, this can be quite useful for "load balancing".  Big servers like facebook might have one computer which you are directed to initially, then depending on which user you are, you will be directed to one of the many other computers they have. </p>
+<h4>Are sockets being used when I go in a browser and visit a webpage?</h4>
+<p>YES!  Often multiple sockets are used just to transfer the information of one webpage to your computer.  HTTP just sends or receives on peice of info, and then the socket closes.  So if you look, for example, on www.hackerschool.com/people, and then right click to "inspect element" you will see many many "GET" requests.  For each GET request your computer has opened and closed a socket.  We will talk more about HTTP later, but for now I just wanted to communicate: THATS A LOT OF SOCKETS! </p>
+<p class="subheader">Category: <a href="./category/blog.html">Blog</a>
+
+</p>
+
+
+
+
+</article>
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="./archives.html">Archives</a>
+            <li><a href="./tags.html">Tags</a>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="./category/blog.html">Blog</a></li>
+   
+        </ul>
+
+		
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <!--                  <p>The L Blog by Leta Montopoli</p> -->
+            </div>
+            </div>
+    </div>
+</footer>
+</body>
+</html>

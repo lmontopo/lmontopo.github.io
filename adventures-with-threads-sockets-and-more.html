@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Adventures with threads, sockets and more!</title>
+
+    <link rel="stylesheet" href="./theme/css/normalize.css" />
+    <link rel="stylesheet" href="./theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="./theme/css/style.css" />
+    <link rel="stylesheet" href="./theme/css/pygments.css" />	
+    <script src="./theme/js/modernizr.js"></script>
+</head>
+
+<body>
+
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href=".">The L Blog</a></h1>
+    </div>
+</div>
+</div>
+
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
+
+            <li><a href="./pages/about.html" class="button secondary small">About</a></li>
+            <li><a href="./pages/contact.html" class="button secondary small">Contact</a></li>
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+<article>
+    <header>
+        <h3 class="article-title"><a href="./adventures-with-threads-sockets-and-more.html" rel="bookmark"
+        title="Permalink to Adventures with threads, sockets and more!">Adventures with threads, sockets and more!</a></h3>
+    </header>
+
+<h6 class="subheader" title="2014-11-11T00:00:00">Tue 11 November 2014
+</h6>
+
+
+    <p>For a while now I've wanted to learn more about the internet, about servers, and about how web apps <em>really</em> work.  Last week I finished a small flaks tutorial.  I enjoyed the tutorial and I learned some cool things by doing it, yet, I was really feeling satisfied.  The tutorial just didn't hit the spot for me.  I wasn't really sure what I was after, but I knew it was something deeper.  Yesterday I discovered sockets, and it was dead on!  </p>
+<p>In this blog post I'm going to write about some stuff I'm just starting to wrap my head around.  I'll start with a few questions I was thinking about yesterday, and what I <em>think</em> are decent (and at least mostly true) answers thoseo the questions.  (If you find something that is just outright wrong, please do reach out to me to correct me!).  Then I'll introduce some code Susan and I wrote to make a web service between our computers.  And afterwards I'll finish with another round of questions and answers.</p>
+<h4>QUESTIONS ROUND 1</h4>
+<h5>What's a socket?</h5>
+<p>This is a question I've spent a great deal of time trying to answer.  This is the answer I've settled on:  A socket is some sort of abstract object like that of a "file" on your computer.  If we impose an object oriented structure on our computer's operating system then we could say that the object type "socket" is built into the operating system and allows users to create instances of them at will. Sockets are used as the endpoints of any bidirectional communication channel. The socket contains the FROM IP address, the TO IP address, the FROM port number, and the TO port number.<sup id="fnref:fn-1"><a class="footnote-ref" href="#fn:fn-1" rel="footnote">1</a></sup>  We can think about the function of sockets to be like plugging chords into walls on the two ends of your communcation channel.</p>
+<h5>How does my computer communicate with my router?</h5>
+<p>If I am using wireless internet, then my computer is connecting to my router (which is itself a computer), via radio signals.  Modern computers have a wireless adapter which is able to translate data from your comptuer into radio waves, so that it can send these waves to a router.  It works the other way as well.  The router can send radio waves to your comptuer and your computer can translate those waves back into 0s and 1s to understand the message.  My computer is listening all the time to the router.  Sometimes my computer will hear messages that aren't even addressed to it, in which case it won't accept these messages. </p>
+<h5>Can older computers connect to the internet?</h5>
+<p>Yes, moderately old computers that don't have wireless network capabilities built in can still be connected to the internet via a modem.  A modem is a translator between signals (probably run through your telephone line)and code that your computer can understand.  The modem isn't smart though -all it does is translate.  In order for your computer to be able to connect to the internet, your computer's operating system still has to know about the different transfer protocols, and has to be able to make sockets, etc.    So, as long as your computer has the necessary internet handling software but is missing a translator, a modem can be used to make your computer internet ready! </p>
+<h5>SOME CODE</h5>
+<p>Susan and I ended up writing the following code to communicate between our computers via our terminal!  In other words, we set up a sort of chat room thing between our computers. </p>
+<div class="highlight"><pre><span class="cp">###SERVER (On Leta&#39;s Computer)</span>
+<span class="n">serversocket</span> <span class="o">=</span> <span class="n">socket</span><span class="p">.</span><span class="n">socket</span><span class="p">()</span>
+<span class="n">port</span> <span class="o">=</span> <span class="mi">9999</span>
+
+<span class="cp"># c lears the port right away preventing &quot;address already in use&quot; errors</span>
+<span class="n">serversocket</span><span class="p">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">socket</span><span class="p">.</span><span class="n">SOL_SOCKET</span><span class="p">,</span> <span class="n">socket</span><span class="p">.</span><span class="n">SO_REUSEADDR</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">my_ip</span> <span class="o">=</span> <span class="mf">10.0.7.65</span>
+<span class="n">serversocket</span><span class="p">.</span><span class="n">bind</span><span class="p">((</span><span class="n">my_ip</span> <span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+
+<span class="cp"># queue up to 5 requests:</span>
+<span class="n">serversocket</span><span class="p">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">clientsocket</span><span class="p">,</span> <span class="n">addr</span> <span class="o">=</span> <span class="n">serversocket</span><span class="p">.</span><span class="n">accept</span><span class="p">()</span>
+
+<span class="n">def</span> <span class="n">listen</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span><span class="o">:</span>
+    <span class="k">while</span> <span class="n">True</span><span class="o">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">clientsocket</span><span class="p">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">not</span> <span class="n">msg</span><span class="o">:</span>
+            <span class="k">break</span>
+        <span class="nl">else:</span>
+            <span class="n">print</span> <span class="err">&#39;</span><span class="n">friend</span> <span class="n">says</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">msg</span>
+
+
+<span class="n">def</span> <span class="n">write</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span><span class="o">:</span>
+    <span class="k">while</span> <span class="n">True</span><span class="o">:</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">raw_input</span><span class="p">(</span><span class="err">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">clientsocket</span><span class="p">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="n">clientsocket</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="p">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span> <span class="o">=</span> <span class="n">write</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">clientsocket</span><span class="p">])</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">threading</span><span class="p">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span> <span class="o">=</span> <span class="n">listen</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">clientsocket</span><span class="p">])</span>
+
+<span class="n">t</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">r</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span class="cp">#CLIENT - on Susan&#39;s computer</span>
+<span class="n">import</span> <span class="n">socket</span>
+<span class="n">import</span> <span class="n">threading</span>
+
+<span class="n">def</span> <span class="n">server</span><span class="p">()</span><span class="o">:</span>
+    <span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="p">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="p">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="p">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+
+    <span class="n">HOST</span><span class="o">=</span> <span class="err">&#39;&#39;</span>
+    <span class="n">SOCKET_LIST</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">RECV_BUFFER</span> <span class="o">=</span> <span class="mi">4096</span>
+    <span class="n">PORT</span> <span class="o">=</span> <span class="mi">9999</span>
+
+    <span class="n">server_addr</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;10.0.7.65&quot;</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
+    <span class="n">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="p">.</span><span class="n">stderr</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">connecting</span> <span class="n">to</span> <span class="o">%</span><span class="n">s</span> <span class="n">port</span> <span class="o">%</span><span class="n">s</span><span class="err">&#39;</span> <span class="o">%</span> <span class="n">server_addr</span>
+    <span class="n">sock</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">server_addr</span><span class="p">)</span>
+
+    <span class="nl">try:</span>
+        <span class="n">t</span><span class="o">=</span><span class="n">threading</span><span class="p">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">send</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="n">sock</span><span class="p">])</span>
+        <span class="n">t</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="n">print</span> <span class="s">&quot;hi!!!! TESTING!!&quot;</span>
+        <span class="k">while</span> <span class="n">True</span><span class="o">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">sock</span><span class="p">.</span><span class="n">recv</span><span class="p">(</span><span class="n">RECV_BUFFER</span><span class="p">)</span>
+            <span class="n">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="p">.</span><span class="n">stderr</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">Leta</span> <span class="n">says</span><span class="o">:</span> <span class="o">%</span><span class="n">s</span><span class="err">&#39;</span> <span class="o">%</span> <span class="n">data</span>
+
+    <span class="nl">finally:</span>
+        <span class="n">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="p">.</span><span class="n">stderr</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">closing</span> <span class="n">socket</span><span class="err">&#39;</span>
+        <span class="n">sock</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+
+
+<h4>QUESTIONS ROUND 2</h4>
+<h5>What is happening when I write "socket.listen"?</h5>
+<p>As mentioned earlier, your computer is constantly "listening" to messages from your router.  But its not necessarily ACCEPTING them.  What socket.listen() does, is it tells your computer to actively start accepting messages that are addressed to the socket.  So as soon as my computer sees some message addressed to a socket which has been told to listen, then supposeing this message is of type TCP, my socket will send back a message saying "OK, I am willing to receive your message". Of course, there are many different types of messages that your router could be sending you, and not all of them adhere to TCP.  Another one, used by Skype is UDP. </p>
+<h5>What is TCP? What is IP?  Are they related?</h5>
+<p>TCP stands for Transmission Control Protocoll.  IP stands for Internet Protocol.  Both are "protcols" in the sense that they outline the standards by which machines are supposed to communicate with each other.  To see how they differ, lets walk through how our computers are dealing with our 'chat server'.  When I send a message to Susan over the chat server we made, the data I write (ie. a message in the form of a string) will be wrappred with extra data to satisfy TCP.  Once this mesage satisfies TCP it can be sent to my operating system, which will look at it, realize its a TCP, and write the necessary extra packaging information to adhere to IP before translating this package into radio waves to communicate to my router.  My router will then use IP and will find Susan's computer and send her this IP package.  Her operating system will unpack the package, and will find that the contents adhere to TCP. Then Susan's computer might find in the TCP packaging a message that says "hey, I'm packet 13 sent from Leta's computer to yours.  Have you gotten package 1 through 12 already?  You can't open me up until you've received all the ones that come before."  And her computer will respond something like "yes, I have gotten all the messages that come before, so I can now open you up", in which case the computer will pass on the package to the application (the chat room) and will unpack the data to find the message I sent.  I know this is pretty confusing, I've wrestled with these concepts a lot already and I am still doing so.  But lets recap: on senders side, the package gets wrapped with all sorts of layers and then this package gets passed around, and on the receivers side, the package gets unpacked layer by layer. </p>
+<h5>What is a thread?</h5>
+<p>Have you ever heard the term "multi-threaded programming" and wondered what the heck people were talking about?  If so, read on! Lets think about how a good chat server works.  In a good chat server, I can type a message to my friend, and I can be listening to receive a message at the same time.  So my computer can simultaneously be waiting for me to type a message to Susan, and listen to messages from Susan.  In terms of my program, the threading is allowing my write function and my read function to occur simultaneously.  Had we not used threadding in this program, then my chat server would kind of suck.  If I just wrote and sent a message to Susan, then my computer would be in "listen" mode, not in write mode, and so I wouldn't be able to write another one to her until she had responded.  The moment Susan responded, my computer would switch to "write" mode, and would stop listening for any messages from Susan.  And this is why threads rock! </p>
+<h5>How do I set up a server to be on another computer?</h5>
+<p>1 - sending all the files you want to the other server
+2 - you set it up a file on another computer which says "hey, when someone comes looking for this stuff, come find me!"
+The second way is useless if I have a very small site, say, this blog.  It would be very silly of me to, instead of pushing all my files to github, I wrote files which instructed github to then come find my computer for the files.  This would mean that everytime I turned off my computer, it wouldn't be able to find me and answer the request.   BUT, this can be quite useful for "load balancing".  Big servers like facebook might have one computer which you are directed to initially, then depending on which user you are, you will be directed to one of the many other computers they have. </p>
+<h5>Are sockets being used when I go in a browser and visit a webpage?</h5>
+<p>YES!  Often multiple sockets are used just to transfer the information of one webpage to your computer.  Generally speaking a  single HTTP request will be associated with a single socket.  This socket will close as soon as the request has been made and received.  So lets take a look at www.google.com.  Type this address into your browser and then right click on "inspect element".  From there you can see the specific HTTP requests that have been made.  On my computer it shows that 4 GET requests were made, meaning 4 sockets would have to me made on my computer - one for each request.  Some web pages have 100s of GET or POST requests, meaning 100s of sockets will be made and then closed on my computer in the short time it takes to load one webpage in my browser.  Note that this is starting to change.  I said "generally" speaking because as far as I know HTTP is starting to change so that a single socket can handle several HTTP requests. </p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:fn-1">
+<p>A Port is just this idea that we've implimented on our computers so that we can have several things going on on one computer.  Its kind of like apartments on an apartment building.  If we have to have several separate things going on at different addresses within the same machine, ports is the way we've done that.&#160;<a class="footnote-backref" href="#fnref:fn-1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+<p class="subheader">Category: <a href="./category/blog.html">Blog</a>
+
+</p>
+
+
+
+
+</article>
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="./archives.html">Archives</a>
+            <li><a href="./tags.html">Tags</a>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="./category/blog.html">Blog</a></li>
+   
+        </ul>
+
+		
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <!--                  <p>The L Blog by Leta Montopoli</p> -->
+            </div>
+            </div>
+    </div>
+</footer>
+</body>
+</html>

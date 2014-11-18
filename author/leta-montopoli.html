@@ -1,72 +1,404 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
-        <meta charset="utf-8" />
-        <title>The L Blog - Leta Montopoli</title>
-        <link rel="stylesheet" href="/theme/css/main.css" />
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
 
-        <!--[if IE]>
-            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+    <title>The L Blog - Leta Montopoli</title>
+
+    <link rel="stylesheet" href="../theme/css/normalize.css" />
+    <link rel="stylesheet" href="../theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="../theme/css/style.css" />
+    <link rel="stylesheet" href="../theme/css/pygments.css" />	
+    <script src="../theme/js/modernizr.js"></script>
 </head>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="/">The L Blog </a></h1>
-                <nav><ul>
-                    <li><a href="/category/home.html">Home</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
+<body>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/hello-and-welcome-to-my-blog.html">Hello and Welcome to my blog!</a></h1>
-<footer class="post-info">
-        <abbr class="published" title="2014-12-06T06:30:00">
-                Published: Sat 06 December 2014
-        </abbr>
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href="..">The L Blog</a></h1>
+    </div>
+</div>
+</div>
 
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/leta-montopoli.html">Leta Montopoli</a>
-        </address>
-<p>In <a href="/category/home.html">Home</a>. </p>
-<p>tags: <a href="/tag/pelican.html">pelican</a> <a href="/tag/publishing.html">publishing</a> <a href="/tag/coding.html">coding</a> </p>
-</footer><!-- /.post-info --><p>HELLOOOOOOO</p>
-<p>This blog is mostly made for the purpose of my own learning,
-but if it helps you in anyway, great! I will be writing about my time at hacker school, and
-the wonderful things I'll be learning.  If you haven't heard of hacker school, you should
-check it out<a href="https://www.hackerschool.com">here</a>.</p>                </article>
-<p class="paginator">
-    Page 1 / 1
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
+
+            <li><a href="../pages/about.html" class="button secondary small">About</a></li>
+            <li><a href="../pages/contact.html" class="button secondary small">Contact</a></li>
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+        
+        
+
+            <article>
+                <a href="../lisp-interpreter-episode-3-the-finally.html"><h3 class="article-title">Lisp Interpreter: Episode 3 (The Finally!)</h3></a>
+<h6 class="subheader" title="2014-11-18T00:00:00">Tue 18 November 2014
+</h6>
+
+
+<p>Let me start off by apologizing for the delay.  I've been hesitant to write this post for several reasons, including: </p>
+<ol>
+<li>Presenting and explaining my entire lisp interpreter is a BIG (and therefore daunting) task.  </li>
+<li>There are parts of my code that I'm not entirely satisfied with and I <em>may</em> refactor these parts in the future.  For this reason, I've been debating waiting until I finish refacturing to write this post.</li>
+<li>The parts of my code that I'm unsatisfied with are pretty ugly and are a pain to read. Which leads me to the next point...</li>
+<li>Will anyone actually read this? </li>
+</ol>
+<p>I have decided to go ahead and write this blog post anyway.  Even if no one reads it, I think that I'll benefit from writing it.  As far as the ugly bits go, I'm trying to not let 'perfect' be the enemy of 'good enough'.  This project is far from perfect but that OK.   I worked hard on it, it works, I learned lots during the process, and those are the things that matter most.  Besides, I've gotten really excited this week about some other projects, so it could be a while before I get back to refacturing the interpreter. </p>
+<p>OK. Lets get started.  Here are the first ten lines of code: </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">termcolor</span> <span class="kn">import</span> <span class="n">colored</span>
+<span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="nb">exit</span>
+
+<span class="c">#------GlOBAL LISTS------</span>
+
+<span class="n">symbol</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="s">&#39;&lt;&#39;</span><span class="p">,</span> <span class="s">&#39;&gt;&#39;</span><span class="p">,</span><span class="s">&#39;&lt;=&#39;</span><span class="p">,</span> <span class="s">&#39;=&#39;</span><span class="p">,</span><span class="s">&#39;&gt;=&#39;</span><span class="p">,</span> <span class="s">&#39;abs&#39;</span><span class="p">,</span> <span class="s">&#39;list&#39;</span><span class="p">,</span> <span class="s">&#39;if&#39;</span><span class="p">,</span> <span class="s">&#39;not&#39;</span><span class="p">,</span>
+            <span class="s">&#39;set!&#39;</span><span class="p">,</span> <span class="s">&#39;begin&#39;</span><span class="p">,</span> <span class="s">&#39;let&#39;</span><span class="p">,</span> <span class="s">&#39;define&#39;</span><span class="p">,</span> <span class="s">&#39;lambda&#39;</span><span class="p">,</span> <span class="s">&#39;quote&#39;</span><span class="p">]</span>
+<span class="n">special</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;set!&#39;</span><span class="p">,</span> <span class="s">&#39;begin&#39;</span><span class="p">,</span> <span class="s">&#39;let&#39;</span><span class="p">,</span> <span class="s">&#39;define&#39;</span><span class="p">,</span> <span class="s">&#39;lambda&#39;</span><span class="p">,</span> <span class="s">&#39;cond&#39;</span><span class="p">,</span> <span class="s">&#39;quote&#39;</span><span class="p">,</span> <span class="s">&#39;if&#39;</span><span class="p">,</span> 
+    <span class="s">&#39;list&#39;</span><span class="p">,</span> <span class="s">&#39;map&#39;</span><span class="p">,</span> <span class="s">&#39;cons&#39;</span><span class="p">,</span> <span class="s">&#39;car&#39;</span><span class="p">,</span> <span class="s">&#39;cdr&#39;</span><span class="p">]</span>
+</pre></div>
+</td></tr></table>
+
+<p>The first 3 lines just specify any functions I'll be using from built in libraries.  Next, two important global lists are introduced.  The list, 'symbol', specifies strings that have a special meaning and will therefore be treated differently from other strings of characters.  The list 'special' is a list of all of the built in Scheme functions which disrupt the flow of the interpretation.  All functions, including addition, subtraction, etc. will be treated in the same way.  But our interpreter will treat these 'special' functions differently.  </p>
+<p>Next, we introduce my class of exceptions and some instances of that class: </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># --- EXCEPTIONS ---</span>
+<span class="k">class</span> <span class="nc">MyError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span>
+
+<span class="n">if_error</span> <span class="o">=</span> <span class="n">MyError</span><span class="p">(</span><span class="s">&quot;Error: you need to specify by a consequence and an alternate.&quot;</span><span class="p">)</span>
+<span class="n">dict_error</span> <span class="o">=</span> <span class="n">MyError</span><span class="p">(</span><span class="s">&quot;Error: can&#39;t find element in dictionary. Improper input.&quot;</span><span class="p">)</span>
+<span class="n">unexpected_error</span> <span class="o">=</span> <span class="n">MyError</span><span class="p">(</span><span class="s">&#39;Error: unexpectedly entered parse function with no input.&#39;</span><span class="p">)</span>
+<span class="n">too_many</span> <span class="o">=</span> <span class="n">MyError</span><span class="p">(</span><span class="s">&quot;Error: too many arguments were inputed.&quot;</span><span class="p">)</span>
+<span class="n">quote_error</span> <span class="o">=</span> <span class="n">MyError</span><span class="p">(</span><span class="s">&#39;Error: quote only takes one operand.&#39;</span><span class="p">)</span>
+<span class="n">let_error</span> <span class="o">=</span> <span class="n">MyError</span><span class="p">(</span><span class="s">&#39;Error: let must be followed by a list.&#39;</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<p>Then, we start doing some of the gritty work:  tokenizing and parsing.  I have implemented both my tokenizer and my parser as functions.  When we call them, the output of the tokenizer will be fed as input to my parser.   Here is my tokenizer:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># ---- TOKENIZE ------ </span>
+<span class="k">def</span> <span class="nf">tokenizer</span><span class="p">(</span><span class="n">holder</span><span class="p">):</span>
+    <span class="n">holder</span> <span class="o">=</span> <span class="s">&#39;(&#39;</span> <span class="o">+</span> <span class="n">holder</span> <span class="o">+</span> <span class="s">&#39;)&#39;</span>
+    <span class="n">holder</span> <span class="o">=</span> <span class="n">holder</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span> <span class="s">&#39;(&#39;</span> <span class="p">,</span> <span class="s">&#39; ( &#39;</span> <span class="p">)</span>
+    <span class="n">holder</span> <span class="o">=</span> <span class="n">holder</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span> <span class="s">&#39;)&#39;</span><span class="p">,</span> <span class="s">&#39; ) &#39;</span> <span class="p">)</span>
+    <span class="n">final</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span> <span class="o">!=</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">holder</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">final</span>
+</pre></div>
+</td></tr></table>
+
+<p>The tokenizer takes my user's raw input - something like <code>(+ 2 2)</code>.  It begins by putting extra braces around the entire thing.  It then adds space around all the braces before splitting the input into an array where each element is a separate token.  The input splits over spaces, which is why it was necessary to add extra space around the braces. far so good, but why did I begin by adding extra braces?! Seems kind of wierd, right? </p>
+<p>The reason for this seemingly cooky choice was to accomodate inputs like the following: <code>(define x 3) x</code>.  This is a valid Scheme expression which evaluates to 3.  Suppose that I do not add extra brackets around the entire statement.  Then, when I go to actually <em>interpret</em> the input, it becomes difficult to know when the end of the user input has been reached.  In fact, I did NOT initially add these extra brackets in my tokenization, but my interpreter evaluated <code>(define x 3) x</code> to be <code>None</code> instead of <code>3</code>. It simply stopped evaluating after <code>(define x 3)</code>. Knowing when the end of the user input has been reached, however, is quite easy if we have an outter set of brackets enclosing everything.  Of course, adding extra brackets came with its own set of issues.  I needed to make sure that my interpreter could differentiate between expressions like <code>(3)</code> and <code>3</code>.  Although '3' is a valid Scheme expression, <code>(3)</code> is not, and I was essentially changing my input to always look like <code>(3)</code>.  Thanks to Mary Cook, I came up with a pretty clever solution to this issue, which we will come accross later. </p>
+<p>Continuing on... the parser! Writing this parser was my first encouter with recursion! Here's the code:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># ---- PARSER ----- </span>
+<span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">unexpected_error</span>
+
+    <span class="n">token</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s">&#39;(&#39;</span><span class="p">:</span>
+        <span class="n">parsed_input</span> <span class="o">=</span> <span class="p">[]</span> 
+
+        <span class="k">while</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&#39;)&#39;</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">,</span> <span class="n">tokens</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+            <span class="n">parsed_input</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">to_append</span><span class="p">)</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>                 <span class="c">#pops off the &#39;)&#39; part</span>
+
+        <span class="c">#we add a condition to check if last return</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">parsed_input</span><span class="p">,</span> <span class="n">tokens</span>     <span class="c">#if not last return, need to return current version of tokens</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="n">parsed_input</span>             <span class="c">#if last return, only want to return new list of tokens         </span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">check_type</span><span class="p">(</span><span class="n">token</span><span class="p">),</span> <span class="n">tokens</span>
+</pre></div>
+</td></tr></table>
+
+<p>To better understand this function, lets look at how <code>parse(['(', '(', +, '1', '1', ')', ')'])</code> would be processed, line by line. Line 3 is not satisfied, so we skip to line 6 and 7.  Here  Token will be set to <code>'('</code>, tokens will become <code>[ '(', '+', '1', '1', ')', ')']</code>.  Since the condition on line 9 is satisfied, we then enter this branch and continue on with line 10 where <code>parsed_input</code> is initialized as an empty list. Then we enter the while loop on line 12, and in line 13 we recurse back into our parse function by calling <code>parse(tokens)</code>.  </p>
+<p>Now in the second level of our parse function.  In this level we execute line 6 and 7 again, setting <code>token</code> as <code>'('</code>, and <code>tokens</code> to <code>['+', '1', '1',')', ')']</code>.  Since <code>token</code> is still <code>'('</code>, line 10 will again be executed, creating another <code>parsed_input</code> list, and then diving into our 3rd level of recursion on <code>parse</code>.  </p>
+<p>In this 3rd level, token is <code>'+'</code> and tokens is <code>['1', '1', ')', ')']</code>.  Since token is not <code>'('</code> we skip down to the else condition and execute line 23.  Since we have yet to define the function check_type, just pretend that this line returns token and tokens.  Having returned those values, we come out of the 3rd layer of recursion and back into the 2nd, at line 13. Here, <code>to_append</code> is set to '+', and tokens is <code>['1', '1', ')', ')']</code>.  Line 14 is then executed, and <code>parsed_input</code> becomes <code>['+']</code>.  We continue looping through this while loop, going into a 3rd layer of recursion, coming back into two, and appending <code>parsed_input</code> until <code>parsed_input</code> looks like ['+', '1', '1'] in our second layer of recursion.  At this point the tokens[0] will be ')', so we break out of the while loop.  Line 15 remouves ')' from tokens, leaving tokens as [')'].  Then since the length of tokens is positive line 19 is executed.</p>
+<p>Now we exit the second layer of recursion and are back into the first parse call. <code>to_append</code> becomes <code>['+', '1', '1']</code>, and <code>tokens</code> is <code>[')']</code>. The original <code>parsed_input</code> is updated to <code>[['+', '1', '1']]</code>, the while loop ends, and line 15 is executed, changing <code>tokens</code> to <code>[]</code>.  Since the <code>len(tokens)</code> is zero line 20 is executed and <code>parsed_input</code> is the final return. We have exited all levels of the parse function, effectively parsing the input!</p>
+<p>This blog post will be continued... I have written enough for one day. </p><p class="subheader">Category: <a href="../category/blog.html">Blog</a>
+
 </p>
-            </aside><!-- /#featured -->
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>blogroll</h2>
-                        <ul>
-                            <li><a href="http://getpelican.com/">Pelican</a></li>
-                            <li><a href="http://python.org/">Python.org</a></li>
-                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
-                            <li><a href="#">You can modify those links in your config file</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
 
-                            <li><a href="#">You can add links in your config file</a></li>
-                            <li><a href="#">Another social link</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
 
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
+            </article>
 
+
+                <hr  class="gradient"/>
+
+
+        
+
+
+            <article>
+                <a href="../adventures-with-sockets-threads-and-more.html"><h3 class="article-title">Adventures with sockets, threads and more!</h3></a>
+<h6 class="subheader" title="2014-11-11T00:00:00">Tue 11 November 2014
+</h6>
+
+
+<p>For a while now I've wanted to learn more about the internet, about servers, and about how web apps <em>really</em> work.  Last week I finished a small flaks tutorial.  I enjoyed the tutorial and I learned some cool things by doing it, yet, I was feeling unsatisfied.  The tutorial ...</p><p class="subheader">Category: <a href="../category/blog.html">Blog</a>
+
+</p>
+
+
+
+                <a class="button radius secondary small right" href="../adventures-with-sockets-threads-and-more.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
+                <a href="../little-lessons-episode-2.html"><h3 class="article-title">Little Lessons: Episode 2</h3></a>
+<h6 class="subheader" title="2014-11-06T00:00:00">Thu 06 November 2014
+</h6>
+
+
+<p>Seeing as there are a whole <strong>bunch</strong> of "little lessons" that I'd like to write down and keep track of, I've decided to extend my previous blog post "Little Lessons" into a whole series! Get ready! </p>
+<h4>Mutating Iterables:</h4>
+<p>Suppose we have a list and we'd like to ...</p><p class="subheader">Category: <a href="../category/blog.html">Blog</a>
+
+</p>
+
+
+
+                <a class="button radius secondary small right" href="../little-lessons-episode-2.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
+                <a href="../interpreting-the-interpreter-episode-2.html"><h3 class="article-title">Interpreting the Interpreter: Episode 2</h3></a>
+<h6 class="subheader" title="2014-10-30T00:00:00">Thu 30 October 2014
+</h6>
+
+
+<p>Confession: I am not yet ready to present my final, finished, Lisp Interpreter.  It will be coming soon, but not today.  Today I will describe the rollercoaster ride of an experience taking on this project has been for me.  Then, I'll focus in on a couple things I've ...</p><p class="subheader">Category: <a href="../category/blog.html">Blog</a>
+
+</p>
+
+
+
+                <a class="button radius secondary small right" href="../interpreting-the-interpreter-episode-2.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
+                <a href="../little-lessons.html"><h3 class="article-title">Little Lessons</h3></a>
+<h6 class="subheader" title="2014-10-27T00:00:00">Mon 27 October 2014
+</h6>
+
+
+<p>This blog post will be dedicated to some of the little (but important!) lessons
+I've learned over the past week.  Enjoy! </p>
+<h4>The list method "extend" returns None.</h4>
+<p>Before I explain this lesson, let me just back up for a second and address the lingo "method".
+Only recently have I ...</p><p class="subheader">Category: <a href="../category/blog.html">Blog</a>
+
+</p>
+
+
+
+                <a class="button radius secondary small right" href="../little-lessons.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
+                <a href="../interpreting-the-interpreter-episode-1.html"><h3 class="article-title">Interpreting the Interpreter:  Episode 1</h3></a>
+<h6 class="subheader" title="2014-10-20T00:00:00">Mon 20 October 2014
+</h6>
+
+
+<p>This episode is all about the experience I had in the initial phases of writing a Lisp interpreter.
+I will describe how I started, my thought processes as I progressed, some of the code I wrote, how it worked, and, why, 
+at day 3, I decided to start from scratch ...</p><p class="subheader">Category: <a href="../category/blog.html">Blog</a>
+
+</p>
+
+
+
+                <a class="button radius secondary small right" href="../interpreting-the-interpreter-episode-1.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
+                <a href="../interpreting-the-interpreter-episode-0.html"><h3 class="article-title">Interpreting the Interpreter:  Episode 0</h3></a>
+<h6 class="subheader" title="2014-10-17T00:00:00">Fri 17 October 2014
+</h6>
+
+
+<p>For a while now, I have been perplexed by the land of compilers and interpreters. Thinking of 
+these things sparks all sorts of questions in my mind.  For instance, if a compiler compiles my program, 
+but the compiler is itself a program, doesn't something need to compile the compiler ...</p><p class="subheader">Category: <a href="../category/blog.html">Blog</a>
+
+</p>
+
+
+
+                <a class="button radius secondary small right" href="../interpreting-the-interpreter-episode-0.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
+                <a href="../what-i-learned-from-crista-lopes.html"><h3 class="article-title">What I learned from Crista Lopes</h3></a>
+<h6 class="subheader" title="2014-10-11T00:00:00">Sat 11 October 2014
+</h6>
+
+
+<p>The resident at Hacker School during my first week was Crista Lopes. She has given some great 
+lectures, and she's taught me some cool things! </p>
+<h5>Different Styles of Writing Code</h5>
+<p>On Monday night she spoke to us about coding styles, the topic of her latest book. Crista explained 
+that ...</p><p class="subheader">Category: <a href="../category/blog.html">Blog</a>
+
+</p>
+
+
+
+                <a class="button radius secondary small right" href="../what-i-learned-from-crista-lopes.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
+                <a href="../the-struggles-i-had-setting-up-this-site.html"><h3 class="article-title">The struggles I had setting up this site.</h3></a>
+<h6 class="subheader" title="2014-10-08T00:00:00">Wed 08 October 2014
+</h6>
+
+
+<p>For me, setting up my blog was not easy. I think part of this was that I was impatient, 
+and part of this was because IT IS HARD!  I ran into many weird error messages and I began 
+to get quite impatient and frustrated. Thankfully I got Allison to help ...</p><p class="subheader">Category: <a href="../category/blog.html">Blog</a>
+
+</p>
+
+
+
+                <a class="button radius secondary small right" href="../the-struggles-i-had-setting-up-this-site.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+            <!-- /#posts-list -->
+
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="../archives.html">Archives</a>
+            <li><a href="../tags.html">Tags</a>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="../category/blog.html">Blog</a></li>
+   
+        </ul>
+
+		
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <!--                  <p>The L Blog by Leta Montopoli</p> -->
+            </div>
+            </div>
+    </div>
+</footer>
 </body>
 </html>

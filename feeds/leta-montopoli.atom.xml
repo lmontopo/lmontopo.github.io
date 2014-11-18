@@ -1,6 +1,866 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>The L Blog</title><link href="/" rel="alternate"></link><link href="/feeds/leta-montopoli.atom.xml" rel="self"></link><id>/</id><updated>2014-12-06T06:30:00+01:00</updated><entry><title>Hello and Welcome to my blog!</title><link href="/hello-and-welcome-to-my-blog.html" rel="alternate"></link><updated>2014-12-06T06:30:00+01:00</updated><author><name>Leta Montopoli</name></author><id>tag:,2014-12-06:hello-and-welcome-to-my-blog.html</id><summary type="html">&lt;p&gt;HELLOOOOOOO&lt;/p&gt;
-&lt;p&gt;This blog is mostly made for the purpose of my own learning,
-but if it helps you in anyway, great! I will be writing about my time at hacker school, and
-the wonderful things I'll be learning.  If you haven't heard of hacker school, you should
-check it out&lt;a href="https://www.hackerschool.com"&gt;here&lt;/a&gt;.&lt;/p&gt;</summary><category term="pelican"></category><category term="publishing"></category><category term="coding"></category></entry></feed>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>The L Blog</title><link href="http://lmontopo/github.io/" rel="alternate"></link><link href="http://lmontopo/github.io/feeds/leta-montopoli.atom.xml" rel="self"></link><id>http://lmontopo/github.io/</id><updated>2014-11-18T00:00:00-05:00</updated><entry><title>Lisp Interpreter: Episode 3 (The Finally!)</title><link href="http://lmontopo/github.io/lisp-interpreter-episode-3-the-finally.html" rel="alternate"></link><updated>2014-11-18T00:00:00-05:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo,2014-11-18:github.io/lisp-interpreter-episode-3-the-finally.html</id><summary type="html">&lt;p&gt;Let me start off by apologizing for the delay.  I've been hesitant to write this post for several reasons, including: &lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Presenting and explaining my entire lisp interpreter is a BIG (and therefore daunting) task.  &lt;/li&gt;
+&lt;li&gt;There are parts of my code that I'm not entirely satisfied with and I &lt;em&gt;may&lt;/em&gt; refactor these parts in the future.  For this reason, I've been debating waiting until I finish refacturing to write this post.&lt;/li&gt;
+&lt;li&gt;The parts of my code that I'm unsatisfied with are pretty ugly and are a pain to read. Which leads me to the next point...&lt;/li&gt;
+&lt;li&gt;Will anyone actually read this? &lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;I have decided to go ahead and write this blog post anyway.  Even if no one reads it, I think that I'll benefit from writing it.  As far as the ugly bits go, I'm trying to not let 'perfect' be the enemy of 'good enough'.  This project is far from perfect but that OK.   I worked hard on it, it works, I learned lots during the process, and those are the things that matter most.  Besides, I've gotten really excited this week about some other projects, so it could be a while before I get back to refacturing the interpreter. &lt;/p&gt;
+&lt;p&gt;OK. Lets get started.  Here are the first ten lines of code: &lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;__future__&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;division&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;termcolor&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;colored&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nb"&gt;exit&lt;/span&gt;
+
+&lt;span class="c"&gt;#------GlOBAL LISTS------&lt;/span&gt;
+
+&lt;span class="n"&gt;symbol&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;+&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;-&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;*&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;lt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;lt;=&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;=&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;gt;=&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;abs&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;list&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;if&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;not&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="s"&gt;&amp;#39;set!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;begin&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;let&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;define&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;lambda&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;quote&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;special&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;set!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;begin&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;let&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;define&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;lambda&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;cond&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;quote&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;if&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
+    &lt;span class="s"&gt;&amp;#39;list&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;map&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;cons&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;car&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;cdr&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;The first 3 lines just specify any functions I'll be using from built in libraries.  Next, two important global lists are introduced.  The list, 'symbol', specifies strings that have a special meaning and will therefore be treated differently from other strings of characters.  The list 'special' is a list of all of the built in Scheme functions which disrupt the flow of the interpretation.  All functions, including addition, subtraction, etc. will be treated in the same way.  But our interpreter will treat these 'special' functions differently.  &lt;/p&gt;
+&lt;p&gt;Next, we introduce my class of exceptions and some instances of that class: &lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# --- EXCEPTIONS ---&lt;/span&gt;
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MyError&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ne"&gt;Exception&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;msg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;msg&lt;/span&gt;
+
+&lt;span class="n"&gt;if_error&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MyError&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Error: you need to specify by a consequence and an alternate.&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;dict_error&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MyError&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Error: can&amp;#39;t find element in dictionary. Improper input.&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;unexpected_error&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MyError&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Error: unexpectedly entered parse function with no input.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;too_many&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MyError&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Error: too many arguments were inputed.&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;quote_error&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MyError&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Error: quote only takes one operand.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;let_error&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MyError&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Error: let must be followed by a list.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Then, we start doing some of the gritty work:  tokenizing and parsing.  I have implemented both my tokenizer and my parser as functions.  When we call them, the output of the tokenizer will be fed as input to my parser.   Here is my tokenizer:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6
+7&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# ---- TOKENIZE ------ &lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;tokenizer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;holder&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;holder&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;(&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;holder&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;)&amp;#39;&lt;/span&gt;
+    &lt;span class="n"&gt;holder&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;holder&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;replace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;(&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39; ( &amp;#39;&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;holder&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;holder&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;replace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;)&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39; ) &amp;#39;&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;final&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;filter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;holder&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39; &amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;final&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;The tokenizer takes my user's raw input - something like &lt;code&gt;(+ 2 2)&lt;/code&gt;.  It begins by putting extra braces around the entire thing.  It then adds space around all the braces before splitting the input into an array where each element is a separate token.  The input splits over spaces, which is why it was necessary to add extra space around the braces. far so good, but why did I begin by adding extra braces?! Seems kind of wierd, right? &lt;/p&gt;
+&lt;p&gt;The reason for this seemingly cooky choice was to accomodate inputs like the following: &lt;code&gt;(define x 3) x&lt;/code&gt;.  This is a valid Scheme expression which evaluates to 3.  Suppose that I do not add extra brackets around the entire statement.  Then, when I go to actually &lt;em&gt;interpret&lt;/em&gt; the input, it becomes difficult to know when the end of the user input has been reached.  In fact, I did NOT initially add these extra brackets in my tokenization, but my interpreter evaluated &lt;code&gt;(define x 3) x&lt;/code&gt; to be &lt;code&gt;None&lt;/code&gt; instead of &lt;code&gt;3&lt;/code&gt;. It simply stopped evaluating after &lt;code&gt;(define x 3)&lt;/code&gt;. Knowing when the end of the user input has been reached, however, is quite easy if we have an outter set of brackets enclosing everything.  Of course, adding extra brackets came with its own set of issues.  I needed to make sure that my interpreter could differentiate between expressions like &lt;code&gt;(3)&lt;/code&gt; and &lt;code&gt;3&lt;/code&gt;.  Although '3' is a valid Scheme expression, &lt;code&gt;(3)&lt;/code&gt; is not, and I was essentially changing my input to always look like &lt;code&gt;(3)&lt;/code&gt;.  Thanks to Mary Cook, I came up with a pretty clever solution to this issue, which we will come accross later. &lt;/p&gt;
+&lt;p&gt;Continuing on... the parser! Writing this parser was my first encouter with recursion! Here's the code:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# ---- PARSER ----- &lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;parse&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;tokens&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;tokens&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;raise&lt;/span&gt; &lt;span class="n"&gt;unexpected_error&lt;/span&gt;
+
+    &lt;span class="n"&gt;token&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;tokens&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="n"&gt;tokens&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;tokens&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:]&lt;/span&gt;
+
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;token&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;(&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;parsed_input&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt; 
+
+        &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="n"&gt;tokens&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;)&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;to_append&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tokens&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;parse&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;tokens&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="n"&gt;parsed_input&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;to_append&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;tokens&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;tokens&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:]&lt;/span&gt;                 &lt;span class="c"&gt;#pops off the &amp;#39;)&amp;#39; part&lt;/span&gt;
+
+        &lt;span class="c"&gt;#we add a condition to check if last return&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;tokens&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;parsed_input&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tokens&lt;/span&gt;     &lt;span class="c"&gt;#if not last return, need to return current version of tokens&lt;/span&gt;
+        &lt;span class="k"&gt;elif&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;tokens&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;parsed_input&lt;/span&gt;             &lt;span class="c"&gt;#if last return, only want to return new list of tokens         &lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;check_type&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;token&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;tokens&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;To better understand this function, lets look at how &lt;code&gt;parse(['(', '(', +, '1', '1', ')', ')'])&lt;/code&gt; would be processed, line by line. Line 3 is not satisfied, so we skip to line 6 and 7.  Here  Token will be set to &lt;code&gt;'('&lt;/code&gt;, tokens will become &lt;code&gt;[ '(', '+', '1', '1', ')', ')']&lt;/code&gt;.  Since the condition on line 9 is satisfied, we then enter this branch and continue on with line 10 where &lt;code&gt;parsed_input&lt;/code&gt; is initialized as an empty list. Then we enter the while loop on line 12, and in line 13 we recurse back into our parse function by calling &lt;code&gt;parse(tokens)&lt;/code&gt;.  &lt;/p&gt;
+&lt;p&gt;Now in the second level of our parse function.  In this level we execute line 6 and 7 again, setting &lt;code&gt;token&lt;/code&gt; as &lt;code&gt;'('&lt;/code&gt;, and &lt;code&gt;tokens&lt;/code&gt; to &lt;code&gt;['+', '1', '1',')', ')']&lt;/code&gt;.  Since &lt;code&gt;token&lt;/code&gt; is still &lt;code&gt;'('&lt;/code&gt;, line 10 will again be executed, creating another &lt;code&gt;parsed_input&lt;/code&gt; list, and then diving into our 3rd level of recursion on &lt;code&gt;parse&lt;/code&gt;.  &lt;/p&gt;
+&lt;p&gt;In this 3rd level, token is &lt;code&gt;'+'&lt;/code&gt; and tokens is &lt;code&gt;['1', '1', ')', ')']&lt;/code&gt;.  Since token is not &lt;code&gt;'('&lt;/code&gt; we skip down to the else condition and execute line 23.  Since we have yet to define the function check_type, just pretend that this line returns token and tokens.  Having returned those values, we come out of the 3rd layer of recursion and back into the 2nd, at line 13. Here, &lt;code&gt;to_append&lt;/code&gt; is set to '+', and tokens is &lt;code&gt;['1', '1', ')', ')']&lt;/code&gt;.  Line 14 is then executed, and &lt;code&gt;parsed_input&lt;/code&gt; becomes &lt;code&gt;['+']&lt;/code&gt;.  We continue looping through this while loop, going into a 3rd layer of recursion, coming back into two, and appending &lt;code&gt;parsed_input&lt;/code&gt; until &lt;code&gt;parsed_input&lt;/code&gt; looks like ['+', '1', '1'] in our second layer of recursion.  At this point the tokens[0] will be ')', so we break out of the while loop.  Line 15 remouves ')' from tokens, leaving tokens as [')'].  Then since the length of tokens is positive line 19 is executed.&lt;/p&gt;
+&lt;p&gt;Now we exit the second layer of recursion and are back into the first parse call. &lt;code&gt;to_append&lt;/code&gt; becomes &lt;code&gt;['+', '1', '1']&lt;/code&gt;, and &lt;code&gt;tokens&lt;/code&gt; is &lt;code&gt;[')']&lt;/code&gt;. The original &lt;code&gt;parsed_input&lt;/code&gt; is updated to &lt;code&gt;[['+', '1', '1']]&lt;/code&gt;, the while loop ends, and line 15 is executed, changing &lt;code&gt;tokens&lt;/code&gt; to &lt;code&gt;[]&lt;/code&gt;.  Since the &lt;code&gt;len(tokens)&lt;/code&gt; is zero line 20 is executed and &lt;code&gt;parsed_input&lt;/code&gt; is the final return. We have exited all levels of the parse function, effectively parsing the input!&lt;/p&gt;
+&lt;p&gt;This blog post will be continued... I have written enough for one day. &lt;/p&gt;</summary></entry><entry><title>Adventures with sockets, threads and more!</title><link href="http://lmontopo/github.io/adventures-with-sockets-threads-and-more.html" rel="alternate"></link><updated>2014-11-11T00:00:00-05:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo,2014-11-11:github.io/adventures-with-sockets-threads-and-more.html</id><summary type="html">&lt;p&gt;For a while now I've wanted to learn more about the internet, about servers, and about how web apps &lt;em&gt;really&lt;/em&gt; work.  Last week I finished a small flaks tutorial.  I enjoyed the tutorial and I learned some cool things by doing it, yet, I was feeling unsatisfied.  The tutorial just didn't hit the spot for me.  I wasn't really sure what I was after, but I knew it was something deeper.  Yesterday I discovered sockets, and it was dead on!  &lt;/p&gt;
+&lt;p&gt;This blog post is going to be a (not so) little write up of some things I've learned as I digging around in the world of sockets and other networky type things.  I'll start with a few questions I was thinking about yesterday.  I'll provide what I think are some decent and mostly true answers to these questions.  (Of course, if you find something in this post that is just outright wrong, please do reach out to correct me!).  Then I'll introduce some code Susan and I wrote to make a simple web chat service using sockets.  Finally, a second round of questions and answers will be presented.  Enjoy!  &lt;/p&gt;
+&lt;h4&gt;QUESTIONS ROUND 1&lt;/h4&gt;
+&lt;h5&gt;What's a socket?&lt;/h5&gt;
+&lt;p&gt;This is a question I've spent a great deal of time trying to answer.  Here's the answer I've settled on:  A socket is some sort of abstract object like that of a "file" on your computer.  We could say that the object type "socket" is built into the operating system of our computer and allows users (or programs) to create instances of them at will. Sockets are used as the endpoints of any bidirectional communication channel. The socket contains the FROM IP address, the TO IP address, the FROM port number, and the TO port number.&lt;sup id="fnref:fn-1"&gt;&lt;a class="footnote-ref" href="#fn:fn-1" rel="footnote"&gt;1&lt;/a&gt;&lt;/sup&gt;  We can think about the function of sockets to be like plugging chords into walls on the two ends of your communcation channel.&lt;/p&gt;
+&lt;h5&gt;How does my computer communicate with my router?&lt;/h5&gt;
+&lt;p&gt;The short answer: via radio signals.  Modern computers come with a built in wireless adapter which translates data from your computer into radio waves.  These radio waves can then be sent out into the world and picked up by a router.  Communication can occur in the other direction as well: The router can send radio waves to a comptuer and the computer will translate those waves into 0s and 1s so that it can understand the message.  One thing that I found interesting is that my computer is always listening to the router.  Sometimes my computer will hear messages that aren't even addressed to it, in which case it won't accept these messages.  So there's a difference between "listening" and "accepting" messages from the router.  We'll come back to this! &lt;/p&gt;
+&lt;h5&gt;Can older computers connect to the internet?&lt;/h5&gt;
+&lt;p&gt;It depends. If your computer has the necessary internet handling software but is simply lacking a translater, then yes.  The modem, afterall, is simply a translator.  It takes signals (probably passed to it through your phone line) and transforms these messages into 0s and 1s that your computer can understand.  But, this only makes your computer internet ready if you're operating system can create sockets, and can understand and work with internet protocols.  Otherwise, extra software would have to be implimented and I'm not exactly sure if this can always be done. &lt;/p&gt;
+&lt;h5&gt;SOME CODE&lt;/h5&gt;
+&lt;p&gt;To learn more about sockets Susan and I implimented a chat service between our two computers using sockets. I wrote the code for the "server", and she wrote the code for the "client".  If I ran 'server' on my computer and then she ran 'client' on hers, we were able to chat back and forth in our terminals!  Anything I wrote in my terminal would be sent to hers the moment I pressed enter. Likewise, messages she typed in her terminal would be sent to mine when she pressed enter.  It was like a real world chat service!  Here's our code: &lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;###SERVER (On Leta&amp;#39;s Computer)&lt;/span&gt;
+
+&lt;span class="n"&gt;import&lt;/span&gt; &lt;span class="n"&gt;socket&lt;/span&gt;
+&lt;span class="n"&gt;import&lt;/span&gt; &lt;span class="n"&gt;threading&lt;/span&gt;
+
+&lt;span class="n"&gt;serversocket&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;socket&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;socket&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;port&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;9999&lt;/span&gt;
+
+&lt;span class="cp"&gt;# c lears the port right away preventing &amp;quot;address already in use&amp;quot; errors&lt;/span&gt;
+&lt;span class="n"&gt;serversocket&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setsockopt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;socket&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;SOL_SOCKET&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;socket&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;SO_REUSEADDR&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;my_ip&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;10.0.7.65&lt;/span&gt;
+&lt;span class="n"&gt;serversocket&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bind&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;my_ip&lt;/span&gt; &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+&lt;span class="cp"&gt;# queue up to 5 requests:&lt;/span&gt;
+&lt;span class="n"&gt;serversocket&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;listen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;clientsocket&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;addr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;serversocket&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;accept&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="n"&gt;listen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;connection&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="n"&gt;True&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;msg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;clientsocket&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;recv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1000&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;not&lt;/span&gt; &lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;break&lt;/span&gt;
+        &lt;span class="nl"&gt;else:&lt;/span&gt;
+            &lt;span class="n"&gt;print&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;friend&lt;/span&gt; &lt;span class="n"&gt;says&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;msg&lt;/span&gt;
+
+
+&lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="n"&gt;write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;connection&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="n"&gt;True&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;message&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;raw_input&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;clientsocket&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sendall&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;clientsocket&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;threading&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Thread&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;write&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;clientsocket&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;threading&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Thread&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;listen&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;clientsocket&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+
+&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;#CLIENT (on Susan&amp;#39;s computer)&lt;/span&gt;
+
+&lt;span class="n"&gt;import&lt;/span&gt; &lt;span class="n"&gt;socket&lt;/span&gt;
+&lt;span class="n"&gt;import&lt;/span&gt; &lt;span class="n"&gt;threading&lt;/span&gt;
+
+&lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;sock&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;socket&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;socket&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;socket&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;AF_INET&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;socket&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;SOCK_STREAM&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="n"&gt;HOST&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+    &lt;span class="n"&gt;SOCKET_LIST&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+    &lt;span class="n"&gt;RECV_BUFFER&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;4096&lt;/span&gt;
+    &lt;span class="n"&gt;PORT&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;9999&lt;/span&gt;
+
+    &lt;span class="n"&gt;server_addr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;10.0.7.65&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;PORT&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;print&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stderr&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;connecting&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="n"&gt;port&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;server_addr&lt;/span&gt;
+    &lt;span class="n"&gt;sock&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;connect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;server_addr&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="nl"&gt;try:&lt;/span&gt;
+        &lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;threading&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Thread&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;send&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;sock&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+        &lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        &lt;span class="n"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hi!!!! TESTING!!&amp;quot;&lt;/span&gt;
+        &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="n"&gt;True&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sock&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;recv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;RECV_BUFFER&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="n"&gt;print&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stderr&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;Leta&lt;/span&gt; &lt;span class="n"&gt;says&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;
+
+    &lt;span class="nl"&gt;finally:&lt;/span&gt;
+        &lt;span class="n"&gt;print&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stderr&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;closing&lt;/span&gt; &lt;span class="n"&gt;socket&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+        &lt;span class="n"&gt;sock&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;h4&gt;QUESTIONS ROUND 2&lt;/h4&gt;
+&lt;h5&gt;What is happening when I write "socket.listen"?&lt;/h5&gt;
+&lt;p&gt;As mentioned earlier, your computer is constantly "listening" to messages from your router.  But its not necessarily ACCEPTING them.  Calling socket.listen() tells your computer to actively start accepting messages that are addressed to the socket.  So, as soon as my computer sees some message addressed to a socket which has been told to listen, the socket will send back a message saying something like, "OK, I am willing to receive your message". And then the message will be sent and received.  (At least I think thats kind of how it goes.)&lt;/p&gt;
+&lt;h5&gt;What is TCP? What is IP?  Are they related?&lt;/h5&gt;
+&lt;p&gt;TCP stands for Transmission Control Protocoll.  IP stands for Internet Protocol.  Both are "protcols" in the sense that they outline the standards by which machines are supposed to communicate with each other.  To see how they differ, lets walk through how Susan's and my computer are dealing with our 'chat server'.  Suppose I send the message "hello" to Susan.  When I send this message to Susan the string "hello" will be wrappred with extra data necessary to satisfy TCP.  Once this mesage satisfies TCP it can be sent to my operating system, which will look at it, realize that data needs to be sent out in the world, and will package the data with yet another layer so it adheres to IP.  This message is then translated to radio waves to be sent to the router.  Upon receiving my message the router will pass the package to Susan's computer.  When Susan's computer receives the package it translates the data back into 0s and 1s and then begins unpacking it.  Her operating system will take off the outtermost layer of packaging: that associated with IP. Her computer will find that the contents of this package adhere to TCP. Susan's computer will make sure that TCP is followed.  Since TCP is a protocol which ensures that messages are sent in order, this means that within the TCP packaging Susan's computer might find some data that says "Hey! I'm packet number 13 sent from Leta's computer to yours.  Have you gotten package 1 through 12 already?  You can't open me up until you've received all the ones that come before."  And her computer will respond saying something like "Yes, I have gotten all the messages that come before, so I can now open you up".  Susan's computer will then pass the package to the application (the chat service) which will unpack the data to find the message I sent: "hello".  &lt;/p&gt;
+&lt;p&gt;I know this is pretty confusing.  I'm still wrestling with these concepts myself.  Lets recap: On the senders side, the package gets wrapped with all sorts of layers and then this package gets passed around, and on the receivers side, the package gets unpacked layer by layer. Each layer is associated with another protocol. Underneath the IP packaging, data can be sent adhering to TCP or adhering to other protocols. Indeed, TCP is not the only one.  As I mentioned above, TCP is a protocol that ensures that data is sent in a particular order, and it ensures that a response be sent back to the sender to communicate if/when the data was received.  Another protocol is UDP: User Datagram Protocol.  It does not ensure that delivery has occured and does not ensure that messages are delivered in order.  We're not going to get into why UDP might be used over TCP, but the point I wanted to make was that IP can encapsulate many different types of messages. TCP is just the one that happened to be used in the chat server Susan and I implimented.&lt;/p&gt;
+&lt;h5&gt;What is a thread?&lt;/h5&gt;
+&lt;p&gt;Have you ever heard the term "multi-threaded programming" and wondered what the heck people were talking about?  If so, read on!  Consider a chat server where I could type a message to Susan, and then I couldn't type one again until I had her response.  That would kind of suck, wouldn't it?  So what this means is that in a good chat service, my server can be waiting for me (the user) to input a message, and can simultaneously be listening for any incoming messages from Susan.  The key here is that we want our program to be doing &lt;strong&gt;two things simultaneously&lt;/strong&gt;.  Looking at the code for Server, above, we see that what I want is for the function "write" and the function "listen" to be running concurrently.  And the way I implemented this was through threads.  Each thread refers to a different task that we want to be carried out, and threading is the process of running them simultaneously.  Conclusion:  Threading rocks! &lt;/p&gt;
+&lt;h5&gt;Are sockets being used when I use my browser to visit a webpage?&lt;/h5&gt;
+&lt;p&gt;YES!  Often multiple sockets are used to transfer the information of one a single webpage to your computer.  Generally speaking, each HTTP request has its own socket that it connects with.  This socket will close as soon as the request has been made and received.  Some web pages have 100s of GET or POST (or other) HTTP requests.  This means that 100s of sockets will be created, opened, and closed on my computer in the short time it takes to load the webpage in my browser.  I have been told that this is actually starting to change.  I don't know very mucha about this, but I think HTTP is starting to allow a single socket to handle more than one HTTP requests. &lt;/p&gt;
+&lt;div class="footnote"&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id="fn:fn-1"&gt;
+&lt;p&gt;A Port is just this idea that we've implimented on our computers so that we can have several things going on on one computer.  Its kind of like apartments on an apartment building.  If we have to have several separate things going on at different addresses within the same machine, ports is the way we've done that.&amp;#160;&lt;a class="footnote-backref" href="#fnref:fn-1" rev="footnote" title="Jump back to footnote 1 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</summary></entry><entry><title>Little Lessons: Episode 2</title><link href="http://lmontopo/github.io/little-lessons-episode-2.html" rel="alternate"></link><updated>2014-11-06T00:00:00-05:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo,2014-11-06:github.io/little-lessons-episode-2.html</id><summary type="html">&lt;p&gt;Seeing as there are a whole &lt;strong&gt;bunch&lt;/strong&gt; of "little lessons" that I'd like to write down and keep track of, I've decided to extend my previous blog post "Little Lessons" into a whole series! Get ready! &lt;/p&gt;
+&lt;h4&gt;Mutating Iterables:&lt;/h4&gt;
+&lt;p&gt;Suppose we have a list and we'd like to mutate some (or all) of its elements as we iterate through them.  Supposing that the way in which we want to mutate each element isn't too complicated, this seems like a straight forward task.
+The case I was initially looking at consisted of a list where each element of my list was either True or False.  I wanted to go through the list and change some of the False entries to True.  As is the case with many tasks in computing, this task was a little trickier than I initially expected.  For the purpose of this lesson, it will suffice to consider a simple list of integers. Here we go!&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6
+7&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;print&lt;/span&gt; &lt;span class="n"&gt;list&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;item&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;list&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; 
+&lt;span class="p"&gt;...&lt;/span&gt; &lt;span class="n"&gt;item&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;print&lt;/span&gt; &lt;span class="n"&gt;list&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;I'm not sure about you, but this was not exactly what I was expecting the first time I tried it. Lets add an extra print statement to better see whats going on.&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6
+7&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;item&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;list&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; 
+&lt;span class="p"&gt;...&lt;/span&gt; &lt;span class="n"&gt;item&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="p"&gt;...&lt;/span&gt; &lt;span class="n"&gt;print&lt;/span&gt; &lt;span class="n"&gt;item&lt;/span&gt; 
+&lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;span class="mi"&gt;3&lt;/span&gt;
+&lt;span class="mi"&gt;4&lt;/span&gt;
+&lt;span class="mi"&gt;5&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;It seems that our code is understanding, and executing, "item += 1", yet, the list itself is not being mutated! HOW CAN THIS BE SO?! After a bit of research Julia and I found our answer: when items of a list are iterated with this 'for item in list' statement, Python creates an element 'item' which is a copy of the value of that list element. This item is an entirely separate object than the elements of the list, and so changing 'item' has no effect on our list.  Here's how you &lt;em&gt;can&lt;/em&gt; change the elements in the list, as intended:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;list&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+&lt;span class="p"&gt;...&lt;/span&gt;     &lt;span class="n"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="p"&gt;...&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;list&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Yay! Notice how we access the elements of the list DIRECTLY.  &lt;/p&gt;
+&lt;h4&gt;User-defined Exceptions/REPL/Errors vs Exceptions&lt;/h4&gt;
+&lt;p&gt;Yesterday I added the finishing touches to my Lisp Interpreter. (Expect a long and detailed post about that very soon!)  My program was interpreting Scheme as I intended it to, but it wasn't very user friendly.  I decided to turn it into a REPL. The acccronym REPL stands for "Read, Evaluate, Print, Loop".  What a REPL does is exactly what you might think: it will read user input, evaluate it, print the result back to the user, and then wait for further input.  Using a while loop and using Python's raw_input() command, it was pretty straightforward to get my interpreter to work like a REPL for non-erroneous user input.  However, if the input was erroneous then the entire program crashed.  Somehow, I needed my program to ACCEPT erroneous input and respond to it with an appropriate error message. The way I went about doing this was by creating my own class of Exceptions!  That's right: since everything in Python is an object, Errors and Exceptions are themselves objects, and we can create our very own classes of them! &lt;/p&gt;
+&lt;p&gt;Lets step back for a minute and quickly discuss what is meant by the terms "Error" and "Exception" in Python.  I found the distinction to be a little confusing at first.  It turns out that the term "Error" is a broad category which can be divided into two different types: Syntax Errors and Exceptions.  Syntax errors are errors which are produced because characters or strings are misplaced, missing, or added when they shouldn't be.  In comparison, the errors which occur during execution are refered to as "exceptions". These errors indicate that the &lt;em&gt;meaning&lt;/em&gt; (as opposed to the syntax) of the code is erroneous. &lt;/p&gt;
+&lt;p&gt;Great, now lets talk about how I implemented my own class of exceptions! The implimentation of this class required very little code: &lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;class&lt;/span&gt; &lt;span class="n"&gt;MyError&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Exception&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="n"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;msg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;msg&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Then I created several different instances of this class.  Each instance refers to a different type of error that could occur, and each had a message associated with it.  Here is the function I implement in my program which takes care of all things to do with being a REPL:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="n"&gt;repl&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+    &lt;span class="nl"&gt;try:&lt;/span&gt; 
+        &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;raw_input&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="nl"&gt;try:&lt;/span&gt;
+            &lt;span class="n"&gt;print&lt;/span&gt; &lt;span class="n"&gt;interpret&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;except&lt;/span&gt; &lt;span class="n"&gt;MyError&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; 
+            &lt;span class="n"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;colored&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;red&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; 
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;repl&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;scope&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;except&lt;/span&gt; &lt;span class="n"&gt;KeyboardInterrupt&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;exit&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Here my code "tries" to print out the result of calling the interpret function on the user input.  If any isntance of MyError occurs, then it will instead return the message associated to that instance of MyError.  Notice the second parameter, 'e'.  It makes reference to the particular instance of MyError which was raised and saves me from having to specify case by case all of the instances of MyError which could be encountered.  For the record, 'e' is not some MAGIC variable that has a special meaning in Python.  It is simply what I chose to name the second parameter.  I could easily change 'e' to 'blah' and the code will work the same.  (I actually tested it out to check!)&lt;/p&gt;</summary></entry><entry><title>Interpreting the Interpreter: Episode 2</title><link href="http://lmontopo/github.io/interpreting-the-interpreter-episode-2.html" rel="alternate"></link><updated>2014-10-30T00:00:00-04:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo,2014-10-30:github.io/interpreting-the-interpreter-episode-2.html</id><summary type="html">&lt;p&gt;Confession: I am not yet ready to present my final, finished, Lisp Interpreter.  It will be coming soon, but not today.  Today I will describe the rollercoaster ride of an experience taking on this project has been for me.  Then, I'll focus in on a couple things I've learned along the way.  &lt;/p&gt;
+&lt;p&gt;Last week Sumana asked me how my interpreter was going, and I explained to her the mixed feelings I was having about the project.  I told her how somedays I feel things are goings great - I'm learning lots, the project is challenging, and I'm excited!  But other days I feel discouraged. I'll put a lot of energy and effort into writing a peice of code for my project only to later realize that this peice of code will not be used at all.  Apparently, this experience is not uncommon. There is an analogy between this experience and hill-climbing which goes something like this: Suppose there are many hills in a region, and we would like to reach the top of the tallest one.  When we are climbing uphill we feel like we are making great progress.  We feel the effort we are putting in is getting us very close to our goal! But then we get to the top and we discover we've been climbing a smaller hill and that the top of the largest hill is still far away.  Furthermore, we realize that to get there, we actually have to go back down the hill we just climbed.  When Suman described to me this analogy, I felt releived.  This was EXACTLY what I had been experiencing!!  It was good to know that I wasn't alone in feeling this way.  And she reminded me that this was all part of the learning process.  Indeed, in climbing these smaller hills, I've still learned a great deal! &lt;/p&gt;
+&lt;p&gt;Here is one of the small hills I climbed, and the lessons I learned in doing so. &lt;/p&gt;
+&lt;h4&gt;All the way back to basic math.&lt;/h4&gt;
+&lt;p&gt;Basic math was one of the first thing that Kuan and I tackled when we begun writing our Lisp Interpreters.  I thought I had conquered that task long ago, but this week I realized I wrong.  The code I had written to interpret basic math looked something like this:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6
+7&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;head&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="sc"&gt;&amp;#39;+&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sc"&gt;&amp;#39;-&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sc"&gt;&amp;#39;*&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sc"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sc"&gt;&amp;#39;&amp;lt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sc"&gt;&amp;#39;&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;=&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sc"&gt;&amp;#39;=&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;=&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;head&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="sc"&gt;&amp;#39;=&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;eval&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rest&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rest&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]))&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;
+    &lt;span class="nl"&gt;else:&lt;/span&gt;
+            &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;eval&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rest&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;head&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rest&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]))&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Here, head is the name given to the first element in a list. In this case head is the operator.  Notice that this code works for only two operands.  What I realized this past week is that Scheme actually accepts math expressions with more than 2 arguments.  For example, "(+ 1 1 1)" is a legitimate scheme expression.  And unfortunately, my current code wouldn't interpret it. In the end, I changed the code to look like this: (I'll just present a couple of functions, so that you get the idea)&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# ---- Defining Basic Math and Bool Functions ----  &lt;/span&gt;
+
+&lt;span class="s-Atom"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s-Atom"&gt;args&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="s-Atom"&gt;:&lt;/span&gt;
+    &lt;span class="s-Atom"&gt;return&lt;/span&gt; &lt;span class="nf"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s-Atom"&gt;args&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="s-Atom"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;subtract&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s-Atom"&gt;args&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="s-Atom"&gt;:&lt;/span&gt;
+    &lt;span class="s-Atom"&gt;return&lt;/span&gt; &lt;span class="nf"&gt;reduce&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s-Atom"&gt;lambda&lt;/span&gt; &lt;span class="s-Atom"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nn"&gt;y&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s-Atom"&gt;x&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="s-Atom"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s-Atom"&gt;args&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="s-Atom"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;equal&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s-Atom"&gt;args&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="s-Atom"&gt;:&lt;/span&gt;
+    &lt;span class="s-Atom"&gt;return&lt;/span&gt; &lt;span class="s-Atom"&gt;args&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="s-Atom"&gt;:&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s-Atom"&gt;args&lt;/span&gt;&lt;span class="p"&gt;[:-&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="s-Atom"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;less&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s-Atom"&gt;args&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="s-Atom"&gt;:&lt;/span&gt;
+    &lt;span class="s-Atom"&gt;return&lt;/span&gt; &lt;span class="s-Atom"&gt;args&lt;/span&gt;&lt;span class="p"&gt;[:-&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="s-Atom"&gt;args&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="s-Atom"&gt;:&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+
+&lt;span class="s-Atom"&gt;#&lt;/span&gt; &lt;span class="s-Atom"&gt;----&lt;/span&gt; &lt;span class="nv"&gt;Interpreting&lt;/span&gt; &lt;span class="nv"&gt;Basic&lt;/span&gt; &lt;span class="nv"&gt;Math&lt;/span&gt; &lt;span class="s-Atom"&gt;and&lt;/span&gt; &lt;span class="nv"&gt;Bool&lt;/span&gt; &lt;span class="nv"&gt;Functions&lt;/span&gt; &lt;span class="s-Atom"&gt;----&lt;/span&gt; 
+
+&lt;span class="s-Atom"&gt;if&lt;/span&gt; &lt;span class="s-Atom"&gt;head&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s-Atom"&gt;&amp;#39;+&amp;#39;:&lt;/span&gt;
+        &lt;span class="s-Atom"&gt;return&lt;/span&gt; &lt;span class="nf"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s-Atom"&gt;rest&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="s-Atom"&gt;if&lt;/span&gt; &lt;span class="s-Atom"&gt;head&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s-Atom"&gt;&amp;#39;-&amp;#39;:&lt;/span&gt;
+    &lt;span class="s-Atom"&gt;return&lt;/span&gt; &lt;span class="nf"&gt;subtract&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s-Atom"&gt;rest&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="s-Atom"&gt;if&lt;/span&gt; &lt;span class="s-Atom"&gt;head&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s-Atom"&gt;&amp;#39;=&amp;#39;:&lt;/span&gt;
+    &lt;span class="s-Atom"&gt;return&lt;/span&gt; &lt;span class="nf"&gt;equal&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s-Atom"&gt;rest&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="s-Atom"&gt;if&lt;/span&gt; &lt;span class="s-Atom"&gt;head&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s-Atom"&gt;&amp;#39;&amp;lt;&amp;#39;:&lt;/span&gt;
+    &lt;span class="s-Atom"&gt;return&lt;/span&gt; &lt;span class="nf"&gt;less&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s-Atom"&gt;rest&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;As you can see, I made use of Python's built in sum function which can handle multiple operands.  Since there isn't a similar function built in for subtraction, I made one with the reduce function.  Since this is the first time I've used the reduce function I'll describe to you what it does.  Reduce takes two arguments: a function and a interable.  I used a list as an iterable, and I used lambda to define the function.  Reduce will take the function and will apply it cumulatively over the inputed iterable.  So, in my subtraction example, if I call subtract([4, 2, 1]) then it will calculate ((4 - 2) - 1) and will return 1.  &lt;/p&gt;
+&lt;p&gt;Notice that I didn't use the reduce function for evaluating boolean statements.  I tried to use it, but I was getting wonky results.  This is what I tried:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="n"&gt;equal&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;reduce&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;To test this equal function, I input [1,1,1] and [2,2,2]. The expression "equal([1, 1, 1])" would return True while "equal([2, 2, 2])"" would return False.  After taking the time to think about it, I realized what was happening.  When I set my input to [1, 1, 1], "(1 == 1)" will first be evaluated and will return True.  Then it will take True, and will evalute "(True == 1)", which will again return True!  Indeed, in Python (and if I'm not mistaken, in most computer languages) True is 1 and False is 0.  This expalains why equal([2, 2, 2]) returns False.  Python would first evalute (2 == 2) returning True.  Then it will evaluate "True == 2" and return False.  Pretty neat eh?  Sometimes it pays off to take the time to really think about how your code is working, and why it isn't returning what you anticipate.  &lt;/p&gt;
+&lt;p&gt;In the end, I was able to define a successful equal function as described above, by:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="s-Atom"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;equal&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s-Atom"&gt;args&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="s-Atom"&gt;:&lt;/span&gt;
+    &lt;span class="s-Atom"&gt;return&lt;/span&gt; &lt;span class="s-Atom"&gt;args&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="s-Atom"&gt;:&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s-Atom"&gt;args&lt;/span&gt;&lt;span class="p"&gt;[:-&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Lets go through what this does when we input, say, args = [arg1, arg2, arg3, arg4].  Two smaller lists are constructed: args[1:] = [arg2, arg3, arg4] and arg[:-1] = [arg1, arg2, arg3].  Then the statement "[arg2, arg3, arg4] == [arg1, arg2, arg3]" is evaluated.  Notice that this is essentially evaluating (arg2 == arg1 and arg3 == arg2 and arg4 == arg3), which return True exactly when all the elements in the list are equal.  I really like this function because I feel its really simple and clean and straight-forward.&lt;/p&gt;
+&lt;p&gt;So, as you can see, there were moments this past week when I had to step WAYYY back and re-write code I thought I was already done.  But, in doing so, I learned some really fun and cool things.  Don't be discouraged if you have to go back to something you thought you had finished!  It could turn out to be fun! &lt;/p&gt;</summary></entry><entry><title>Little Lessons</title><link href="http://lmontopo/github.io/little-lessons.html" rel="alternate"></link><updated>2014-10-27T00:00:00-04:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo,2014-10-27:github.io/little-lessons.html</id><summary type="html">&lt;p&gt;This blog post will be dedicated to some of the little (but important!) lessons
+I've learned over the past week.  Enjoy! &lt;/p&gt;
+&lt;h4&gt;The list method "extend" returns None.&lt;/h4&gt;
+&lt;p&gt;Before I explain this lesson, let me just back up for a second and address the lingo "method".
+Only recently have I been able to add this word to my vocabulary, so I'll take the time to explain it 
+briefly here.  A method is actually just a function that is associated with a class.  It 
+is usually called on an instance of that class.  If you've written some code in Python you've 
+probably already used methods, even if you didn't know the lingo.  Now lets talk about extend, a method invoked on
+lists!  Here's a little example to illustrate what it does:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;extend&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Now, consider the following bit of code.  Warning: It will produce an error!&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; 
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;extend&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;extend&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;I expected to get the list with entries 1 through 9 in return, but instead I was greeted with
+the following message: "AttributeError: 'NoneType' object has no attribute 'extend'" &lt;sup id="fnref:*"&gt;&lt;a class="footnote-ref" href="#fn:*" rel="footnote"&gt;1&lt;/a&gt;&lt;/sup&gt;.  I was working
+with Julia Tufts at the time, and we were both intrigued by this message.  So we did a little playing around
+and realized that although the method 'extend' alters the list instance it is invoked on, the method
+actually returns None.  So when we extend doubly, in one line, as I did above, list.extend([6,7]) returns None,
+and then we try to extend None with [8,9], producing an error.  Cool!&lt;/p&gt;
+&lt;h4&gt;Recursion.&lt;/h4&gt;
+&lt;p&gt;For a while now I've had a vague idea of what recursion was, but my vague idea caused me to believe I 
+actually had a REAL idea of what it was.  I didn't.  Here's a little example that Kuan Butts gave me
+which really cleared up my confusion:  Suppose we want to write a function that, when given a number, 
+will write out that number as 1 + 1 + 1 .... etc.  Here's a simple way to use recursion to 
+write that code:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;plus_one&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;num&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;num&lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; 
+        &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;+&amp;#39;&lt;/span&gt; 
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;plus_one&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Here, the "base case" is when num == 1.  This is when the recursion stops, and you start
+jumping back out of the layers of recursion.     &lt;/p&gt;
+&lt;h4&gt;Writing automated tests is useful!!&lt;/h4&gt;
+&lt;p&gt;Previous to hacker school I had written some automated testing for the sake of learning how 
+to do it.  I learned the very basics of how to write an automated test, and then I never used this
+knowledge because I didn't see the point.  I reasoned, "why would I waste time writing
+code to test my code, when I could just test it on my own?"  After all, I had been testing my code on my own 
+all along anyway, and I had been getting by just fine!  And I wasn't wrong!  I really had been making 
+out just fine.  But then I got to hacker school and started working on bigger, more involved projects.
+At some point I was having a hard time keeping track of all the things I needed to test.  I had a list
+of inputs to test, but many times I forgot exactly what each of them was testing for.  It started getting a little
+out of control, and it was at this point, that writing automated tests became a valuable tool for me!
+It was magical to be able to write all of my tests in one file, with comments, and be able 
+to quickly run those tests every time I made a change to my project.&lt;/p&gt;
+&lt;p&gt;So, the moral of the story is:  If you are working on small projects and you can keep track of your own testing and debugging, 
+then by all means skip the automated tests!  But know that they aren't pointless.  They have their 
+uses, even if its not for your project.  &lt;/p&gt;
+&lt;h4&gt;What's a cache?&lt;/h4&gt;
+&lt;p&gt;The other day I boldly decided to pair with Susan Steinman on her NY Public Library app, even though I had no
+experience with the things she was doing.  When we met up she told me she was working on improving her "cache" and
+since I didn't know what a cache was, I asked.  A cache, I discovered, is just a database on a web 
+application that stores stores previously requested data.  Have you ever noticed that
+when you search something on the internet that you've previously searched, often the results come 
+faster the second time around?  This is caching at work! I'll use Susan's app as an example. 
+Suppose someone has used her app to search for the book 1984 by George Orwell.  Then, suppose 
+I use her app and search for the same book.  Her cache will already have stored the results of the previous 1984 book search, so
+my inquiry can obtain the data directly from her cache instead of trying to retrieve the information
+all over again from the NY Public Library database. Thanks Susan for pairing with me! &lt;/p&gt;
+&lt;div class="footnote"&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id="fn:*"&gt;
+&lt;p&gt;&lt;small&gt; Ok so I realize now that this may be a bit confusing since the error specifies that
+it is an attribute error instead of a &lt;em&gt;method&lt;/em&gt; error.  I'm not exactly clear on the difference
+between an attribute and a method, but I am pretty sure that a method IS an attribute.  I think 
+the word "attribute" is just a more general term.  So for now, we'll go with that! Hopefully later
+I'll write a blog post to clear up the difference! &lt;/small&gt;&amp;#160;&lt;a class="footnote-backref" href="#fnref:*" rev="footnote" title="Jump back to footnote 1 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</summary></entry><entry><title>Interpreting the Interpreter: Episode 1</title><link href="http://lmontopo/github.io/interpreting-the-interpreter-episode-1.html" rel="alternate"></link><updated>2014-10-20T00:00:00-04:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo,2014-10-20:github.io/interpreting-the-interpreter-episode-1.html</id><summary type="html">&lt;p&gt;This episode is all about the experience I had in the initial phases of writing a Lisp interpreter.
+I will describe how I started, my thought processes as I progressed, some of the code I wrote, how it worked, and, why, 
+at day 3, I decided to start from scratch (almost).  If you are only interested in the final product, 
+skip this episode!  If, however, you'd like to get some insight as to how a newbie handled the 
+task of writing an interpreter, read on!  &lt;/p&gt;
+&lt;p&gt;Step one: recruit a friend. (This just makes the process a little more fun, plus its great to have someone to bounce ideas off of!) 
+I recruited Kuan.  We decided that we'd each write our own interpreter, but that we'd talk through all the steps
+together, work side by side, and help each other debug.  Our plan has worked out great so far!  To start, and we grabbed our computers, 
+retreated to a quiet room, and sat quietly for a few moments, contemplating the task at hand. I 
+found myself asking, "What do interpreters do again?", and then answering my own question with, "Right, they 'interpret'
+and then execute the code".  We figured that before our computers could execute any code, the code
+must first be separating into small elements, or &lt;strong&gt;tokens&lt;/strong&gt;. (The word &lt;strong&gt;token&lt;/strong&gt; is the technical name referring to the smallest element of any 
+programming language.)  In separating the code this way, we would later be able to instruct our computers to 
+scan through these elements in order, making sense of each element individually, before executing the expressions 
+they form together. We figured a good way to go about &lt;strong&gt;tokenizing&lt;/strong&gt; would be to create a list of all of the 
+tokens in the input.  (Tokenizing is just the action of separating the tokens.  Don't worry if you aren't familiar with the terms token and tokenization.  I didn't 
+know the meaning of these words until after I had already tokenized my input!)  This is the code Kuan and I came up with: &lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;holder&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;input&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;replace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;(&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39; ( &amp;#39;&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;holder&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;holder&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;replace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;)&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39; ) &amp;#39;&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;holder&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;holder&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39; &amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;holder&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;filter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;holder&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;holder&lt;/span&gt;    
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Here, 'holder' is what I decided to call the list that is constructed from the input, because it 
+'holds' the input. Given, for example, &lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;input&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;(/ (+ 3  2) (- 4 2))&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;this program will return the list: &lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;holder&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;(&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;(&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;+&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;3&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;2&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;)&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;(&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;-&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;4&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;2&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;)&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;)&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Notice that before splitting the input, we added space around each of the brackets.  This accounts for 
+the case where the user inputs two brackets side by side, or a number right beside a bracket
+with no space.&lt;/p&gt;
+&lt;p&gt;Having successfully created a list, holder, to hold the contents of our input, 
+we begun writing an algorithm to evaluate this content.  For starters, Kuan 
+and I decided we would limit ourselves to making our interpreter work for basic math expressions.  After that
+we would gradually worry about interpreting more complicated inputs.&lt;/p&gt;
+&lt;p&gt;When basic math is inputed the most nested expression should be calculated first.  We needed a way 
+for the computer to find which math expression is the innermost one.  We created the following 
+algorithm: 1- Scan through the elements of holder from left to right in search of the first ')'.
+2 - Begin scanning again, this time in search of the last '(' we hit before the first ')'.&lt;br /&gt;
+3- Extract whatever is inside of those brackets, and evaluate it.  4- In holder, replace this 
+innermost expression (including the brackets surrounding it) by its result we just evaluated.&lt;br /&gt;
+5- Start again at 1.  This process would continue until there were no more brackets and expressions
+left to evaluate.  At this point, we would have evaluated the entire expression. &lt;/p&gt;
+&lt;p&gt;We were able to write a working piece of code that implemented this algorithm, but it was sloppy 
+and we'd only interpreted basic math.  Kuan and I took a step back and looked at how our algorithm would pan out moving forward. We brainstormed 
+how we could go about interpreting 'define' expressions and we realized our current algorithm was going to get 
+pretty complicated.  Consider, for example, interpreting the expression: '(define (func) (+ x 2))'.
+If our current algorithm encountered this as input, it would find '(func)' and would get stuck trying to evaluate it.&lt;br /&gt;
+It seemed that before even beginning our algorithm, we'd have to first scan the entire input looking for the key word 'define'.  Then, every time we find 'define', 
+we'd have to find the set of brackets containing the entire 'define' expression.  This in itself is kind of cumbersome, but
+we're only the beginning.  Once our entire 'define' expression is isolated, we'd have to search within this expression to
+find the our function's name.  This would be done by scanning from left to right and searching for
+the first ')' we come across, and then scanning again until we found its corresponding '('.  Then we'd have 
+to remember the contents of these brackets, and begin scanning again to find the defined 
+function's expression.  Once the expression was found, we'd have to assign the contents of the previous two brackets
+as the name of the function's expression we just found.  &lt;/p&gt;
+&lt;p&gt;If you're getting confused, I don't blame you.  Clearly this algorithm is confusing.  The reason 
+it is confusing is  because there are so many states the the computer is required to keep track of 
+at any moment.  First we have to know we have found an expression containing 'define', and that we are searching 
+for the entire define expression.  Then we isolate this expression, and we have to remember that we are within the define expression 
+and that we are searching for the right bracket that will contain the function's name.  Then we have to remember we have found 
+the right bracket of the name of the function we are defining, and we're searching for the left bracket containing
+the name, etc etc.  SO MUCH TO KEEP TRACK OF!!! &lt;/p&gt;
+&lt;p&gt;We turned to some resources online to see how they were approaching these things.  We found 
+&lt;a href="https://www.hackerschool.com/blog/21-little-lisp-interpreter"&gt;Mary Cook's article&lt;/a&gt; and &lt;a href="http://norvig.com/lispy.html"&gt;Peter Norvig's article&lt;/a&gt; helpful. 
+They had taken the parsing stage one step further than we 
+did.  Instead of storing the brackets as elements of the list, they created a version of "holder" 
+which was a nested list.  So, in the example where "(define (func) (x + 2))" is inputed, their code 
+would turn it into the following array: &lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;define&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;func&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;+&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;x&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;2&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Kuan and I decided to figure out if/how this extra parsing step was advantageous.  After talking 
+to Mary Cook in person about it (thanks Mary!) we got our answer: 
+Using the nested method allowed us to not have to keep track of as many sates!  Indeed, at each stage 
+of interpreting, we could simply look at the outermost list, look at the operator, and then act accordingly.
+If we encountered a 'define' expression we could handle it as follows: Given the new structure of
+holder we know that if our operator is define then holder[1] will be the function's name.  Likewise, 
+we would know that the expression of this defined function could be found at holder[2]. With this 
+extra parsing step, there is no longer the need to scan through the list searching for brackets, 
+and keeping track of where we are. The nested structure of holder replicates the actual structure of the input, 
+and a lot of the pain and agony in our previous method is taken care of for us here. &lt;/p&gt;
+&lt;p&gt;Having clearly understood the differences between our algorithm and the popular one found online,
+and having seen the benefits of theirs over ours, we decided scratch what we had and start again.  (Of course, 
+the little tokenizer I described above could stay.) &lt;/p&gt;
+&lt;p&gt;I would like to mention that I am HAPPY for the mistakes I made, as they resulted in a great deal of 
+learning.  I am a big advocate of trying things your own way first, and only changing your way once 
+you've learned the merits of another way.  Doing so results in a great deal of learning you 
+might otherwise miss out on. &lt;/p&gt;
+&lt;p&gt;In the next episode, I hope to introduce to you the final product, and explain how it works! 
+Stay tuned! &lt;/p&gt;</summary></entry><entry><title>Interpreting the Interpreter: Episode 0</title><link href="http://lmontopo/github.io/interpreting-the-interpreter-episode-0.html" rel="alternate"></link><updated>2014-10-17T00:00:00-04:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo,2014-10-17:github.io/interpreting-the-interpreter-episode-0.html</id><summary type="html">&lt;p&gt;For a while now, I have been perplexed by the land of compilers and interpreters. Thinking of 
+these things sparks all sorts of questions in my mind.  For instance, if a compiler compiles my program, 
+but the compiler is itself a program, doesn't something need to compile the compiler?  If so, 
+wouldn't this chain just go on forever? And, if I were to write my own computer language (which I could,theoretically, do)
+how would I go about doing so? And what's the difference between a compiler and an interpreter? 
+Are interpreters and compilers things that I can write?!&lt;/p&gt;
+&lt;p&gt;In this episode, I will begin by trying to answer some of these questions. In later episodes 
+I will describe my experiences writing a Lisp Interpreter.  When I have the interpreter all 
+set up and running, I'll present it, and explain it.  But before we get to that, I think its 
+worth while exploring what an interpreter IS, and how it differs from a compiler.  &lt;/p&gt;
+&lt;p&gt;Compilers and interpreters serve a similar purpose: they take
+a piece of code written in some language that is foreign to your computer, and they turn it into something that can
+be executed on your machine. It's the way in which these two programs work that differentiates them.&lt;/p&gt;
+&lt;p&gt;A &lt;strong&gt;compiler&lt;/strong&gt; works by taking the inputed piece of code (this is called the &lt;strong&gt;source code&lt;/strong&gt;) and translating the
+entire document into &lt;strong&gt;machine code&lt;/strong&gt; (ie your machines native code, written in 0s and 1s).  The 
+compiler produces a new file, called the &lt;strong&gt;object file&lt;/strong&gt; which can be run directly on the machine, 
+without any intermediate translation.   So, if I write a piece of code in C++, for example, 
+then my compiler will read through the whole document, and will re-write the set of instructions 
+I've written in C++ into machine language instructions. (Usually some sort of optimization 
+is also involved, but we don't have to concern ourselves with that just yet.) Since the code is 
+then executed from the object file, and no longer interacts with the initial C++ document, 
+the C++ document could be deleted from your computer, and the code could still be executed. &lt;/p&gt;
+&lt;p&gt;An &lt;strong&gt;interpreter&lt;/strong&gt; on the other hand, executes the code directly as it reads it.  It doesn't create
+another translated file first.  An interpreter will just read a line of code, will transform it into something it understands, 
+and then it it will execute it.  I realize that this might all sound a little vague, especially the part where I say the interpreter "transforms it into
+something it understands".  What does &lt;em&gt;it&lt;/em&gt; understand, anyhow?  Well, lets say we are writing 
+a lisp interpreter in python (as I will be doing soon!) and the interpreter comes across a line of
+code that reads "( + 1 1 )".  Well, python doesn't understand this, but if the interpreter changes
+it to "1 + 1", then python does understand this.  Hopefully that clarifies things a little. 
+Of course, the discussion I provide of my experience writing an interpreter should also help clarify things. &lt;/p&gt;
+&lt;p&gt;Another thing I'd like to mention is that languages are not always either "interpreted" or 
+"compiled".  Some languages, Python is one of them, are actually implemented with both a compiler
+and an interpreter.  Although people often refer to Python as an 'interpreted language', its implementation has 2 parts:  First, the python code is
+compiled into something called "byte-code".  Then, an interpreter reads and executes the byte-code!
+Cool, eh?  Big thanks goes to &lt;a href="http://akaptur.github.io"&gt;Allison Kaptur&lt;/a&gt; for explaining this to me and discussing interpreters 
+and compilers with me!  You rock! &lt;/p&gt;</summary></entry><entry><title>What I learned from Crista Lopes</title><link href="http://lmontopo/github.io/what-i-learned-from-crista-lopes.html" rel="alternate"></link><updated>2014-10-11T00:00:00-04:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo,2014-10-11:github.io/what-i-learned-from-crista-lopes.html</id><summary type="html">&lt;p&gt;The resident at Hacker School during my first week was Crista Lopes. She has given some great 
+lectures, and she's taught me some cool things! &lt;/p&gt;
+&lt;h5&gt;Different Styles of Writing Code&lt;/h5&gt;
+&lt;p&gt;On Monday night she spoke to us about coding styles, the topic of her latest book. Crista explained 
+that there are many different styles of code to work with, but that often programmers get stuck in 
+one way of coding.  No style is "better" than another, but some work better in certain situations. 
+Crista suggests that when we set out to write a program we ask ourselves, "what are 
+our constraints?". Our constraint could be something we need to minimize/avoid, or something 
+we want to maximize/include.  Examples of constraints include minimizing the number of lines
+in our code,  including functions, not including functions, and maximizing efficiency.  Theses 
+constraints produce different "styles" of code. As a programmer, it is good to familiarize 
+ourselves with these different styles so that we can write in whichever style is best suited for a
+particular project. &lt;/p&gt;
+&lt;h5&gt;Data Types and Data Structures&lt;/h5&gt;
+&lt;p&gt;On Wednesday Crista gave a really helpful introductory lecture on data types and data structures.&lt;br /&gt;
+Before this lecture I had little knowledge on the subject.  I had heard the words before but not
+really understood their meanings.  Here is how she explained the two concepts: &lt;/p&gt;
+&lt;p&gt;A &lt;strong&gt;data type&lt;/strong&gt; is something more conceptual.  It refers to our ideas of what can be done with 
+the data and what we want to do with the data. &lt;/p&gt;
+&lt;p&gt;The term &lt;strong&gt;data structure&lt;/strong&gt;, on the other hand, refers to how we &lt;em&gt;implement&lt;/em&gt; the data type.  When we talk
+about data structure we are referring to how a "data type" is actually storred in memory on our
+computer and how we can access that data. &lt;/p&gt;
+&lt;p&gt;Crista talked about two common implementations of data in our computer: the array, and the
+list.  An array is a continuous portion of memory in our computer with slots to put our data
+in.  Each slot takes up the same amount of memory, and the total amount of memory is fixed. Any 
+slot of the array can be accessed directly. A list, on the other hand, is NOT continuous.  Different 
+elements of the list can be stored in any location on the computer's harddrive.  Your computer 
+knows which item is first in the list and each item will point to the location in memory where
+the next item on the list is located.  &lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Ok... but why does all of this matter?!&lt;/em&gt; Well, Crista provided us with an example to illustrate why
+these things are important: Suppose we have a list of 500 contacts on our computer.  Our list
+contains the names and telephone numbers of each contact. We can call this data type a 
+"contact list".  We have some choices as to how we can implement this data.  One option would be
+to use the list implementation described above. In this case, to find a contact's telephone number
+we must scan through the list, starting from the top, until we arrive at the name we are looking for.&lt;br /&gt;
+Another option would be to implement our contact list as a hash function. &lt;/p&gt;
+&lt;p&gt;&lt;em&gt;What is a hash function?!&lt;/em&gt; 
+I think the best way to illustrate the hash function is by example, the way Crista described it. 
+In our contact list scenario, an example of a hash function would be something that acts as follows: 
+For each contact, the computer associates to it the number of letters in that contact's first name. 
+Then an array, lets call it a, is created in memory. The nth cell of a will "point" to a new list, 
+containing only the contacts whose names have n letters. From there the search starts from the top 
+down, but the list is (hopefully) much smaller in size. Using this hash function is much more 
+efficient than just creating one list containing all of the contacts.  Indeed, computers can 
+compute simple mathematical calculations like this one extremely quickly, while scanning through 
+lists is a more time consuming task. &lt;/p&gt;
+&lt;p&gt;At this point, I'd like like to clarify something about data structures and types: What certain 
+programming languages refer to as "lists" and "arrays" are not necessarily implemented as such. 
+Likewise, what is implemented as a list or array or hash function in a programming language is not necessarily 
+called a list, array or hash function. I know that this is kind of confusing, but here are some examples 
+to clarify the situation. What Python calls a "list" of n elements is actually implemented as an array 
+with more than n slots.  The array is created longer than necessary, leaving several slots empty. 
+This makes the array easier to append (ie. add elements to).  Another example in Python is the
+data type "dictionary", which is actually implemented as a hash function. &lt;/p&gt;
+&lt;h5&gt;Objects, Functions, Etc.&lt;/h5&gt;
+&lt;p&gt;On Thursday, I came to Crista with a few questions about some terminology that had been confusing 
+me. I didn't really understand what was meant by the terms "functional programming" and "object 
+oriented programming".  I wondered, "are these terms referring to particular languages or 
+are they referring to a style of writing code"?  According to Crista, these terms mostly apply to the
+style a program is written in.  However, the terms are sometimes used to describe languages.&lt;br /&gt;
+(No wonder I was confused!)  Crista explains that when you step far enough away, you can see certain trends in programming languages too.  Some languages 
+might tend towards the functional style, while others might tend towards the object oriented style, 
+for example.  In reality, though, most languages pull from all different ideas.  Python is an 
+example of this. Although Python is often called "object oriented", Python also has functions! 
+Most languages combine these ideas as does Python, though there are some exceptions. Haskel, 
+for example, is a purely functional programming language. &lt;/p&gt;
+&lt;p&gt;This leads me to the next question: 
+What is an object and why is it important?  Although I've created classes and objects in 
+Python programs, I wasn't sure I really understood the point. Crista provided me with an 
+explanation that I liked.  She explained how objects are constructs which "wrap around" 
+your data, so that you can't access it directly. This protects the data so that it is less
+likely to be accidentally corrupted.  There are other ways that data can be protected if a 
+language doesn't use classes, but this is just one of those ways. &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Thanks Crista for visting Hacker School this week!!!!&lt;/strong&gt;&lt;/p&gt;</summary></entry><entry><title>The struggles I had setting up this site.</title><link href="http://lmontopo/github.io/the-struggles-i-had-setting-up-this-site.html" rel="alternate"></link><updated>2014-10-08T00:00:00-04:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo,2014-10-08:github.io/the-struggles-i-had-setting-up-this-site.html</id><summary type="html">&lt;p&gt;For me, setting up my blog was not easy. I think part of this was that I was impatient, 
+and part of this was because IT IS HARD!  I ran into many weird error messages and I began 
+to get quite impatient and frustrated. Thankfully I got Allison to help me, and together we 
+figured out what was going on and got things up and running.  Here I will explain what went wrong for me and 
+how I fixed it.  If you encounter similar difficulties, hopefully this article will help you. &lt;/p&gt;
+&lt;p&gt;The main struggle I encountered began when I tried to publish my page through Github. 
+There are two different ways one can go about doing this: either as a project page, or
+as a user page.  Without knowing there was another option, I began creating my blog as a 
+Github project page. In order to do this, I had to create a repository on Github, and then 
+create branch of the repository called "gh-pages".  "gh-pages" is where I needed to push 
+the pelican created "output" folder containing all the necessary html to create the page. 
+To make this push happen, I made use of the "gh-import" package which can be installed using pip. 
+Here is what needed to be done next:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; ghp-import output
+&lt;span class="gp"&gt;$&lt;/span&gt; git push origin gh-pages
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Here, the first line commits changes made in my output folder to the gh-branch of my LOCAL 
+repository.  (Local meaning, the repository on my own computer, not the one store on Github.)
+The second line of this code pushes these changes to the remote repository's gh-pages branch
+(ie. the branch of the repository stored on github).Then, in about ten minutes time, my website
+was created with url https:://lmontopo.github.io/blog. (here, lmontopo is my username on github, 
+and blog was the repository I created).&lt;/p&gt;
+&lt;p&gt;I wish this were the end of the story, but unfortunately it is not.  What I realized when my
+webpage was published is that none of pelican's styling information was being
+received.  My webpage was just a simple plain text webpage and it looked extremely ugly.
+What was puzzling was that when I viewed the page source I saw a line in the code specifying
+the location of the style sheet as:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;&amp;lt;link&lt;/span&gt; &lt;span class="na"&gt;rel=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;stylesheet&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;href=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/theme/css/main.css&amp;quot;&lt;/span&gt; &lt;span class="nt"&gt;/&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;But when I clicked on this href, it couldn't find the file.  Then I looked in my github 
+repository, and searched for that stylesheet file.  I found it.  It was there.  So why couldn't my 
+computer find it? Well, it turns out that my computer was looking at the wrong url.  It expected my 
+css style sheet to be found at "username.github.io/theme/css/main.css", but in reality it 
+was located at "username.github.io/repositoryname/theme/css/main.css".&lt;/p&gt;
+&lt;p&gt;So, at this point I found out that there was such thing as a github user page, 
+and I decided to change my page to be one of those instead.  I should clarify that this 
+was not necessary, and this was not the only way to solve my problem!  Had I decided to
+stay with the gh-pages website, I would have needed to change my default root directory. 
+This probably is quite easy, although to be honest I don't know exactly how it is done. &lt;/p&gt;
+&lt;p&gt;Since I decided to change to a user github page, this is how I proceeded:
+I needed to create a new repository called username.github.io.  To github, this is a magic
+repository name.  Github will know that you are publishing a user webpage from the contents 
+of this repository and it will do the work for you (just as gh-pages was a magical branch name 
+for the project pages site.) Then I deleted my old repository.  Now, I needed to tell my computer
+to connect remotely with this new repository as opposed to the old one. (Just because the old 
+repository is deleted, doesn't mean my computer won't try to find it.) To do this I type in:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; git remote rm origin 
+&lt;span class="gp"&gt;$&lt;/span&gt; git remote add username.github.io https://github.com/username/username.github.io
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;The first line here removes the connection I had to the previous (now deleted) repository on Github.
+The second line adds a remote connection to the repository named username.github.io found at
+https://github.com/username/username.github.io.&lt;/p&gt;
+&lt;p&gt;Great, now all I had to do was push the contents of my local repository to the main branch of
+my new remote repository as follows:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; ghp-import output
+&lt;span class="gp"&gt;$&lt;/span&gt; git push origin -f gh-pages:master
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;This created a lovely new webpage for me! Notice, though, that here I had to FORCE the push.
+Quite honestly, I am not clear on why this is happening.  For now, I have decided to create 
+a new local branch called "writing" and I will use this for all of my version control. This way 
+I can continue to force push without worrying about anything being lost. This may not be the 
+most sophisticated way of handling things, but being quite new to git, I am more than satisfied 
+with this solution. &lt;/p&gt;
+&lt;p&gt;Another little glitch that occurred along the way, and how I solved it:&lt;/p&gt;
+&lt;p&gt;In the process of playing around with my computer, I somehow deleted the pelicanconf.py
+file that pelican creates for you when you quickstart.  This is the file that specifies all 
+of your settings.  Since it was gone, I had lost my title, and the default title "A Pelican 
+Blog" appeared.  Obviously, this wasn't desirable.  This ended up being a really easy fix
+because all I needed was to re-create this file and save it the directory where my "content" 
+folder is found.  Then it integrates itself (somewhat magically) into the html files.  Just
+make sure that you have the correct formatting, as specified on pelican's documentation
+site: &lt;a href="http://docs.getpelican.com/en/latest/settings.html"&gt;http://docs.getpelican.com/en/latest/settings.html&lt;/a&gt; &lt;/p&gt;</summary></entry></feed>
