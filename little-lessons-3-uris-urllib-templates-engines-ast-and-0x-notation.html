@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Little Lessons 3: URI's, urllib, templates engines, ast, and 0x notation.</title>
+
+    <link rel="stylesheet" href="./theme/css/normalize.css" />
+    <link rel="stylesheet" href="./theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="./theme/css/style.css" />
+    <link rel="stylesheet" href="./theme/css/pygments.css" />	
+    <script src="./theme/js/modernizr.js"></script>
+</head>
+
+<body>
+
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href=".">The L Blog</a></h1>
+    </div>
+</div>
+</div>
+
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
+
+            <li><a href="./pages/about.html" class="button secondary small">About</a></li>
+            <li><a href="./pages/contact.html" class="button secondary small">Contact</a></li>
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+<article>
+    <header>
+        <h3 class="article-title"><a href="./little-lessons-3-uris-urllib-templates-engines-ast-and-0x-notation.html" rel="bookmark"
+        title="Permalink to Little Lessons 3: URI's, urllib, templates engines, ast, and 0x notation.">Little Lessons 3: URI's, urllib, templates engines, ast, and 0x notation.</a></h3>
+    </header>
+
+<h6 class="subheader" title="2014-11-19T00:00:00">Wed 19 November 2014
+</h6>
+
+
+    <p>A learned so many new 'little things', that its time for another post!</p>
+<h5>What is a URI? Is it the same as a URL?</h5>
+<p>URI stands for uniform reserouce identifier.  A very common form of a URI is a URL, uniform resource locator. The URL is just the address of a website - ie. the thing you type into the browser when you want to go somewhere. And while we're talking about URL's...</p>
+<h5>What meant by the 'path' and the 'query' of a URL?</h5>
+<p>The wikipedia page, here, does a pretty good job at explaining this, but I'll summarize it here also. The URL consists of several different parts.  Lets discuss these parts with respect to this example: http://www.cineplex.com/Search?Query=Interstellar</p>
+<ul>
+<li>Protocol: specifies which protocol is being used to obtain the resource. In our example it is 'http'</li>
+<li>Domain Name: This can be an IP address, or a registered, easier to remember, name that is associated to an * IP address.  The example's domain name is 'cineplex.com'</li>
+<li>The Port: After the domain name, one can optionally specify a port number. By default we are directed to port 8000, and so it is usually unnecessary to manually specify a port number.</li>
+<li>Path: Within a single domain name or IP address there can be several different files.  The path specifies the address of the particular file we are requesting.  In the example this is specified by /Search</li>
+<li>The Query String: contains data, usually inputed by the user, which will be passed to some sort of software running on the servers computer.  In my example, I typed in Interstellar on the search bar of the cineplex website.  "Interstellar" was passed to the servers computer, used in some program to figure out the optimal output, and then the resulting info, in the form of a webpage, was passed back to me.  The Query string becomes part of the URL, "?Query=Interstellar".  The Query string always (as far as I know) begins with a question mark.</li>
+</ul>
+<p>Lets inspect the following URL: http://www.cineplex.com/Search?Query=Interstellar</p>
+<p class="subheader">Category: <a href="./category/blog.html">Blog</a>
+
+</p>
+
+
+
+
+</article>
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="./archives.html">Archives</a>
+            <li><a href="./tags.html">Tags</a>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="./category/blog.html">Blog</a></li>
+   
+        </ul>
+
+		
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <!--                  <p>The L Blog by Leta Montopoli</p> -->
+            </div>
+            </div>
+    </div>
+</footer>
+</body>
+</html>

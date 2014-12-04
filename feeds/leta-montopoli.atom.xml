@@ -1,5 +1,472 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>The L Blog</title><link href="http://lmontopo/github.io/" rel="alternate"></link><link href="http://lmontopo/github.io/feeds/leta-montopoli.atom.xml" rel="self"></link><id>http://lmontopo/github.io/</id><updated>2014-11-18T00:00:00-05:00</updated><entry><title>Lisp Interpreter: Episode 3 (The Finally!)</title><link href="http://lmontopo/github.io/lisp-interpreter-episode-3-the-finally.html" rel="alternate"></link><updated>2014-11-18T00:00:00-05:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo,2014-11-18:github.io/lisp-interpreter-episode-3-the-finally.html</id><summary type="html">&lt;p&gt;Let me start off by apologizing for the delay.  I've been hesitant to write this post for several reasons, including: &lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>The L Blog</title><link href="http://lmontopo/github.io/" rel="alternate"></link><link href="http://lmontopo/github.io/feeds/leta-montopoli.atom.xml" rel="self"></link><id>http://lmontopo/github.io/</id><updated>2014-12-04T00:00:00-05:00</updated><entry><title>Regular Expressions in Python - with LOTS of Examples!</title><link href="http://lmontopo/github.io/regular-expressions-in-python-with-lots-of-examples.html" rel="alternate"></link><updated>2014-12-04T00:00:00-05:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo,2014-12-04:github.io/regular-expressions-in-python-with-lots-of-examples.html</id><summary type="html">&lt;p&gt;Over the past several days I've learned a great deal about regular expressions. I struggled initially with the subject, but I think things have finally clicked.  So, I'm going to write what I've learned!  In this blog post I am going to: &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Explain what a regular expression is. &lt;/li&gt;
+&lt;li&gt;Introduce &lt;code&gt;re.split()&lt;/code&gt; and use it to provide examples.&lt;/li&gt;
+&lt;li&gt;Explain some of the ways that the star, dot, and question mark can be used in a regular expression. &lt;/li&gt;
+&lt;li&gt;Explain, in detail, the plague of the backslash.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;As I learned about regular expressions, I found examples to be enourmously helpful.  For this reason, there will be a TON of examples throughout this blogpost. &lt;/p&gt;
+&lt;h4&gt;What is a regular expression?&lt;/h4&gt;
+&lt;p&gt;A regular expression is sequence of characters that represent a pattern we would like to search for within a larger chunk of text.  There are two types of characters within a regular expression: ones that represent themselves, called &lt;strong&gt;ordinary characters&lt;/strong&gt;, and one's that don't represent themselves, called &lt;strong&gt;special characters&lt;/strong&gt;.  Most common characters, like the letter 'a', match to themselves in a python regular expression. &lt;/p&gt;
+&lt;h4&gt;Introducing the split function:&lt;/h4&gt;
+&lt;p&gt;To use regular expression in Python you need to &lt;code&gt;import re&lt;/code&gt;.  This module gives you access to many different methods.  The ones I use the most are &lt;code&gt;re.split(pattern, string)&lt;/code&gt; and &lt;code&gt;re.match(patter, string)&lt;/code&gt;.  I find &lt;code&gt;re.split()&lt;/code&gt; easiest to understand, so we'll start there.  We'll visit &lt;code&gt;re.search()&lt;/code&gt; later. &lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;re.split(pattern, string)&lt;/code&gt; is very similar to python's built in split method for strings.  It splits the inputed string over the pattern expressed by the regular expression.  By default, &lt;code&gt;re.split()&lt;/code&gt; will return a list of all the parts of the string, excluding the parts that matched the pattern.  If you would like the resulting list to include the sections which match to the pattern then parenthesis are needed around the regular expression:&lt;/p&gt;
+&lt;h5&gt;Example 1: Introductiory Example:&lt;/h5&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;re&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Hackerschool is cool.&amp;#39;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;a&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;H&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;cker School is cool.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;(a)&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;H&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;a&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;ckerschool is cool.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;As you can see, when we put parentheses around 'a', then 'a' is included in the resulting list.  But perhaps we have a pattern that is more than one character long, and we want only part of the pattern to be kept in the array.  To do this brackets are put around the part of the regular expression we want to keep.  Check it out:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;a(ck)&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;H&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;ck&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;erschool is cool.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Here the 'a' is still left out because it wasn't included in the parentheses! &lt;/p&gt;
+&lt;h4&gt;Special Characters Star, Period and Question Mark:&lt;/h4&gt;
+&lt;p&gt;We're going to use &lt;code&gt;re.split()&lt;/code&gt; to explore what these special symbols match to in a regular expression. &lt;/p&gt;
+&lt;h5&gt;Example 2: The period:&lt;/h5&gt;
+&lt;p&gt;According to Python's regular expression documentation, the period matches any character except a newline.&lt;/p&gt;
+&lt;p&gt;so as you'd expect it is going to split on every character...&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Hackerschool is cool!&amp;quot;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;(.)&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;H&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;a&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;c&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;k&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;e&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;r&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;s&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
+&lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;c&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;h&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;o&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;o&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;l&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39; &amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;i&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
+&lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;s&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39; &amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;c&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;o&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;o&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;l&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;It might be surprising to you that there are empty string elements between each character.  I was surprised!  I don't really have a good explanation for why this happens except to say that this is just the way the split function works.  It finds the pattern we are searching for, and then says "OK, on  the left side of this pattern instance we have (fill in the blank) and on the right side we have (fill in the blank)".  In our example, since every character is an instance of the pattern, on either side of each pattern instance there is only the empty string.  We'll see another occurence of this behaviour in a later example. If it doesn't make sense to you now, hopefully it will then.&lt;/p&gt;
+&lt;p&gt;Now lets combine the dot with other characters:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;(.ool)&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Hackersc&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;hool&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39; is &amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;cool&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;This makes sense - there were two occurences where there appeared "some character followed by 'ool'". &lt;/p&gt;
+&lt;p&gt;Lets try a couple more examples just to make sure we get the hang of it: &lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;(c.o)&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Hackers&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;cho&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;ol is &amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;coo&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;l!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;(c.h)&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Hackerschool is cool!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;The first time we split over 'cho' and 'coo' since both are instances of the pattern "'c' followed by some character followed by 'o'".  The second time we don't split the expression at all.  Even though 'ch' is in school, there is no character between the 'c' and the 'h'. So 'ch' doesn't match to the regular expression 'c.h'.  The lesson here is that &lt;strong&gt;'.' on its own matches to exactly one instance of any character&lt;/strong&gt;.  Not zero, not two, one. &lt;/p&gt;
+&lt;h5&gt;Example 3: The period and the star.&lt;/h5&gt;
+&lt;p&gt;The star represents 0 or more repititions of the previous character expressed in the regular expression.  Whenever possible, the star will 'suck up' as much as it can.  Because of this behaviour, star is called a &lt;strong&gt;greedy character&lt;/strong&gt;.&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;I like reading scify books.&amp;quot;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;(s.i)&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;I like reading &amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;sci&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;fi books.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;(s.*i)&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;I like reading &amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;scifi&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;books&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;]&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Without the star, the regular expression 's.i' will match to 'sci'.  When the star is added the regular expression matches to more stuff!  The expression 's.*i' matches to 'scifi' because the star indicates that the dot can be repeated 0 or more times. Because the star is greedy it soaks up as many repetitions as possible. &lt;/p&gt;
+&lt;p&gt;Lets see what happens when we change the text to "I like science books.".&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;I like science books.&amp;quot;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;(s.*i)&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;I like &amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;sci&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;ence books.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Now that there is only one 'i' in the text, there are no more characters that the star can suck up, so, "s.*i" matches to 'sci'. &lt;/p&gt;
+&lt;h5&gt;Example 4: The Question Mark&lt;/h5&gt;
+&lt;p&gt;The question matches either 0 or 1 repetitions of the preceeding regular expression. Here are some examples:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;There are num sections in this document.&amp;quot;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;(e.*)&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Th&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;ere are num sections in this document.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;(e.?)&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Th&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;er&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;e &amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;ar&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;e &amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;num s&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;ec&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;tions in this docum&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;en&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;t.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;When we use the question mark instead of the star there are many more matches to the regular expression! The question mark is basically the oposite of a greedy character.  &lt;/p&gt;
+&lt;p&gt;Also, notice the occurence of an empty string between the 'er' and the 'e'.  Since we are splitting over the 'er' and the 'e' the split functions wants to put something on either side of these that isn't something else we're splitting over. The only thing between the 'er' and the 'e' is the empty string.  Hopefully this examples helps to understand the whole empty string phenomenon.&lt;/p&gt;
+&lt;h5&gt;Example 5: Combining the dot, star, and question mark:&lt;/h5&gt;
+&lt;p&gt;Lets see what happens when we combine all three: the dot, the star, and the question mark.&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;There are num sections in this document.&amp;quot;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;(e.*?)&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;Th&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sc"&gt;&amp;#39;e&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sc"&gt;&amp;#39;r&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sc"&gt;&amp;#39;e&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;ar&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sc"&gt;&amp;#39;e&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;num&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sc"&gt;&amp;#39;e&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;ctions&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;this&lt;/span&gt; &lt;span class="n"&gt;docum&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sc"&gt;&amp;#39;e&amp;#39;&lt;/span&gt;
+&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;nt&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Placing the question mark after a the star makes the regular expression match to the minimal number of characters possible. We'll see this more in the next example...&lt;/p&gt;
+&lt;h5&gt;Example #4: Application to my Template Engine:&lt;/h5&gt;
+&lt;p&gt;I have been working on writing my own template engine.  In my language, variables will be contained within double curly braces.  I used regular expressions to parse the html template and find all of the variables.  Lets see an example: &lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;html_text&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&amp;lt;html&amp;gt;&amp;lt;title&amp;gt; Hello {{name}}.&amp;lt;/title&amp;gt; Today is {{day}}.&amp;lt;/html&amp;gt;&amp;quot;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;({{.*?}})&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;html_text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;lt;html&amp;gt;&amp;lt;title&amp;gt; Hello &amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;{{name}}&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;.&amp;lt;/title&amp;gt; Today is &amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;{{day}}&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;.&amp;lt;/html&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Just to make sure we understand what the star and question mark are doing, lets see what happens when either one is removed:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;({{.*}})&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;html_text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;lt;html&amp;gt;&amp;lt;title&amp;gt; Hello &amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;{{name}}.&amp;lt;/title&amp;gt; Today is {{day}}&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;.&amp;lt;/html&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;({{.?}})&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;html_text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;lt;html&amp;gt;&amp;lt;title&amp;gt; Hello {{name}}.&amp;lt;/title&amp;gt; Today is {{day}}.&amp;lt;/html&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;When the question mark is removed, the star acts greedily and soaks everything up until the last occurence of '}}'.  When the star is removed, we have no match to our pattern at all.  This is because the variable names inside the curly braces are more than 1 character long.  &lt;/p&gt;
+&lt;h4&gt;The plague of the backslash:&lt;/h4&gt;
+&lt;p&gt;Now we have a handle on those special functions, lets explore the ... dun dun dun... THE BACKSLASH!&lt;/p&gt;
+&lt;p&gt;Beleive it or not, the regular expression for a backslash is FOUR backslashes.  Woah.  Lets walk through why this is the case:&lt;/p&gt;
+&lt;p&gt;In python, a backslash is a special character, and so to represent a backslash we actually need to use two backslashes.  So in python two backslashes represents one. I'm not even talking about regular expressions yet, I'm just talking about python strings. Lets verify this: &lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;backslash&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\\&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;backslash&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;backslash&lt;/span&gt;
+\
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Neat! &lt;/p&gt;
+&lt;p&gt;Ok, so this means that we actually have to write a regular expression which will match to two backslashes instead of to a single backslash. Now, in regular expression land, backlash is one of those special characters we talked about previously.  They don't match to themselves.  The regular expression for a backslash is also two backslashes.  So, since we want to match to the python string &lt;code&gt;\\&lt;/code&gt; the regular expression to do so becomes &lt;code&gt;\\\\&lt;/code&gt;.  &lt;/p&gt;
+&lt;p&gt;I hope you've enjoyed this introduction to regular expression in Python.  If anything is confusing, don't hesitate to contact me!&lt;/p&gt;</summary></entry><entry><title>I made my first cookie!</title><link href="http://lmontopo/github.io/i-made-my-first-cookie.html" rel="alternate"></link><updated>2014-11-27T00:00:00-05:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo,2014-11-27:github.io/i-made-my-first-cookie.html</id><summary type="html">&lt;p&gt;Margo and I have been working on our web-framework, Chapeau. To test out its functionality and user-friendliness, we've been using Chapeau to build various web-apps.  This week we implimented a buzz-feed-style quiz.  To challenge ourselves (and Chapeau) we structured the app to have a separate webpage for each question, and then a final webpage displaying the result.  This forced us to address the issues: 'Does Chapeau allow data to be transfered between non-adjacent webpages?' and 'Does Chapeau allow for the data to be accessed directly and used in a calculation'? As we tried to answer these questions and broaden the functionality of Chapeau, the framework took on several variations. In this blog post I'll begin by describing how Chapeau works for very simple web-apps, and then I'll continue by explaining some of the changes we made to Chapeau as we worked towards our buzz-feed-style quiz.&lt;/p&gt;
+&lt;h4&gt;Simple Web Apps&lt;/h4&gt;
+&lt;p&gt;Chapeau's design makes very simple web-apps just that: very simple.  To make such an app, a developer needs only to define a dicitonary matching URL's to their corresponding html pages. Then calling Chapeau's 'go' function on the dictionary gets everything going.  Pretty simple right?  Beleive it or not, with Chapeau, an app this simple can even pass variables from an html form to the webpage that follows.  The app itself (by 'app' I mean the python code) does not need to be changed to include this feature.  Adding very basic variable passing to a Chapeau app is just a matter of formatting your html pages accordingly.  Here's how to do it: &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The form must specify either 'method = get' or 'method = post', since Chapeau deals only with post and get requests.&lt;/li&gt;
+&lt;li&gt;The form's action needs to specify the URL that this form redirects to. &lt;/li&gt;
+&lt;li&gt;The html page corresponding to this URL should have '%(key)s' wherever this key's value is meant to appear.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;How is this all working? In the background Chapeau parses the request made from the form's submission.  Chapeau finds the user's input in this request and stores it in a dictionary of key-value pairs called params.  The specified html file is then read in as a string with '%params' tacked on to the end.  Python's built in string formatting takes care of the rest, and the page renders with the desired arguments! Easy-peasy.  &lt;/p&gt;
+&lt;p&gt;But what if we wanted to mutate the user input in some way?  Or what if we wanted to &lt;em&gt;use&lt;/em&gt; the input to perform some sort of analysis or calculation?  Perhaps we want to create some results for a quiz? Our initial version of Chapeau could not handle such situations.   &lt;/p&gt;
+&lt;h4&gt;Adding Functions&lt;/h4&gt;
+&lt;p&gt;To extend Chapeau's usability Margo and I decided that web developers would have the choice to route a URL to a path or to a function.  If a URL is routed to a function then this function would have a few structural constraints.  Initially, these were the constraints we implimented: &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Chapeau will be passing a dictionary into the function, so the function must be defined to accept it.  This dictionary will contain some of the request information and will look something like: '{'type': 'get', 'query': 'query_string', 'path': 'url' , 'body': 'user_input_from_post_form'}'.  (Basically this dictionary stores all of the request information except for the headers.) &lt;/li&gt;
+&lt;li&gt;The function must return two objects: a path and a dictionary.  The path will specify the next html page to be rendered and the dictionary will be the same one that the function receives, but possibly with some mutated data.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The dictionary that the function takes in gives the developer access to the user input that was just aquired.  If the developer wanted to mutate this user input in anyway, they could do so.  Alternatively, if the developper wants user input to be saved so that it can be obtained later, Margo and I figured this could be done as well.  The developper could create a global dictionary that they can add to when user input is submitted, and that they could read from later. Problem solved.  Except not really. &lt;/p&gt;
+&lt;p&gt;More experienced developpers might already see the problem we've created.  Consider the buzz-feed-style quiz that Margo and I wanted to create.  Suppose that we implimented this app by storing the user input in a global dictionary.  This dictionary is updated after every question is answered.  When the results page needs to be rendered all of the user input is obtained from the global dictionary. But suppose two clients, client1 and client2, are taking the quiz simultaneously.  Client1 inputs their answer to question 1 first, and chooses 'grapes'. Before client1 finishes the quiz client2 submits their answer to question 1 as 'oranges'. When our app goes to fetch the results of client1, their 'grapes' answer will have been overwritten by 'oranges'. Afterall, we've only implimented one global dictionary for our entire client base. Oups.&lt;/p&gt;
+&lt;h4&gt;Finally, adding Cookies!&lt;/h4&gt;
+&lt;p&gt;At this point Margo and I weren't really sure how to solve this issue. How do we keep track of which answer corresponds to which client? For advice, we turned to our trusted friend &lt;a href="http://www.greghendershott.com"&gt;Greg&lt;/a&gt; who suggested we use cookies! &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;What is a cookie, and how do I make one?&lt;/strong&gt; &lt;/p&gt;
+&lt;p&gt;A cookie is a very small peice of data that will be sent from a server and stored temporarily on a client's computer.  To create a cookie, the server needs to include a 'Set-Cookie' header in their HTTP response to the client.  This will prompt the client's browser to create a 'cookie' to store the specified data.  When a browser has a cookie from our server any HTTP request it sends to us will include a 'Cookie' header containing the data we asked it to store. &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;How does this help our situation?&lt;/strong&gt; &lt;/p&gt;
+&lt;p&gt;Margo and I used cookies to store every quiz answer submited from a client.  Then, when the client's browser sends our server an HTTP request asking for their results page, this request will include all of that client's quiz answers - stored in the form of cookies! Great!&lt;/p&gt;
+&lt;p&gt;Now lets talk about how we implimented this. To create cookies Margo and I changed the constraints of our functions (the ones that URL's are routed to) as follows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Chapeau will now pass to these functions both the dictionary containing the request information and a client object.  So these functions must now accept two parameters!  The dicitonary accepted contains everything the previous one does, but also includes '{header: {all of the headers and their values}}'.&lt;/li&gt;
+&lt;li&gt;The functions must call Chapeau's render function: render(client, path/to/html/file, args, header) before returning None. &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Now that &lt;em&gt;all&lt;/em&gt; of the request information is passed to the developper, cookies can be read. Since the developer is now also in charge of calling the render function, they have control over any headers they want to include in their response.  The header parameter in the render function is optional, and when unspecified it will be set to None.  The args parameter is a dictionary of variables that we want to pass to the html file.  So, in our buzz-feed-style-quiz, every client's answer will be saved in a cookie.  When we want to render the results page all of the incoming cookies can be read from the inputed dictionary of request information.  We can create another dictionary out of the received cookies and can pass this dictionary into our render function to be passed to our html file. Yay! &lt;/p&gt;
+&lt;p&gt;Thanks Margo for working on this project with me, its been an adventure! &lt;/p&gt;</summary></entry><entry><title>Lisp Interpreter: Episode 3 (The Finally!) ... Continued.</title><link href="http://lmontopo/github.io/lisp-interpreter-episode-3-the-finally-continued.html" rel="alternate"></link><updated>2014-11-24T00:00:00-05:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo,2014-11-24:github.io/lisp-interpreter-episode-3-the-finally-continued.html</id><summary type="html">&lt;p&gt;In last week's episode we inspected how my program tokenizes and parses the user's input.  In the spirit of finishing this series of blog posts, I have decided today to present an overview of how the rest of my program works. We'll walk through the basic algorithm that my program follows, pausing at some of the more exciting and important parts. I'll do my best to skip over the less exciting bits of code, while still providing enough information to convey the general ideas. If anyone would like to see the code in its entirety, feel free to check it out on my github account: &lt;a href="https://github.com/lmontopo/Lispeter"&gt;https://github.com/lmontopo/Lispeter&lt;/a&gt;.  As always, I welcome any questions or comments about either this blog post or the code i'm describing.  Lets begin! &lt;/p&gt;
+&lt;p&gt;After the user's Scheme input is parsed and tokenzied, it is passed to a function which 'unwraps' it.  This funciton is called 'outer_evaluate'.  Remember how, in the tokenzier, the input gets wrapped in an extra set of parenthesis?  My 'outer_evaluate' function is how I dealt with this.  It evaluates from left to right each of the internal expressions within the parsed expression and then it spit out the result of the last expression. Here's the function:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;outer_evaluate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;list_input&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;evaluated_list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;expression&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;list_input&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;evaluated_list&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;evaluate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;expression&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;evaluated_list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Here, 'evaluate' is the main function that interprets the parsed input. Inside 'evaluate' the input is classified as either a list or an atom and is passed to the 'is_cons' and 'is_atom' functions respectively. The 'is_atom' function is pretty straightforward since atoms are self-evaluating, but I'll take a bit of time to describe how the 'is_cons' function works. &lt;/p&gt;
+&lt;p&gt;When 'is_cons' is called it inspects the first element of the list that is inputed. Assuming that our input is a valid Scheme expression, we expect the first item in this list to be a function.  'is_cons' will check to see if this function is in our pre-defined list of special functions. (Recall that special functions are the ones that change the flow of the interpretation.) Once the program has decided if the function is special or not, input is directed to either the 'is_special' or 'is_regular' function, whichever is appropriate.  Lets talk a bit about both of these functions. &lt;/p&gt;
+&lt;p&gt;The 'is_special' function consists of a case by case evaluation of what to do for each special operator.  I'll just present a subset of this function because the whole thing is a little long and overwhelming. Here's some of it: &lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;call_special&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;list_input&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;head&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;rest&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;list_input&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;list_input&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:]&lt;/span&gt;
+
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;head&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;map&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rest&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;new_head&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;list_to_act_on&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;rest&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;evaluate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rest&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="n"&gt;new_list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+            &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;item&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;list_to_act_on&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="n"&gt;new_item&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;interpret&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;(&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s"&gt; &lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s"&gt;)&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;new_head&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;item&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                &lt;span class="n"&gt;new_list&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;new_item&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;new_list&lt;/span&gt;
+
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;head&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;define&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rest&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rest&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_values&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rest&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;rest&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;rest&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+                &lt;span class="n"&gt;expression&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MakeLambda&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rest&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:],&lt;/span&gt; &lt;span class="n"&gt;rest&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:])&lt;/span&gt;
+                &lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_values&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;expression&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;raise&lt;/span&gt; &lt;span class="n"&gt;too_many&lt;/span&gt;
+
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;head&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;lambda&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;func&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MakeLambda&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rest&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="n"&gt;rest&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:])&lt;/span&gt;
+        &lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_values&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;lam&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;lam&amp;#39;&lt;/span&gt;
+
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;head&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;quote&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;list_input&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;rest&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+        &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;raise&lt;/span&gt; &lt;span class="n"&gt;quote_error&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;The input is split into the 'head' and 'rest', the 'head' being the special operator.  Each special function has a corresponding bit of code which indicates how to interpret that kind of expression. Notice that when we encounter 'lambda' and 'define' operators we use some sort of 'MakeLambda' magic.  Don't worry, i'll come back to explaining this magic, but first I want to present the 'call_regular' function, where more magic appears!&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6
+7
+8
+9&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;call_regular&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;list_input&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;new_list_input&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt;
+
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;term&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;list_input&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;new_list_input&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;evaluate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;term&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+    &lt;span class="n"&gt;list_input&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;new_list_input&lt;/span&gt;
+    &lt;span class="n"&gt;head&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;rest&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;list_input&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;list_input&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:]&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fetch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;head&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;do_fun&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rest&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;In contrast to the 'call_special' function which outlines a specific proceedure for each special operator, the regular functions are all dealt with in exactly the same way.  This is something I'm quite proud of. Its just so &lt;em&gt;pretty&lt;/em&gt;! &lt;/p&gt;
+&lt;p&gt;Again, notice the magic... I'm calling some 'do_fun' method on some 'env.fetch' thing... What is all this?!  To explain whats going on here, I'll start by talking about environments. I implimented a class called Scope to keep track of my environment throughout the evaluation process.  Here it is:   &lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# --- DEFINING SCOPE --- &lt;/span&gt;
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Scope&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;parent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;env&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;parent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;parent&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;add_values&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;fetch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;keys&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+        &lt;span class="k"&gt;elif&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;parent&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;parent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fetch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Every scope object consists of an environment and a parent.  The environment is a  dictionary containing variables/functions and their values/expressions.  The parent of a scope instance is the smallest scope containing it. If a scope's parent is not specified then it gets the default parent, 'None'. The global scope will have a None parent but all other scopes should have a legitimate parent, possibly the global scope.&lt;/p&gt;
+&lt;p&gt;Lets inspect the methods of the Scope class.  The 'add_values' method simply updates the environment by adding more key value pairs. The 'fetch' method looks up variables in the scope's environment.  Notice that if we have no luck looking up a variable in the current environment, then fetch will redirect us to our parent's environment. This means that even if our current scope is not the global scope, all of the variables in the global environment can still be accessed.  But, since we look in our current scope first, it also means that we can re-define any of the global variables in our current scope, and, when we fetch for the values of these variables, we'll get the appropriate, re-defined, value. &lt;/p&gt;
+&lt;p&gt;By now we should understand that &lt;code&gt;env.fetch(head)&lt;/code&gt; is returning the value of the key 'head' from the dictionary in our current scope.  What we have yet to discuss is what 'MakeLambda', and 'do_fun' are refering to.  Here's the bit of code that defines these terms:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# --- CLASS OF FUNCTIONS ---&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MakeLambda&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;first&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;second&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;first&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;first&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;second&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;second&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;params&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;first&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;second&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;do_fun&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;zipped&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;zip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;temp_scope&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Scope&lt;/span&gt;&lt;span class="p"&gt;({},&lt;/span&gt; &lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;param&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;arg&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;zipped&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;temp_scope&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_values&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;param&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;arg&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;evaluate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exp&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;temp_scope&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MakePyFun&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;everything&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="n"&gt;everything&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;everything&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;do_fun&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;arguments&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;arguments&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;everything&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;arguments&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;elif&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;arguments&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;everything&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;arguments&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;These classes are used to create function objects. I use the MakePyFun class to make function objects out of the built-in, non-special, Scheme functions.  I use MakeLambda to make function objects for user defined functions.  (You'll remember that this MakeLambda was called when the user input contained either 'lambda' or 'define' expressions.)  The main difference between these two classes is that functions created with the MakeLambda class have a defined set of parameters which are specified in their definition. This means that instances of MakeLambda cannot operate on an arbitrary number of arguments.  In comparison, functions defined using the MakePyFun class, &lt;em&gt;can&lt;/em&gt; be called on an aribitrary number of arguments.  One very important thing to notice, though, is that both the MakePyFun class and the MakeLambda class have 'do_fun' methods which do essentially the same thing:  They take in some arguments and evaluate the function on those arguments.  This is how the 'call_regular' function needed only to fetch the value of 'head' in our current scope and call 'do_fun' on the result.  It didn't matter whether the result of fetch was an instance of MakeLambda or of MakePyFun, because both have the 'do_fun' method!&lt;/p&gt;
+&lt;p&gt;At this point I've pretty much described all of the exciting aspects of my program.  But, before wrapping up this blog series, I think I owe it to anyone who's made it this far to present a nice solid example. &lt;/p&gt;
+&lt;p&gt;Consider the user input &lt;code&gt;((define (f x)(+ x x))(f 4))&lt;/code&gt;.  After this expression is tokenized and parsed it will enter the 'outer_evaluate' function as: &lt;code&gt;[['define', ['f', 'x'], ['+', 'x', 'x']], ['f', '4']]&lt;/code&gt;.  'Outter_evaluate' then calls 'evaluate' on the first item in this list, &lt;code&gt;['define', ['f', 'x'], ['+', 'x', 'x']]&lt;/code&gt;.  Evaluate decides that this is a list, and passes it on to the 'is_cons' function.  'is_cons' decides that 'define' is a special function and passes the expression to 'call_special'.  In 'call_special', 'head' is assigned to 'define' and 'rest' to &lt;code&gt;[['f', 'x'], ['+', 'x', 'x']]&lt;/code&gt;.  Since the &lt;code&gt;if 'head' == 'define'&lt;/code&gt; condition is satisfied, it's consequent block of code is executed.  This assigns 'name' to 'f' and 'expression' to &lt;code&gt;MakeLambda(['x'], ['+', 'x', 'x'])&lt;/code&gt; and adds them as a key-value pair to our current environment.  The first part of the user input has now been evaluated, and control is turned back over to the &lt;code&gt;outter_evaluate&lt;/code&gt; function which calls &lt;code&gt;evaluate(['f', '4'])&lt;/code&gt;.  From 'evaluate' we are redirected to 'is_cons' and then to 'call_regular'.  In 'call_regular' the value of 'f' is fetched from our current environment, returning the MakeLambda object we previously instantiated. It's 'do_fun' method is called with argument '4', returning &lt;code&gt;evaluate(['+', 'x', 'x'], env)&lt;/code&gt; where env contains &lt;code&gt;{'x' : '4'}&lt;/code&gt;.  This time 'evaluate' directs us once again 'is_cons' which directs us to 'is_regular'.  Here, both x's evaluate to 4. and then we fetch '+' from our environment.  We will not find '+' in our current environment, but will find it in the global environment.  &lt;code&gt;env.fetch('+')&lt;/code&gt; will return the instance of 'MakePyFun' associated to addition.  This will be called on the arguments &lt;code&gt;['4','4']&lt;/code&gt;, and finally, 8 will be returned. Phew.  &lt;/p&gt;
+&lt;p&gt;And finally, I have finished my series of interpreting the interpreter.  I've learned alot through this project, and had a lot of fun in the process.  Thanks again to the awesome &lt;a href="http://akaptur.com"&gt;Allison Kaptur&lt;/a&gt; for suggesting this project to me and for your encouragement along the way.  To anyone else out there who is contemplating writing a lisp interpreter, I whole heartedly encourage you to do so! &lt;/p&gt;
+&lt;p&gt;Thanks for reading!&lt;/p&gt;</summary></entry><entry><title>Little Lessons 3: URI's, 'urllib', Template engines, and generators.</title><link href="http://lmontopo/github.io/little-lessons-3-uris-urllib-template-engines-and-generators.html" rel="alternate"></link><updated>2014-11-19T00:00:00-05:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo,2014-11-19:github.io/little-lessons-3-uris-urllib-template-engines-and-generators.html</id><summary type="html">&lt;p&gt;I've learned so many fun little lessons over the past week, its time for another post!&lt;/p&gt;
+&lt;h4&gt;What is a URI? Is it the same as a URL?&lt;/h4&gt;
+&lt;p&gt;URI stands for uniform resource identifier.  A very common form of a URI is the URL, which stands for uniform resource locator. The URL is just the address of a website - ie. the thing you type into your browser when you want to visit a webpage. Apparently, sometimes, the terms URI and URL are used interchangeably.  But, if you want to be precise, know that a URL is a type of URI.  Time to dig a little deaper into URL's...&lt;/p&gt;
+&lt;h4&gt;What meant by the 'path' and the 'query' of a URL?&lt;/h4&gt;
+&lt;p&gt;The wikipedia page, &lt;a href="http://en.wikipedia.org/wiki/Uniform_resource_locator"&gt;here&lt;/a&gt;, does a good job at explaining the URL.  I'll summarize what I learned from it here. The URL consists of several different parts.  I'll introduce these parts and discuss them with respect to this example: http://www.cineplex.com/Search?Query=Interstellar&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The very first part of the URL is the &lt;strong&gt;protocol&lt;/strong&gt;.  It specifies which application protocol is being used to obtain the resource. In our example the application protocol is 'http'.&lt;/li&gt;
+&lt;li&gt;The &lt;strong&gt;domain name&lt;/strong&gt; can be an IP address or a registered and easier to remember name associated to an IP address.  In our example the domain name is 'cineplex.com'.  If you are creating a server on your own computer, your domain name might be 'localhost'.&lt;/li&gt;
+&lt;li&gt;After the domain name a &lt;strong&gt;port number&lt;/strong&gt; can optionally be specified. By default we are directed to port 8000, and so it is almost always unnecessary to manually specify a port.&lt;/li&gt;
+&lt;li&gt;A single domain name or IP address can host a multitude of files.  The particular file/resource that a URL is after is specified by the &lt;strong&gt;URL path&lt;/strong&gt;.  It specifies the address of the particular file we are requesting and is analogous to the way in which we specify the path to a particular file within our own computer. In our example the URL path is '/Search'.  &lt;/li&gt;
+&lt;li&gt;The &lt;strong&gt;query string&lt;/strong&gt; contains data (usually inputed by the user) which will be passed to some sort of software running on the server.  The example I've shown is the result of typing "Interstellar" into the search bar on the cineplex homepage. "Interstellar" was passed to the servers computer and used in some program to figure out the output.  Then the results were passed back to me in the webpage with URL "http://www.cineplex.com/Search?Query=Interstellar".  The query string part of the URL is '?Query=Interstellar'.  As far as I know, the query string always starts with a question mark.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;urllib.uncode('string') is great!  Here's why:&lt;/h4&gt;
+&lt;p&gt;As I may have previously mentioned, I have decided to write my own web framework.  Not because I think I can do a better job than the existing frameworks, but because I want to learn more about what is happening behind the scenes with web development. An issue I encountered as I developped my framework involved html forms and processing user input.  If a user inputed any special characters, like '!', '~', '?', etc., my browser would encode these characters and send my server an http request with these encodings.  For example, '!' was encoded as '%21'.  Why is the browser doing this?  Although its tempting to think that this character encoding is just a pain in the butt, its actually pretty useful!  Indeed, some characters in the URL have a special meaning.  The question mark, for example, is always used to signify the begining of a query.  So whenever the &lt;em&gt;USER&lt;/em&gt; inputs characters which have (or may have) a special meaning, the browser will encode these characters to avoid confusion.  The places where these characters are used by the browser to indicate a special meaning, they are NOT encoded.  So, to make this clear, when a user inputs "?" into a form, it will be encoded.  But if a query string is present, the "?" at the begining of the query will not be encoded.  And this makes my life alot easier when I have to parse through the raw http requests.  I can guarantee that whenever I see a "?" it is signifying the begining of a query string, and NOT some user input. Great! But now, I DO have to worry about decoding the encoded characters so that they can correctly be passed as a variable to an html page. How do I decode a special character from its encoded represenation?  Using the python's urllib module!! Check it out:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6
+7
+8
+9&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;urllib&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;quote&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;!!!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;&lt;/span&gt;&lt;span class="si"&gt;%21%&lt;/span&gt;&lt;span class="s"&gt;21%21&amp;#39;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;encoded_input&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;urllib&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;quote&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;amp;!?&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;encoded_input&lt;/span&gt;
+&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="mi"&gt;26&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="mi"&gt;21&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="n"&gt;F&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;decoded_input&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;urllib&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;unquote&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;encoded_input&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;decoded_input&lt;/span&gt;
+&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="err"&gt;!?&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;h4&gt;What is a template engine?&lt;/h4&gt;
+&lt;p&gt;A template engine provides a way for users to put variables and possibly even logic into their html templates.  Templating engines consist of a templating language and a templating compiler.  The templating language specifies syntax that will be understood to mean specific things in your html template.  So, for example, you could say that two curly braces will enclose any variables and that a curly brace and a percent sign will enclose any python logic.  Then, you're compiler will parse this html template and then will see which parts need to perform logic or input variables, and will ultimately translate the template into an html page void of any logic or variables, that can be displayed by your browser.  Often, template engines are part of what makes up a web framework.&lt;/p&gt;
+&lt;h4&gt;Generators are a kind of python object!&lt;/h4&gt;
+&lt;p&gt;You know how you can write lists like:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;abcdefg&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;a&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;b&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;c&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;d&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;e&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;f&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;g&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;This way of specifying a list is called a &lt;strong&gt;list comprehension&lt;/strong&gt;.  I just found out yesterday that if we write the same thing but instead use the non-square embraces, then we create something called a generator.  Check it out:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;abcdefg&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;generator&lt;/span&gt; &lt;span class="nb"&gt;object&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;genexpr&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;at&lt;/span&gt; &lt;span class="mh"&gt;0x10b323910&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Woah! So whats a generator? I honestly don't know. Yet.  All I know is that its a different kind of python object, one which I had previously no idea about.  By typing in `dir((x for x in 'abcdef')) we can see the collection of methods that generators have, and it is, obviously, a different collection than the methods associated with lists.  I hope to come back to generators in the future to explain why they are used and what they are good for!&lt;/p&gt;
+&lt;h4&gt;Hexadecimal Numbers in Python&lt;/h4&gt;
+&lt;p&gt;Have you ever seen numbers starting with 0x in python, and not really known what they were for?  I have seen these around, and always just thought they were some sort of complicated encoding.  In reality, numbers begining with 0x are just hexidecimal numbers - ie. numbers with base 16 instead of 10.  (If you aren't familiar with hexidecimal numbers, no worries. You can read up on it &lt;a href="http://simple.wikipedia.org/wiki/Hexadecimal_numeral_system"&gt;here&lt;/a&gt;.)  So we can write:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="mh"&gt;0x11&lt;/span&gt;
+&lt;span class="mi"&gt;17&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;since 11 is the base 16 representation of the decimal number 17.  Mystery solved.&lt;/p&gt;</summary></entry><entry><title>Lisp Interpreter: Episode 3 (The Finally!)</title><link href="http://lmontopo/github.io/lisp-interpreter-episode-3-the-finally.html" rel="alternate"></link><updated>2014-11-18T00:00:00-05:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo,2014-11-18:github.io/lisp-interpreter-episode-3-the-finally.html</id><summary type="html">&lt;p&gt;Let me start off by apologizing for the delay.  I've been hesitant to write this post for several reasons, including: &lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Presenting and explaining my entire lisp interpreter is a BIG (and therefore daunting) task.  &lt;/li&gt;
 &lt;li&gt;There are parts of my code that I'm not entirely satisfied with and I &lt;em&gt;may&lt;/em&gt; refactor these parts in the future.  For this reason, I've been debating waiting until I finish refacturing to write this post.&lt;/li&gt;

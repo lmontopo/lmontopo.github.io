@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Lisp Interpreter: Episode 3 (The Finally!) ... Continued.</title>
+
+    <link rel="stylesheet" href="./theme/css/normalize.css" />
+    <link rel="stylesheet" href="./theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="./theme/css/style.css" />
+    <link rel="stylesheet" href="./theme/css/pygments.css" />	
+    <script src="./theme/js/modernizr.js"></script>
+</head>
+
+<body>
+
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href=".">The L Blog</a></h1>
+    </div>
+</div>
+</div>
+
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
+
+            <li><a href="./pages/about.html" class="button secondary small">About</a></li>
+            <li><a href="./pages/contact.html" class="button secondary small">Contact</a></li>
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+<article>
+    <header>
+        <h3 class="article-title"><a href="./lisp-interpreter-episode-3-the-finally-continued.html" rel="bookmark"
+        title="Permalink to Lisp Interpreter: Episode 3 (The Finally!) ... Continued.">Lisp Interpreter: Episode 3 (The Finally!) ... Continued.</a></h3>
+    </header>
+
+<h6 class="subheader" title="2014-11-24T00:00:00">Mon 24 November 2014
+</h6>
+
+
+    <p>In last week's episode we inspected how my program tokenizes and parses the user's input.  In the spirit of finishing this series of blog posts, I have decided today to present an overview of how the rest of my program works. We'll walk through the basic algorithm that my program follows, pausing at some of the more exciting and important parts. I'll do my best to skip over the less exciting bits of code, while still providing enough information to convey the general ideas. If anyone would like to see the code in its entirety, feel free to check it out on my github account: <a href="https://github.com/lmontopo/Lispeter">https://github.com/lmontopo/Lispeter</a>.  As always, I welcome any questions or comments about either this blog post or the code i'm describing.  Lets begin! </p>
+<p>After the user's Scheme input is parsed and tokenzied, it is passed to a function which 'unwraps' it.  This funciton is called 'outer_evaluate'.  Remember how, in the tokenzier, the input gets wrapped in an extra set of parenthesis?  My 'outer_evaluate' function is how I dealt with this.  It evaluates from left to right each of the internal expressions within the parsed expression and then it spit out the result of the last expression. Here's the function:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">outer_evaluate</span><span class="p">(</span><span class="n">list_input</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+    <span class="n">evaluated_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">expression</span> <span class="ow">in</span> <span class="n">list_input</span><span class="p">:</span>
+        <span class="n">evaluated_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">evaluate</span><span class="p">(</span><span class="n">expression</span><span class="p">,</span> <span class="n">env</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">evaluated_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</td></tr></table>
+
+<p>Here, 'evaluate' is the main function that interprets the parsed input. Inside 'evaluate' the input is classified as either a list or an atom and is passed to the 'is_cons' and 'is_atom' functions respectively. The 'is_atom' function is pretty straightforward since atoms are self-evaluating, but I'll take a bit of time to describe how the 'is_cons' function works. </p>
+<p>When 'is_cons' is called it inspects the first element of the list that is inputed. Assuming that our input is a valid Scheme expression, we expect the first item in this list to be a function.  'is_cons' will check to see if this function is in our pre-defined list of special functions. (Recall that special functions are the ones that change the flow of the interpretation.) Once the program has decided if the function is special or not, input is directed to either the 'is_special' or 'is_regular' function, whichever is appropriate.  Lets talk a bit about both of these functions. </p>
+<p>The 'is_special' function consists of a case by case evaluation of what to do for each special operator.  I'll just present a subset of this function because the whole thing is a little long and overwhelming. Here's some of it: </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">call_special</span><span class="p">(</span><span class="n">list_input</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+    <span class="n">head</span><span class="p">,</span> <span class="n">rest</span> <span class="o">=</span> <span class="n">list_input</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">list_input</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="k">if</span> <span class="n">head</span> <span class="o">==</span> <span class="s">&quot;map&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">new_head</span><span class="p">,</span> <span class="n">list_to_act_on</span> <span class="o">=</span> <span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">env</span><span class="p">)</span>
+            <span class="n">new_list</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">list_to_act_on</span><span class="p">:</span>
+                <span class="n">new_item</span> <span class="o">=</span> <span class="n">interpret</span><span class="p">(</span><span class="s">&quot;(</span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">new_head</span><span class="p">,</span> <span class="n">item</span><span class="p">),</span> <span class="n">env</span><span class="p">)</span>
+                <span class="n">new_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_item</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">new_list</span>
+
+    <span class="k">if</span> <span class="n">head</span> <span class="o">==</span> <span class="s">&#39;define&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span>
+                <span class="n">env</span><span class="o">.</span><span class="n">add_values</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">rest</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">expression</span> <span class="o">=</span> <span class="n">MakeLambda</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:],</span> <span class="n">rest</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+                <span class="n">env</span><span class="o">.</span><span class="n">add_values</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">expression</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">too_many</span>
+
+    <span class="k">if</span> <span class="n">head</span> <span class="o">==</span> <span class="s">&#39;lambda&#39;</span><span class="p">:</span>
+        <span class="n">func</span> <span class="o">=</span> <span class="n">MakeLambda</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">rest</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="n">env</span><span class="o">.</span><span class="n">add_values</span><span class="p">(</span><span class="s">&#39;lam&#39;</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">&#39;lam&#39;</span>
+
+    <span class="k">if</span> <span class="n">head</span> <span class="o">==</span> <span class="s">&#39;quote&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_input</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">quote_error</span>
+</pre></div>
+</td></tr></table>
+
+<p>The input is split into the 'head' and 'rest', the 'head' being the special operator.  Each special function has a corresponding bit of code which indicates how to interpret that kind of expression. Notice that when we encounter 'lambda' and 'define' operators we use some sort of 'MakeLambda' magic.  Don't worry, i'll come back to explaining this magic, but first I want to present the 'call_regular' function, where more magic appears!</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">call_regular</span><span class="p">(</span><span class="n">list_input</span><span class="p">,</span><span class="n">env</span><span class="p">):</span>
+    <span class="n">new_list_input</span> <span class="o">=</span><span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">list_input</span><span class="p">:</span>
+        <span class="n">new_list_input</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">evaluate</span><span class="p">(</span><span class="n">term</span><span class="p">,</span><span class="n">env</span><span class="p">))</span>
+
+    <span class="n">list_input</span> <span class="o">=</span> <span class="n">new_list_input</span>
+    <span class="n">head</span><span class="p">,</span> <span class="n">rest</span> <span class="o">=</span> <span class="n">list_input</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">list_input</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">return</span> <span class="n">env</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">head</span><span class="p">)</span><span class="o">.</span><span class="n">do_fun</span><span class="p">(</span><span class="n">rest</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<p>In contrast to the 'call_special' function which outlines a specific proceedure for each special operator, the regular functions are all dealt with in exactly the same way.  This is something I'm quite proud of. Its just so <em>pretty</em>! </p>
+<p>Again, notice the magic... I'm calling some 'do_fun' method on some 'env.fetch' thing... What is all this?!  To explain whats going on here, I'll start by talking about environments. I implimented a class called Scope to keep track of my environment throughout the evaluation process.  Here it is:   </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># --- DEFINING SCOPE --- </span>
+<span class="k">class</span> <span class="nc">Scope</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">env</span> <span class="o">=</span> <span class="n">env</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
+
+    <span class="k">def</span> <span class="nf">add_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">key</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<p>Every scope object consists of an environment and a parent.  The environment is a  dictionary containing variables/functions and their values/expressions.  The parent of a scope instance is the smallest scope containing it. If a scope's parent is not specified then it gets the default parent, 'None'. The global scope will have a None parent but all other scopes should have a legitimate parent, possibly the global scope.</p>
+<p>Lets inspect the methods of the Scope class.  The 'add_values' method simply updates the environment by adding more key value pairs. The 'fetch' method looks up variables in the scope's environment.  Notice that if we have no luck looking up a variable in the current environment, then fetch will redirect us to our parent's environment. This means that even if our current scope is not the global scope, all of the variables in the global environment can still be accessed.  But, since we look in our current scope first, it also means that we can re-define any of the global variables in our current scope, and, when we fetch for the values of these variables, we'll get the appropriate, re-defined, value. </p>
+<p>By now we should understand that <code>env.fetch(head)</code> is returning the value of the key 'head' from the dictionary in our current scope.  What we have yet to discuss is what 'MakeLambda', and 'do_fun' are refering to.  Here's the bit of code that defines these terms:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># --- CLASS OF FUNCTIONS ---</span>
+
+<span class="k">class</span> <span class="nc">MakeLambda</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">first</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">second</span> <span class="o">=</span> <span class="n">second</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">first</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">second</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">do_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+        <span class="n">zipped</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+        <span class="n">temp_scope</span> <span class="o">=</span> <span class="n">Scope</span><span class="p">({},</span> <span class="n">env</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">param</span><span class="p">,</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">zipped</span><span class="p">:</span>
+            <span class="n">temp_scope</span><span class="o">.</span><span class="n">add_values</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exp</span><span class="p">,</span> <span class="n">temp_scope</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">MakePyFun</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">everything</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span> <span class="n">everything</span> <span class="o">=</span> <span class="n">everything</span>
+
+    <span class="k">def</span> <span class="nf">do_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arguments</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">arguments</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">everything</span><span class="p">(</span><span class="n">arguments</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">arguments</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">everything</span><span class="p">(</span><span class="o">*</span><span class="n">arguments</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<p>These classes are used to create function objects. I use the MakePyFun class to make function objects out of the built-in, non-special, Scheme functions.  I use MakeLambda to make function objects for user defined functions.  (You'll remember that this MakeLambda was called when the user input contained either 'lambda' or 'define' expressions.)  The main difference between these two classes is that functions created with the MakeLambda class have a defined set of parameters which are specified in their definition. This means that instances of MakeLambda cannot operate on an arbitrary number of arguments.  In comparison, functions defined using the MakePyFun class, <em>can</em> be called on an aribitrary number of arguments.  One very important thing to notice, though, is that both the MakePyFun class and the MakeLambda class have 'do_fun' methods which do essentially the same thing:  They take in some arguments and evaluate the function on those arguments.  This is how the 'call_regular' function needed only to fetch the value of 'head' in our current scope and call 'do_fun' on the result.  It didn't matter whether the result of fetch was an instance of MakeLambda or of MakePyFun, because both have the 'do_fun' method!</p>
+<p>At this point I've pretty much described all of the exciting aspects of my program.  But, before wrapping up this blog series, I think I owe it to anyone who's made it this far to present a nice solid example. </p>
+<p>Consider the user input <code>((define (f x)(+ x x))(f 4))</code>.  After this expression is tokenized and parsed it will enter the 'outer_evaluate' function as: <code>[['define', ['f', 'x'], ['+', 'x', 'x']], ['f', '4']]</code>.  'Outter_evaluate' then calls 'evaluate' on the first item in this list, <code>['define', ['f', 'x'], ['+', 'x', 'x']]</code>.  Evaluate decides that this is a list, and passes it on to the 'is_cons' function.  'is_cons' decides that 'define' is a special function and passes the expression to 'call_special'.  In 'call_special', 'head' is assigned to 'define' and 'rest' to <code>[['f', 'x'], ['+', 'x', 'x']]</code>.  Since the <code>if 'head' == 'define'</code> condition is satisfied, it's consequent block of code is executed.  This assigns 'name' to 'f' and 'expression' to <code>MakeLambda(['x'], ['+', 'x', 'x'])</code> and adds them as a key-value pair to our current environment.  The first part of the user input has now been evaluated, and control is turned back over to the <code>outter_evaluate</code> function which calls <code>evaluate(['f', '4'])</code>.  From 'evaluate' we are redirected to 'is_cons' and then to 'call_regular'.  In 'call_regular' the value of 'f' is fetched from our current environment, returning the MakeLambda object we previously instantiated. It's 'do_fun' method is called with argument '4', returning <code>evaluate(['+', 'x', 'x'], env)</code> where env contains <code>{'x' : '4'}</code>.  This time 'evaluate' directs us once again 'is_cons' which directs us to 'is_regular'.  Here, both x's evaluate to 4. and then we fetch '+' from our environment.  We will not find '+' in our current environment, but will find it in the global environment.  <code>env.fetch('+')</code> will return the instance of 'MakePyFun' associated to addition.  This will be called on the arguments <code>['4','4']</code>, and finally, 8 will be returned. Phew.  </p>
+<p>And finally, I have finished my series of interpreting the interpreter.  I've learned alot through this project, and had a lot of fun in the process.  Thanks again to the awesome <a href="http://akaptur.com">Allison Kaptur</a> for suggesting this project to me and for your encouragement along the way.  To anyone else out there who is contemplating writing a lisp interpreter, I whole heartedly encourage you to do so! </p>
+<p>Thanks for reading!</p>
+<p class="subheader">Category: <a href="./category/blog.html">Blog</a>
+
+</p>
+
+
+
+
+</article>
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="./archives.html">Archives</a>
+            <li><a href="./tags.html">Tags</a>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="./category/blog.html">Blog</a></li>
+   
+        </ul>
+
+		
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <!--                  <p>The L Blog by Leta Montopoli</p> -->
+            </div>
+            </div>
+    </div>
+</footer>
+</body>
+</html>

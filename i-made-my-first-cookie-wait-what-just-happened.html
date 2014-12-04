@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
+
+    <title>I made my first cookie! ... Wait, what just happened?</title>
+
+    <link rel="stylesheet" href="./theme/css/normalize.css" />
+    <link rel="stylesheet" href="./theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="./theme/css/style.css" />
+    <link rel="stylesheet" href="./theme/css/pygments.css" />	
+    <script src="./theme/js/modernizr.js"></script>
+</head>
+
+<body>
+
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href=".">The L Blog</a></h1>
+    </div>
+</div>
+</div>
+
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
+
+            <li><a href="./pages/about.html" class="button secondary small">About</a></li>
+            <li><a href="./pages/contact.html" class="button secondary small">Contact</a></li>
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+<article>
+    <header>
+        <h3 class="article-title"><a href="./i-made-my-first-cookie-wait-what-just-happened.html" rel="bookmark"
+        title="Permalink to I made my first cookie! ... Wait, what just happened?">I made my first cookie! ... Wait, what just happened?</a></h3>
+    </header>
+
+<h6 class="subheader" title="2014-11-25T00:00:00">Tue 25 November 2014
+</h6>
+
+
+    <p>Margo and I have been working on our web-framework, Chapeau. To test out its functionality and user-friendly-ness, we've been using Chapeau to build various web-apps.  Lately, we've been working on implimenting buzz-feed-style quiz.  To challenge ourselves (and Chapeau) we decided to impliment this app so that each question of the quiz appears on a different webpage.  This forced us to address the issue: 'how can a user of Chapeau transfer data from one web-page to another'?  And furthermore, 'does Chapeau allow data to be transfered from one page to a page that is not directly afterwards?' 
+As we tried to answer these questions and broaden the functionality of Chapeau, the framework took on several variations. In this blog post I'll begin by describing how Chapeau works for very simple web-apps, and then I'll continue by explaining some of the changes we made to Chapeau as we worked towards our buzz-feed-style quiz.</p>
+<h4>Simple Web Apps</h4>
+<p>Chapeau's design makes very simple web-apps just that: very simple!  To make a simple app, a developer simply defines a dicitonary matching URL's to their corresponding html pages. Then calling Chapeau's 'go' function on the dictionary gets everything going.  Pretty simple right?  And an app this simple could even handle very simple variable passing from an html form to the subsequent page.  To add this feature, a web developer just needs to format their html pages according to these conditions:</p>
+<ul>
+<li>The form must specify either 'method = get' or 'method = post'.</li>
+<li>The form's action needs to specify the URL that this form should re-direct to. </li>
+<li>The html page corresponding to this URL should have '%(key)s' wherever this key's value is meant to appear.</li>
+</ul>
+<p>To make sure I'm being clear, I want to repeat that the app itself (by this I mean the python code) doesn't have to change. Adding very basic variable passing to a Chapeau app is just a matter of formating your html pages correctly.  How is this all working? In the background Chapeau parses the request made from the form's submission.  Chapeau finds in this request the user's input and stores it in a dictionary of key-value pairs called params.  The specified html file is then read in as a string with %params tacked on to the end.  Python's built in string formatting takes care of the rest, and the page renders with the desired arguments! Easy-peasy.  </p>
+<p>But what if we wanted to mutate the user input in some way?  Or what if we wanted to <em>use</em> the input to perform some sort of analysis or calculation?  Perhaps we want to create some results for a quiz... Our initial version of Chapeau could not handle such situations.   </p>
+<h4>Adding Functions</h4>
+<p>To extend chapeau's usability Margo and I decided that web developers would have the choice to route a URL to a path or to a function.  If a URL is routed to a function then this function would have a few structural constraints.  Initially, these were the constraints we implimented: </p>
+<ul>
+<li>The function must take as input a dictionary containing some of the request information.  This dictionary would be passed into the function by Chapeau, and it looks something like: '{'type': 'get', 'query': 'query_string', 'path': 'url' , 'body': 'user_input_from_post_form'}'.  (Basically this dictionary stores all of the request information except for the headers.) </li>
+<li>The function must return a path specifying the next html page to be rendered and the dictionary it received, in possibly a mutated form. </li>
+</ul>
+<p>The dictionary that the function takes in gives the developer access to the user input that was just aquired.  If the developer wanted to mutate this user input in anyway, they could do so.  Alternatively, if the developper wants user input to be saved so that it can be obtained later, Margo and I figured this could be done as well.  The developper could create a global dictionary that they can add to when user input is submitted, and that they could read from later. Problem Solved.  Except not Really. </p>
+<p>More experience developpers probably already realize the problem we've created.  When multiple clients use this web app simultaneously, global variables are going to get mixed up between clients.  Say, for instance, that in creating our quiz app we store our clients's answers in a global dictionary.  We update this dictionary after every question and fetch results from it before returning the quiz's results.  When multiple users are answering the quiz simultaneously client1 might answer that their favorite fruit is 'grapes', and before Client1 finishes the quiz Client2 answers that their favorite fruit is 'oranges'.  What this means is that when our app goes to fetch the results of Client1, their 'grapes' answer will have been overwritten by 'oranges'. Shoot.</p>
+<h4>Finally, adding Cookies!</h4>
+<p>So, what is a cookie, and how do I make one anyway?  This was the first thought I had when Greg, our Chapeau advisor, suggested we use cookies in our app.  Basically, a cookie is just some data that is stored in the clients browser.  So in my buzz-feed quiz scenario, when the user submits their answers to the quiz questions, I can parse the data, find the answers, and then in the next page I send to them I can add a "Set-Cookie: question1=clients_answer" header in my http response.  Their browser will see this header and will then save a small peice of data containing the cookie key and value, the servers domain name (in this case my computer) and a path.  The next time their browser sends an http request to my server, it will include a cookie header looking somethign like "Cookies: question1=clients_answer".  Cool!! </p>
+<h4>Download Complete</h4>
+<h4>Everything's well.</h4>
+<p class="subheader">Category: <a href="./category/blog.html">Blog</a>
+
+</p>
+
+
+
+
+</article>
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="./archives.html">Archives</a>
+            <li><a href="./tags.html">Tags</a>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="./category/blog.html">Blog</a></li>
+   
+        </ul>
+
+		
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <!--                  <p>The L Blog by Leta Montopoli</p> -->
+            </div>
+            </div>
+    </div>
+</footer>
+</body>
+</html>
