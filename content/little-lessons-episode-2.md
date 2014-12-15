@@ -109,9 +109,10 @@ program which takes care of all things to do with being a REPL:
 def repl(env):    
 	try:         
 		x = raw_input('> ')        
-			try: print interpret(x, env)
-		except MyError, e:   
-			print(colored(e.msg, 'red'))         
+			try: 
+				print interpret(x, env)
+			except MyError, e:   
+				print(colored(e.msg, 'red'))         
 		return repl(scope)    
 	except KeyboardIterrupt:        
 		exit()
