@@ -1921,76 +1921,45 @@ deal of learning you might otherwise miss out on.&lt;/p&gt;
 &lt;p&gt;In the next episode, I hope to introduce to you the final product, and
 explain how it works!&lt;/p&gt;
 &lt;p&gt;Stay tuned!&lt;/p&gt;</summary></entry><entry><title>Interpreting the Interpreter: Episode 0</title><link href="http://lmontopo.github.io/interpreting-the-interpreter-episode-0.html" rel="alternate"></link><updated>2014-10-17T04:00:00-04:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo.github.io,2014-10-17:interpreting-the-interpreter-episode-0.html</id><summary type="html">&lt;p&gt;For a while now, I have been perplexed by the land of compilers and
-interpreters. Thinking of&lt;/p&gt;
-&lt;p&gt;these things sparks all sorts of questions in my mind. For instance, if
-a compiler compiles my program,&lt;/p&gt;
-&lt;p&gt;but the compiler is itself a program, doesn't something need to compile
-the compiler? If so,&lt;/p&gt;
-&lt;p&gt;wouldn't this chain just go on forever? And, if I were to write my own
-computer language (which I could,theoretically, do)&lt;/p&gt;
-&lt;p&gt;how would I go about doing so? And what's the difference between a
-compiler and an interpreter?&lt;/p&gt;
-&lt;p&gt;Are interpreters and compilers things that I can write?!&lt;/p&gt;
+interpreters. Thinking of these things sparks all sorts of questions in my mind. For instance, if
+a compiler compiles my program, but the compiler is itself a program, doesn't something need to compile
+the compiler? If so, wouldn't this chain just go on forever? And, if I were to write my own
+computer language (which I could,theoretically, do) how would I go about doing so? And what's the difference between a
+compiler and an interpreter?  Are interpreters and compilers things that I can write?!&lt;/p&gt;
 &lt;p&gt;In this episode, I will begin by trying to answer some of these
-questions. In later episodes&lt;/p&gt;
-&lt;p&gt;I will describe my experiences writing a Lisp Interpreter. When I have
-the interpreter all&lt;/p&gt;
-&lt;p&gt;set up and running, I'll present it, and explain it. But before we get
-to that, I think its&lt;/p&gt;
-&lt;p&gt;worth while exploring what an interpreter IS, and how it differs from a
+questions. In later episodes I will describe my experiences writing a Lisp Interpreter. When I have
+the interpreter all set up and running, I'll present it, and explain it. But before we get
+to that, I think its worth while exploring what an interpreter IS, and how it differs from a
 compiler.&lt;/p&gt;
-&lt;p&gt;Compilers and interpreters serve a similar purpose: they take&lt;/p&gt;
-&lt;p&gt;a piece of code written in some language that is foreign to your
-computer, and they turn it into something that can&lt;/p&gt;
-&lt;p&gt;be executed on your machine. It's the way in which these two programs
+&lt;p&gt;Compilers and interpreters serve a similar purpose: they take a piece of code written in some language that is foreign to your
+computer, and they turn it into something that can be executed on your machine. It's the way in which these two programs
 work that differentiates them.&lt;/p&gt;
 &lt;p&gt;A &lt;strong&gt;compiler&lt;/strong&gt; works by taking the inputed piece of code (this is called
-the &lt;strong&gt;source code&lt;/strong&gt;) and translating the&lt;/p&gt;
-&lt;p&gt;entire document into &lt;strong&gt;machine code&lt;/strong&gt; (ie your machines native code,
-written in 0s and 1s). The&lt;/p&gt;
-&lt;p&gt;compiler produces a new file, called the &lt;strong&gt;object file&lt;/strong&gt; which can be
-run directly on the machine,&lt;/p&gt;
-&lt;p&gt;without any intermediate translation. So, if I write a piece of code in
-C++, for example,&lt;/p&gt;
-&lt;p&gt;then my compiler will read through the whole document, and will re-write
-the set of instructions&lt;/p&gt;
-&lt;p&gt;I've written in C++ into machine language instructions. (Usually some
-sort of optimization&lt;/p&gt;
-&lt;p&gt;is also involved, but we don't have to concern ourselves with that just
-yet.) Since the code is&lt;/p&gt;
-&lt;p&gt;then executed from the object file, and no longer interacts with the
-initial C++ document,&lt;/p&gt;
-&lt;p&gt;the C++ document could be deleted from your computer, and the code could
+the &lt;strong&gt;source code&lt;/strong&gt;) and translating the entire document into &lt;strong&gt;machine code&lt;/strong&gt; (ie your machines native code,
+written in 0s and 1s). The compiler produces a new file, called the &lt;strong&gt;object file&lt;/strong&gt; which can be
+run directly on the machine, without any intermediate translation. So, if I write a piece of code in
+C++, for example, then my compiler will read through the whole document, and will re-write
+the set of instructions I've written in C++ into machine language instructions. (Usually some
+sort of optimization is also involved, but we don't have to concern ourselves with that just
+yet.) Since the code is then executed from the object file, and no longer interacts with the
+initial C++ document, the C++ document could be deleted from your computer, and the code could
 still be executed.&lt;/p&gt;
 &lt;p&gt;An &lt;strong&gt;interpreter&lt;/strong&gt; on the other hand, executes the code directly as it
-reads it. It doesn't create&lt;/p&gt;
-&lt;p&gt;another translated file first. An interpreter will just read a line of
-code, will transform it into something it understands,&lt;/p&gt;
-&lt;p&gt;and then it it will execute it. I realize that this might all sound a
-little vague, especially the part where I say the interpreter
-"transforms it into&lt;/p&gt;
-&lt;p&gt;something it understands". What does &lt;em&gt;it&lt;/em&gt; understand, anyhow? Well, lets
-say we are writing&lt;/p&gt;
-&lt;p&gt;a lisp interpreter in python (as I will be doing soon!) and the
-interpreter comes across a line of&lt;/p&gt;
-&lt;p&gt;code that reads "( + 1 1 )". Well, python doesn't understand this, but
-if the interpreter changes&lt;/p&gt;
-&lt;p&gt;it to "1 + 1", then python does understand this. Hopefully that
-clarifies things a little.&lt;/p&gt;
-&lt;p&gt;Of course, the discussion I provide of my experience writing an
+reads it. It doesn't create another translated file first. An interpreter will just read a line of
+code, will transform it into something it understands, and then it it will execute it. I realize that this might all sound a
+little vague, especially the part where I say the interpreter "transforms it into something it understands". What does &lt;em&gt;it&lt;/em&gt; understand, anyhow? Well, lets say we are writing a lisp interpreter in python (as I will be doing soon!) and the
+interpreter comes across a line of code that reads "( + 1 1 )". Well, python doesn't understand this, but
+if the interpreter changes it to "1 + 1", then python does understand this. &lt;/p&gt;
+&lt;p&gt;Hopefully that clarifies things a little. Of course, the discussion I provide of my experience writing an
 interpreter should also help clarify things.&lt;/p&gt;
 &lt;p&gt;Another thing I'd like to mention is that languages are not always
-either "interpreted" or&lt;/p&gt;
-&lt;p&gt;"compiled". Some languages, Python is one of them, are actually
-implemented with both a compiler&lt;/p&gt;
-&lt;p&gt;and an interpreter. Although people often refer to Python as an
+either "interpreted" or "compiled". Some languages, Python is one of them, are actually
+implemented with both a compiler and an interpreter. Although people often refer to Python as an
 'interpreted language', its implementation has 2 parts: First, the
-python code is&lt;/p&gt;
-&lt;p&gt;compiled into something called "byte-code". Then, an interpreter reads
+python code is compiled into something called "byte-code". Then, an interpreter reads
 and executes the byte-code!&lt;/p&gt;
 &lt;p&gt;Cool, eh? Big thanks goes to &lt;a href="http://akaptur.github.io"&gt;Allison Kaptur&lt;/a&gt;
-for explaining this to me and discussing interpreters&lt;/p&gt;
-&lt;p&gt;and compilers with me! You rock!&lt;/p&gt;</summary></entry><entry><title>What I learned from Crista Lopes</title><link href="http://lmontopo.github.io/what-i-learned-from-crista-lopes.html" rel="alternate"></link><updated>2014-10-11T04:00:00-04:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo.github.io,2014-10-11:what-i-learned-from-crista-lopes.html</id><summary type="html">&lt;p&gt;The resident at Hacker School during my first week was Crista Lopes. She
+for explaining this to me and discussing interpreters and compilers with me! You rock!&lt;/p&gt;</summary></entry><entry><title>What I learned from Crista Lopes</title><link href="http://lmontopo.github.io/what-i-learned-from-crista-lopes.html" rel="alternate"></link><updated>2014-10-11T04:00:00-04:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo.github.io,2014-10-11:what-i-learned-from-crista-lopes.html</id><summary type="html">&lt;p&gt;The resident at Hacker School during my first week was Crista Lopes. She
 has given some great&lt;/p&gt;
 &lt;p&gt;lectures, and she's taught me some cool things!&lt;/p&gt;
 &lt;h5&gt;Different Styles of Writing Code&lt;/h5&gt;
