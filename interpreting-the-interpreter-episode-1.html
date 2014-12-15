@@ -76,11 +76,11 @@ input!) This is the code Kuan and I came up with:</p>
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">holder</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span> <span class="s">&#39;(&#39;</span> <span class="p">,</span> <span class="s">&#39;</span>
-<span class="p">(</span> <span class="s">&#39; )holder = holder.replace( &#39;</span><span class="p">)</span><span class="s">&#39;, &#39;</span>
-<span class="p">)</span> <span class="s">&#39; )holder = holder.split(&#39;</span> <span class="s">&#39;)hold</span>
-<span class="n">er</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span> <span class="o">!=</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">holde</span>
-<span class="n">r</span><span class="p">)</span><span class="k">print</span> <span class="n">holder</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">holder</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span> <span class="s">&#39;(&#39;</span> <span class="p">,</span> <span class="s">&#39;( &#39;</span> <span class="p">)</span>
+<span class="n">holder</span> <span class="o">=</span> <span class="n">holder</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span> <span class="s">&#39;)&#39;</span><span class="p">,</span> <span class="s">&#39;) &#39;</span> <span class="p">)</span>
+<span class="n">holder</span> <span class="o">=</span> <span class="n">holder</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">)</span>
+<span class="n">holder</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span> <span class="o">!=</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">holder</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">holder</span>
 </pre></div>
 </td></tr></table>
 
@@ -92,10 +92,8 @@ from the input, because it 'holds' the input. Given, for example,</p>
 
 <p>This program will return the list:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">holder</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;(&#39;</span><span class="p">,</span> <span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="s">&#39;(&#39;</span><span class="p">,</span> <span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="s">&#39;3</span>
-<span class="s">&#39;, &#39;</span><span class="mi">2</span><span class="s">&#39;, &#39;</span><span class="p">)</span><span class="s">&#39;, &#39;</span><span class="p">(</span><span class="s">&#39;, &#39;</span><span class="o">-</span><span class="s">&#39;, &#39;</span><span class="mi">4</span><span class="s">&#39;, &#39;</span><span class="mi">2</span><span class="s">&#39;, &#39;</span><span class="p">)</span><span class="s">&#39;</span>
-<span class="p">,</span> <span class="s">&#39;)&#39;</span><span class="p">]</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">holder</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;(&#39;</span><span class="p">,</span> <span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="s">&#39;(&#39;</span><span class="p">,</span> <span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">,</span> <span class="s">&#39;)&#39;</span><span class="p">,</span> 
+<span class="s">&#39;(&#39;</span><span class="p">,</span> <span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="s">&#39;4&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">,</span> <span class="s">&#39;)&#39;</span><span class="p">,</span> <span class="s">&#39;)&#39;</span><span class="p">]</span>
 </pre></div>
 </td></tr></table>
 
