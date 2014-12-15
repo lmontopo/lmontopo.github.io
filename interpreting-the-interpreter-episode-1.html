@@ -6,11 +6,11 @@
 
     <title>Interpreting the Interpreter: Episode 1</title>
 
-    <link rel="stylesheet" href="./theme/css/normalize.css" />
-    <link rel="stylesheet" href="./theme/css/foundation.min.css" />
-    <link rel="stylesheet" href="./theme/css/style.css" />
-    <link rel="stylesheet" href="./theme/css/pygments.css" />	
-    <script src="./theme/js/modernizr.js"></script>
+    <link rel="stylesheet" href="http://lmontopo.github.io/theme/css/normalize.css" />
+    <link rel="stylesheet" href="http://lmontopo.github.io/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="http://lmontopo.github.io/theme/css/style.css" />
+    <link rel="stylesheet" href="http://lmontopo.github.io/theme/css/pygments.css" />	
+    <script src="http://lmontopo.github.io/theme/js/modernizr.js"></script>
 </head>
 
 <body>
@@ -20,7 +20,7 @@
 <div class="top-bar">
 <div class="row">
     <div class="large-9 large-centered columns">
-	    <h1><a href=".">The L Blog</a></h1>
+	    <h1><a href="http://lmontopo.github.io">The L Blog</a></h1>
     </div>
 </div>
 </div>
@@ -30,8 +30,6 @@
 <div class="large-9 columns">
     <ul class="button-group navigation">
 
-            <li><a href="./pages/about.html" class="button secondary small">About</a></li>
-            <li><a href="./pages/contact.html" class="button secondary small">Contact</a></li>
     </ul>
 </div>
 </div>
@@ -46,119 +44,196 @@
     <div class="large-9 columns">
 <article>
     <header>
-        <h3 class="article-title"><a href="./interpreting-the-interpreter-episode-1.html" rel="bookmark"
-        title="Permalink to Interpreting the Interpreter: Episode 1">Interpreting the Interpreter:  Episode 1</a></h3>
+        <h3 class="article-title"><a href="http://lmontopo.github.io/interpreting-the-interpreter-episode-1.html" rel="bookmark"
+        title="Permalink to Interpreting the Interpreter: Episode 1">Interpreting the Interpreter: Episode 1</a></h3>
     </header>
 
-<h6 class="subheader" title="2014-10-20T00:00:00">Mon 20 October 2014
+<h6 class="subheader" title="2014-10-20T04:00:00-04:00">Mon 20 October 2014
 </h6>
 
 
-    <p>This episode is all about the experience I had in the initial phases of writing a Lisp interpreter.
-I will describe how I started, my thought processes as I progressed, some of the code I wrote, how it worked, and, why, 
-at day 3, I decided to start from scratch (almost).  If you are only interested in the final product, 
-skip this episode!  If, however, you'd like to get some insight as to how a newbie handled the 
-task of writing an interpreter, read on!  </p>
-<p>Step one: recruit a friend. (This just makes the process a little more fun, plus its great to have someone to bounce ideas off of!) 
-I recruited Kuan.  We decided that we'd each write our own interpreter, but that we'd talk through all the steps
-together, work side by side, and help each other debug.  Our plan has worked out great so far!  To start, and we grabbed our computers, 
-retreated to a quiet room, and sat quietly for a few moments, contemplating the task at hand. I 
-found myself asking, "What do interpreters do again?", and then answering my own question with, "Right, they 'interpret'
-and then execute the code".  We figured that before our computers could execute any code, the code
-must first be separating into small elements, or <strong>tokens</strong>. (The word <strong>token</strong> is the technical name referring to the smallest element of any 
-programming language.)  In separating the code this way, we would later be able to instruct our computers to 
-scan through these elements in order, making sense of each element individually, before executing the expressions 
-they form together. We figured a good way to go about <strong>tokenizing</strong> would be to create a list of all of the 
-tokens in the input.  (Tokenizing is just the action of separating the tokens.  Don't worry if you aren't familiar with the terms token and tokenization.  I didn't 
-know the meaning of these words until after I had already tokenized my input!)  This is the code Kuan and I came up with: </p>
+    <p>This episode is all about the experience I had in the initial phases of
+writing a Lisp interpreter.</p>
+<p>I will describe how I started, my thought processes as I progressed,
+some of the code I wrote, how it worked, and, why,</p>
+<p>at day 3, I decided to start from scratch (almost). If you are only
+interested in the final product,</p>
+<p>skip this episode! If, however, you'd like to get some insight as to how
+a newbie handled the</p>
+<p>task of writing an interpreter, read on!</p>
+<p>Step one: recruit a friend. (This just makes the process a little more
+fun, plus its great to have someone to bounce ideas off of!)</p>
+<p>I recruited Kuan. We decided that we'd each write our own interpreter,
+but that we'd talk through all the steps</p>
+<p>together, work side by side, and help each other debug. Our plan has
+worked out great so far! To start, and we grabbed our computers,</p>
+<p>retreated to a quiet room, and sat quietly for a few moments,
+contemplating the task at hand. I</p>
+<p>found myself asking, "What do interpreters do again?", and then
+answering my own question with, "Right, they 'interpret'</p>
+<p>and then execute the code". We figured that before our computers could
+execute any code, the code</p>
+<p>must first be separating into small elements, or <strong>tokens</strong>. (The word
+<strong>token</strong> is the technical name referring to the smallest element of any</p>
+<p>programming language.) In separating the code this way, we would later
+be able to instruct our computers to</p>
+<p>scan through these elements in order, making sense of each element
+individually, before executing the expressions</p>
+<p>they form together. We figured a good way to go about <strong>tokenizing</strong>
+would be to create a list of all of the</p>
+<p>tokens in the input. (Tokenizing is just the action of separating the
+tokens. Don't worry if you aren't familiar with the terms token and
+tokenization. I didn't</p>
+<p>know the meaning of these words until after I had already tokenized my
+input!) This is the code Kuan and I came up with:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">holder</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span> <span class="s">&#39;(&#39;</span> <span class="p">,</span> <span class="s">&#39; ( &#39;</span> <span class="p">)</span>
-<span class="n">holder</span> <span class="o">=</span> <span class="n">holder</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span> <span class="s">&#39;)&#39;</span><span class="p">,</span> <span class="s">&#39; ) &#39;</span> <span class="p">)</span>
-<span class="n">holder</span> <span class="o">=</span> <span class="n">holder</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">)</span>
-<span class="n">holder</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span> <span class="o">!=</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">holder</span><span class="p">)</span>
-<span class="k">print</span> <span class="n">holder</span>    
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">holder</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span> <span class="s">&#39;(&#39;</span> <span class="p">,</span> <span class="s">&#39;</span>
+<span class="p">(</span> <span class="s">&#39; )holder = holder.replace( &#39;</span><span class="p">)</span><span class="s">&#39;, &#39;</span>
+<span class="p">)</span> <span class="s">&#39; )holder = holder.split(&#39;</span> <span class="s">&#39;)hold</span>
+<span class="n">er</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span> <span class="o">!=</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">holde</span>
+<span class="n">r</span><span class="p">)</span><span class="k">print</span> <span class="n">holder</span>
 </pre></div>
 </td></tr></table>
 
-<p>Here, 'holder' is what I decided to call the list that is constructed from the input, because it 
-'holds' the input. Given, for example, </p>
+<p>Here, 'holder' is what I decided to call the list that is constructed
+from the input, because it</p>
+<p>'holds' the input. Given, for example,</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="nb">input</span> <span class="o">=</span> <span class="s">&quot;(/ (+ 3  2) (- 4 2))&quot;</span>
 </pre></div>
 </td></tr></table>
 
-<p>this program will return the list: </p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">holder</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;(&#39;</span><span class="p">,</span> <span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="s">&#39;(&#39;</span><span class="p">,</span> <span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">,</span> <span class="s">&#39;)&#39;</span><span class="p">,</span> <span class="s">&#39;(&#39;</span><span class="p">,</span> <span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="s">&#39;4&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">,</span> <span class="s">&#39;)&#39;</span><span class="p">,</span> <span class="s">&#39;)&#39;</span><span class="p">]</span>
+<p>this program will return the list:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">holder</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;(&#39;</span><span class="p">,</span> <span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="s">&#39;(&#39;</span><span class="p">,</span> <span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="s">&#39;3</span>
+<span class="s">&#39;, &#39;</span><span class="mi">2</span><span class="s">&#39;, &#39;</span><span class="p">)</span><span class="s">&#39;, &#39;</span><span class="p">(</span><span class="s">&#39;, &#39;</span><span class="o">-</span><span class="s">&#39;, &#39;</span><span class="mi">4</span><span class="s">&#39;, &#39;</span><span class="mi">2</span><span class="s">&#39;, &#39;</span><span class="p">)</span><span class="s">&#39;</span>
+<span class="p">,</span> <span class="s">&#39;)&#39;</span><span class="p">]</span>
 </pre></div>
 </td></tr></table>
 
-<p>Notice that before splitting the input, we added space around each of the brackets.  This accounts for 
-the case where the user inputs two brackets side by side, or a number right beside a bracket
-with no space.</p>
-<p>Having successfully created a list, holder, to hold the contents of our input, 
-we begun writing an algorithm to evaluate this content.  For starters, Kuan 
-and I decided we would limit ourselves to making our interpreter work for basic math expressions.  After that
-we would gradually worry about interpreting more complicated inputs.</p>
-<p>When basic math is inputed the most nested expression should be calculated first.  We needed a way 
-for the computer to find which math expression is the innermost one.  We created the following 
-algorithm: 1- Scan through the elements of holder from left to right in search of the first ')'.
-2 - Begin scanning again, this time in search of the last '(' we hit before the first ')'.<br />
-3- Extract whatever is inside of those brackets, and evaluate it.  4- In holder, replace this 
-innermost expression (including the brackets surrounding it) by its result we just evaluated.<br />
-5- Start again at 1.  This process would continue until there were no more brackets and expressions
-left to evaluate.  At this point, we would have evaluated the entire expression. </p>
-<p>We were able to write a working piece of code that implemented this algorithm, but it was sloppy 
-and we'd only interpreted basic math.  Kuan and I took a step back and looked at how our algorithm would pan out moving forward. We brainstormed 
-how we could go about interpreting 'define' expressions and we realized our current algorithm was going to get 
-pretty complicated.  Consider, for example, interpreting the expression: '(define (func) (+ x 2))'.
-If our current algorithm encountered this as input, it would find '(func)' and would get stuck trying to evaluate it.<br />
-It seemed that before even beginning our algorithm, we'd have to first scan the entire input looking for the key word 'define'.  Then, every time we find 'define', 
-we'd have to find the set of brackets containing the entire 'define' expression.  This in itself is kind of cumbersome, but
-we're only the beginning.  Once our entire 'define' expression is isolated, we'd have to search within this expression to
-find the our function's name.  This would be done by scanning from left to right and searching for
-the first ')' we come across, and then scanning again until we found its corresponding '('.  Then we'd have 
-to remember the contents of these brackets, and begin scanning again to find the defined 
-function's expression.  Once the expression was found, we'd have to assign the contents of the previous two brackets
-as the name of the function's expression we just found.  </p>
-<p>If you're getting confused, I don't blame you.  Clearly this algorithm is confusing.  The reason 
-it is confusing is  because there are so many states the the computer is required to keep track of 
-at any moment.  First we have to know we have found an expression containing 'define', and that we are searching 
-for the entire define expression.  Then we isolate this expression, and we have to remember that we are within the define expression 
-and that we are searching for the right bracket that will contain the function's name.  Then we have to remember we have found 
-the right bracket of the name of the function we are defining, and we're searching for the left bracket containing
-the name, etc etc.  SO MUCH TO KEEP TRACK OF!!! </p>
-<p>We turned to some resources online to see how they were approaching these things.  We found 
-<a href="https://www.hackerschool.com/blog/21-little-lisp-interpreter">Mary Cook's article</a> and <a href="http://norvig.com/lispy.html">Peter Norvig's article</a> helpful. 
-They had taken the parsing stage one step further than we 
-did.  Instead of storing the brackets as elements of the list, they created a version of "holder" 
-which was a nested list.  So, in the example where "(define (func) (x + 2))" is inputed, their code 
-would turn it into the following array: </p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="p">[</span><span class="s">&#39;define&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;func&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">]]</span>
+<p>Notice that before splitting the input, we added space around each of
+the brackets. This accounts for</p>
+<p>the case where the user inputs two brackets side by side, or a number
+right beside a bracket</p>
+<p>with no space.</p>
+<p>Having successfully created a list, holder, to hold the contents of our
+input,</p>
+<p>we begun writing an algorithm to evaluate this content. For starters,
+Kuan</p>
+<p>and I decided we would limit ourselves to making our interpreter work
+for basic math expressions. After that</p>
+<p>we would gradually worry about interpreting more complicated inputs.</p>
+<p>When basic math is inputed the most nested expression should be
+calculated first. We needed a way</p>
+<p>for the computer to find which math expression is the innermost one. We
+created the following</p>
+<p>algorithm: 1- Scan through the elements of holder from left to right in
+search of the first ')'.</p>
+<p>2 - Begin scanning again, this time in search of the last '(' we hit
+before the first ')'.  </p>
+<p>3- Extract whatever is inside of those brackets, and evaluate it. 4- In
+holder, replace this</p>
+<p>innermost expression (including the brackets surrounding it) by its
+result we just evaluated.  </p>
+<p>5- Start again at 1. This process would continue until there were no
+more brackets and expressions</p>
+<p>left to evaluate. At this point, we would have evaluated the entire
+expression.</p>
+<p>We were able to write a working piece of code that implemented this
+algorithm, but it was sloppy</p>
+<p>and we'd only interpreted basic math. Kuan and I took a step back and
+looked at how our algorithm would pan out moving forward. We
+brainstormed</p>
+<p>how we could go about interpreting 'define' expressions and we realized
+our current algorithm was going to get</p>
+<p>pretty complicated. Consider, for example, interpreting the expression:
+'(define (func) (+ x 2))'.</p>
+<p>If our current algorithm encountered this as input, it would find
+'(func)' and would get stuck trying to evaluate it.  </p>
+<p>It seemed that before even beginning our algorithm, we'd have to first
+scan the entire input looking for the key word 'define'. Then, every
+time we find 'define',</p>
+<p>we'd have to find the set of brackets containing the entire 'define'
+expression. This in itself is kind of cumbersome, but</p>
+<p>we're only the beginning. Once our entire 'define' expression is
+isolated, we'd have to search within this expression to</p>
+<p>find the our function's name. This would be done by scanning from left
+to right and searching for</p>
+<p>the first ')' we come across, and then scanning again until we found its
+corresponding '('. Then we'd have</p>
+<p>to remember the contents of these brackets, and begin scanning again to
+find the defined</p>
+<p>function's expression. Once the expression was found, we'd have to
+assign the contents of the previous two brackets</p>
+<p>as the name of the function's expression we just found.</p>
+<p>If you're getting confused, I don't blame you. Clearly this algorithm is
+confusing. The reason</p>
+<p>it is confusing is because there are so many states the the computer is
+required to keep track of</p>
+<p>at any moment. First we have to know we have found an expression
+containing 'define', and that we are searching</p>
+<p>for the entire define expression. Then we isolate this expression, and
+we have to remember that we are within the define expression</p>
+<p>and that we are searching for the right bracket that will contain the
+function's name. Then we have to remember we have found</p>
+<p>the right bracket of the name of the function we are defining, and we're
+searching for the left bracket containing</p>
+<p>the name, etc etc. SO MUCH TO KEEP TRACK OF!!!</p>
+<p>We turned to some resources online to see how they were approaching
+these things. We found</p>
+<p><a href="https://www.hackerschool.com/blog/21-little-lisp-interpreter">Mary Cook's
+article</a>
+and <a href="http://norvig.com/lispy.html">Peter Norvig's article</a> helpful.</p>
+<p>They had taken the parsing stage one step further than we</p>
+<p>did. Instead of storing the brackets as elements of the list, they
+created a version of "holder"</p>
+<p>which was a nested list. So, in the example where "(define (func) (x +
+2))" is inputed, their code</p>
+<p>would turn it into the following array:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="p">[</span><span class="s">&#39;define&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;func&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="s">&#39;x&#39;</span><span class="p">,</span>
+<span class="s">&#39;2&#39;</span><span class="p">]]</span>
 </pre></div>
 </td></tr></table>
 
-<p>Kuan and I decided to figure out if/how this extra parsing step was advantageous.  After talking 
-to Mary Cook in person about it (thanks Mary!) we got our answer: 
-Using the nested method allowed us to not have to keep track of as many sates!  Indeed, at each stage 
-of interpreting, we could simply look at the outermost list, look at the operator, and then act accordingly.
-If we encountered a 'define' expression we could handle it as follows: Given the new structure of
-holder we know that if our operator is define then holder[1] will be the function's name.  Likewise, 
-we would know that the expression of this defined function could be found at holder[2]. With this 
-extra parsing step, there is no longer the need to scan through the list searching for brackets, 
-and keeping track of where we are. The nested structure of holder replicates the actual structure of the input, 
-and a lot of the pain and agony in our previous method is taken care of for us here. </p>
-<p>Having clearly understood the differences between our algorithm and the popular one found online,
-and having seen the benefits of theirs over ours, we decided scratch what we had and start again.  (Of course, 
-the little tokenizer I described above could stay.) </p>
-<p>I would like to mention that I am HAPPY for the mistakes I made, as they resulted in a great deal of 
-learning.  I am a big advocate of trying things your own way first, and only changing your way once 
-you've learned the merits of another way.  Doing so results in a great deal of learning you 
-might otherwise miss out on. </p>
-<p>In the next episode, I hope to introduce to you the final product, and explain how it works! 
-Stay tuned! </p>
-<p class="subheader">Category: <a href="./category/blog.html">Blog</a>
+<p>Kuan and I decided to figure out if/how this extra parsing step was
+advantageous. After talking</p>
+<p>to Mary Cook in person about it (thanks Mary!) we got our answer:</p>
+<p>Using the nested method allowed us to not have to keep track of as many
+sates! Indeed, at each stage</p>
+<p>of interpreting, we could simply look at the outermost list, look at the
+operator, and then act accordingly.</p>
+<p>If we encountered a 'define' expression we could handle it as follows:
+Given the new structure of</p>
+<p>holder we know that if our operator is define then holder[1] will be the
+function's name. Likewise,</p>
+<p>we would know that the expression of this defined function could be
+found at holder[2]. With this</p>
+<p>extra parsing step, there is no longer the need to scan through the list
+searching for brackets,</p>
+<p>and keeping track of where we are. The nested structure of holder
+replicates the actual structure of the input,</p>
+<p>and a lot of the pain and agony in our previous method is taken care of
+for us here.</p>
+<p>Having clearly understood the differences between our algorithm and the
+popular one found online,</p>
+<p>and having seen the benefits of theirs over ours, we decided scratch
+what we had and start again. (Of course,</p>
+<p>the little tokenizer I described above could stay.)</p>
+<p>I would like to mention that I am HAPPY for the mistakes I made, as they
+resulted in a great deal of</p>
+<p>learning. I am a big advocate of trying things your own way first, and
+only changing your way once</p>
+<p>you've learned the merits of another way. Doing so results in a great
+deal of learning you</p>
+<p>might otherwise miss out on.</p>
+<p>In the next episode, I hope to introduce to you the final product, and
+explain how it works!</p>
+<p>Stay tuned!</p>
+<p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
 
 </p>
 
@@ -173,14 +248,14 @@ Stay tuned! </p>
     <aside class="large-3 columns">
         <h5 class="sidebar-title">Site</h5>
         <ul class="side-nav">
-            <li><a href="./archives.html">Archives</a>
-            <li><a href="./tags.html">Tags</a>
+            <li><a href="http://lmontopo.github.io/archives.html">Archives</a>
+            <li><a href="http://lmontopo.github.io/tags.html">Tags</a>
         </ul>
 
 		
         <h5 class="sidebar-title">Categories</h5>
         <ul class="side-nav">
-            <li><a href="./category/blog.html">Blog</a></li>
+            <li><a href="http://lmontopo.github.io/category/blog.html">Blog</a></li>
    
         </ul>
 

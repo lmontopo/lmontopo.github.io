@@ -6,11 +6,11 @@
 
     <title>Regular Expressions in Python - with LOTS of Examples!</title>
 
-    <link rel="stylesheet" href="./theme/css/normalize.css" />
-    <link rel="stylesheet" href="./theme/css/foundation.min.css" />
-    <link rel="stylesheet" href="./theme/css/style.css" />
-    <link rel="stylesheet" href="./theme/css/pygments.css" />	
-    <script src="./theme/js/modernizr.js"></script>
+    <link rel="stylesheet" href="http://lmontopo.github.io/theme/css/normalize.css" />
+    <link rel="stylesheet" href="http://lmontopo.github.io/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="http://lmontopo.github.io/theme/css/style.css" />
+    <link rel="stylesheet" href="http://lmontopo.github.io/theme/css/pygments.css" />	
+    <script src="http://lmontopo.github.io/theme/js/modernizr.js"></script>
 </head>
 
 <body>
@@ -20,7 +20,7 @@
 <div class="top-bar">
 <div class="row">
     <div class="large-9 large-centered columns">
-	    <h1><a href=".">The L Blog</a></h1>
+	    <h1><a href="http://lmontopo.github.io">The L Blog</a></h1>
     </div>
 </div>
 </div>
@@ -30,8 +30,6 @@
 <div class="large-9 columns">
     <ul class="button-group navigation">
 
-            <li><a href="./pages/about.html" class="button secondary small">About</a></li>
-            <li><a href="./pages/contact.html" class="button secondary small">Contact</a></li>
     </ul>
 </div>
 </div>
@@ -46,190 +44,285 @@
     <div class="large-9 columns">
 <article>
     <header>
-        <h3 class="article-title"><a href="./regular-expressions-in-python-with-lots-of-examples.html" rel="bookmark"
+        <h3 class="article-title"><a href="http://lmontopo.github.io/regular-expressions-in-python-with-lots-of-examples.html" rel="bookmark"
         title="Permalink to Regular Expressions in Python - with LOTS of Examples!">Regular Expressions in Python - with LOTS of Examples!</a></h3>
     </header>
 
-<h6 class="subheader" title="2014-12-04T00:00:00">Thu 04 December 2014
+<h6 class="subheader" title="2014-12-04T05:00:00-05:00">Thu 04 December 2014
 </h6>
 
 
-    <p>Over the past several days I've learned a great deal about regular expressions. I struggled initially with the subject, but I think things have finally clicked.  So, I'm going to write what I've learned!  In this blog post I am going to: </p>
+    <p>Over the past several days I've learned a great deal about regular
+expressions. I struggled initially with the subject, but I think things
+have finally clicked. So, I'm going to write what I've learned! In this
+blog post I am going to:</p>
 <ul>
-<li>Explain what a regular expression is. </li>
+<li>Explain what a regular expression is.</li>
 <li>Introduce <code>re.split()</code> and use it to provide examples.</li>
-<li>Explain some of the ways that the star, dot, and question mark can be used in a regular expression. </li>
+<li>Explain some of the ways that the star, dot, and question mark can
+    be used in a regular expression.</li>
 <li>Explain, in detail, the plague of the backslash.</li>
 </ul>
-<p>As I learned about regular expressions, I found examples to be enourmously helpful.  For this reason, there will be a TON of examples throughout this blogpost. </p>
+<p>As I learned about regular expressions, I found examples to be
+enourmously helpful. For this reason, there will be a TON of examples
+throughout this blogpost.</p>
 <h4>What is a regular expression?</h4>
-<p>A regular expression is sequence of characters that represent a pattern we would like to search for within a larger chunk of text.  There are two types of characters within a regular expression: ones that represent themselves, called <strong>ordinary characters</strong>, and one's that don't represent themselves, called <strong>special characters</strong>.  Most common characters, like the letter 'a', match to themselves in a python regular expression. </p>
+<p>A regular expression is sequence of characters that represent a pattern
+we would like to search for within a larger chunk of text. There are two
+types of characters within a regular expression: ones that represent
+themselves, called <strong>ordinary characters</strong>, and one's that don't
+represent themselves, called <strong>special characters</strong>. Most common
+characters, like the letter 'a', match to themselves in a python regular
+expression.</p>
 <h4>Introducing the split function:</h4>
-<p>To use regular expression in Python you need to <code>import re</code>.  This module gives you access to many different methods.  The ones I use the most are <code>re.split(pattern, string)</code> and <code>re.match(patter, string)</code>.  I find <code>re.split()</code> easiest to understand, so we'll start there.  We'll visit <code>re.search()</code> later. </p>
-<p>The <code>re.split(pattern, string)</code> is very similar to python's built in split method for strings.  It splits the inputed string over the pattern expressed by the regular expression.  By default, <code>re.split()</code> will return a list of all the parts of the string, excluding the parts that matched the pattern.  If you would like the resulting list to include the sections which match to the pattern then parenthesis are needed around the regular expression:</p>
+<p>To use regular expression in Python you need to <code>import re</code>. This module
+gives you access to many different methods. The ones I use the most are
+<code>re.split(pattern, string)</code> and <code>re.match(patter, string)</code>. I find
+<code>re.split()</code> easiest to understand, so we'll start there. We'll visit
+<code>re.search()</code> later.</p>
+<p>The <code>re.split(pattern, string)</code> is very similar to python's built in
+split method for strings. It splits the inputed string over the pattern
+expressed by the regular expression. By default, <code>re.split()</code> will
+return a list of all the parts of the string, excluding the parts that
+matched the pattern. If you would like the resulting list to include the
+sections which match to the pattern then parenthesis are needed around
+the regular expression:</p>
 <h5>Example 1: Introductiory Example:</h5>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
-5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">re</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&#39;Hackerschool is cool.&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-<span class="p">[</span><span class="s">&#39;H&#39;</span><span class="p">,</span> <span class="s">&#39;cker School is cool.&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(a)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-<span class="p">[</span><span class="s">&#39;H&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;ckerschool is cool.&#39;</span><span class="p">]</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">re</span><span class="o">&gt;&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&#39;Hackers</span>
+<span class="n">chool</span> <span class="ow">is</span> <span class="n">cool</span><span class="o">.</span><span class="s">&#39;&gt;&gt;&gt; re.split(&quot;a&quot;, tex</span>
+<span class="n">t</span><span class="p">)[</span><span class="s">&#39;H&#39;</span><span class="p">,</span> <span class="s">&#39;cker School is cool.&#39;</span><span class="p">]</span><span class="o">&gt;&gt;&gt;</span> <span class="n">r</span>
+<span class="n">e</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(a)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)[</span><span class="s">&#39;H&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;cker</span>
+<span class="n">school</span> <span class="ow">is</span> <span class="n">cool</span><span class="o">.</span><span class="s">&#39;]</span>
 </pre></div>
 </td></tr></table>
 
-<p>As you can see, when we put parentheses around 'a', then 'a' is included in the resulting list.  But perhaps we have a pattern that is more than one character long, and we want only part of the pattern to be kept in the array.  To do this brackets are put around the part of the regular expression we want to keep.  Check it out:</p>
+<p>As you can see, when we put parentheses around 'a', then 'a' is included
+in the resulting list. But perhaps we have a pattern that is more than
+one character long, and we want only part of the pattern to be kept in
+the array. To do this brackets are put around the part of the regular
+expression we want to keep. Check it out:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;a(ck)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-<span class="p">[</span><span class="s">&#39;H&#39;</span><span class="p">,</span> <span class="s">&#39;ck&#39;</span><span class="p">,</span> <span class="s">&#39;erschool is cool.&#39;</span><span class="p">]</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;a(ck)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)[</span><span class="s">&#39;H&#39;</span><span class="p">,</span>
+<span class="s">&#39;ck&#39;</span><span class="p">,</span> <span class="s">&#39;erschool is cool.&#39;</span><span class="p">]</span>
 </pre></div>
 </td></tr></table>
 
-<p>Here the 'a' is still left out because it wasn't included in the parentheses! </p>
+<p>Here the 'a' is still left out because it wasn't included in the
+parentheses!</p>
 <h4>Special Characters Star, Period and Question Mark:</h4>
-<p>We're going to use <code>re.split()</code> to explore what these special symbols match to in a regular expression. </p>
+<p>We're going to use <code>re.split()</code> to explore what these special symbols
+match to in a regular expression.</p>
 <h5>Example 2: The period:</h5>
-<p>According to Python's regular expression documentation, the period matches any character except a newline.</p>
+<p>According to Python's regular expression documentation, the period
+matches any character except a newline.</p>
 <p>so as you'd expect it is going to split on every character...</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;Hackerschool is cool!&quot;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(.)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-<span class="p">[</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;H&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;k&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;s&#39;</span><span class="p">,</span> 
-<span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;h&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;o&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;o&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39; &#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;i&#39;</span><span class="p">,</span> 
-<span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;s&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39; &#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;o&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;o&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;!&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">]</span>
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;Hackerschool is cool</span>
+<span class="err">!</span><span class="s">&quot;&gt;&gt;&gt; re.split(&quot;</span><span class="p">(</span><span class="o">.</span><span class="p">)</span><span class="s">&quot;, text)[&#39;&#39;, &#39;H&#39;,</span>
+<span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;k&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">,</span>
+<span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;s&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;h&#39;</span><span class="p">,</span>
+<span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;o&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;o&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39; &#39;</span><span class="p">,</span>
+<span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;s&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39; &#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span>
+<span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;o&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;o&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;!&#39;</span><span class="p">,</span>
+<span class="s">&#39;&#39;</span><span class="p">]</span>
 </pre></div>
 </td></tr></table>
 
-<p>It might be surprising to you that there are empty string elements between each character.  I was surprised!  I don't really have a good explanation for why this happens except to say that this is just the way the split function works.  It finds the pattern we are searching for, and then says "OK, on  the left side of this pattern instance we have (fill in the blank) and on the right side we have (fill in the blank)".  In our example, since every character is an instance of the pattern, on either side of each pattern instance there is only the empty string.  We'll see another occurence of this behaviour in a later example. If it doesn't make sense to you now, hopefully it will then.</p>
+<p>It might be surprising to you that there are empty string elements
+between each character. I was surprised! I don't really have a good
+explanation for why this happens except to say that this is just the way
+the split function works. It finds the pattern we are searching for, and
+then says "OK, on the left side of this pattern instance we have (fill
+in the blank) and on the right side we have (fill in the blank)". In our
+example, since every character is an instance of the pattern, on either
+side of each pattern instance there is only the empty string. We'll see
+another occurence of this behaviour in a later example. If it doesn't
+make sense to you now, hopefully it will then.</p>
 <p>Now lets combine the dot with other characters:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(.ool)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-<span class="p">[</span><span class="s">&#39;Hackersc&#39;</span><span class="p">,</span> <span class="s">&#39;hool&#39;</span><span class="p">,</span> <span class="s">&#39; is &#39;</span><span class="p">,</span> <span class="s">&#39;cool&#39;</span><span class="p">,</span> <span class="s">&#39;!&#39;</span><span class="p">]</span>
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(.ool)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)[</span><span class="s">&#39;Ha</span>
+<span class="n">ckersc</span><span class="s">&#39;, &#39;</span><span class="n">hool</span><span class="s">&#39;, &#39;</span> <span class="ow">is</span> <span class="s">&#39;, &#39;</span><span class="n">cool</span><span class="s">&#39;, &#39;</span><span class="err">!</span><span class="s">&#39;</span>
+<span class="p">]</span>
 </pre></div>
 </td></tr></table>
 
-<p>This makes sense - there were two occurences where there appeared "some character followed by 'ool'". </p>
-<p>Lets try a couple more examples just to make sure we get the hang of it: </p>
+<p>This makes sense - there were two occurences where there appeared "some
+character followed by 'ool'".</p>
+<p>Lets try a couple more examples just to make sure we get the hang of it:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(c.o)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-<span class="p">[</span><span class="s">&#39;Hackers&#39;</span><span class="p">,</span> <span class="s">&#39;cho&#39;</span><span class="p">,</span> <span class="s">&#39;ol is &#39;</span><span class="p">,</span> <span class="s">&#39;coo&#39;</span><span class="p">,</span> <span class="s">&#39;l!&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(c.h)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-<span class="p">[</span><span class="s">&#39;Hackerschool is cool!&#39;</span><span class="p">]</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(c.o)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)[</span><span class="s">&#39;Hac</span>
+<span class="n">kers</span><span class="s">&#39;, &#39;</span><span class="n">cho</span><span class="s">&#39;, &#39;</span><span class="n">ol</span> <span class="ow">is</span> <span class="s">&#39;, &#39;</span><span class="n">coo</span><span class="s">&#39;, &#39;</span><span class="n">l</span><span class="err">!</span><span class="s">&#39;]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(c.h)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)[</span><span class="s">&#39;Hackers</span>
+<span class="n">chool</span> <span class="ow">is</span> <span class="n">cool</span><span class="err">!</span><span class="s">&#39;]</span>
 </pre></div>
 </td></tr></table>
 
-<p>The first time we split over 'cho' and 'coo' since both are instances of the pattern "'c' followed by some character followed by 'o'".  The second time we don't split the expression at all.  Even though 'ch' is in school, there is no character between the 'c' and the 'h'. So 'ch' doesn't match to the regular expression 'c.h'.  The lesson here is that <strong>'.' on its own matches to exactly one instance of any character</strong>.  Not zero, not two, one. </p>
+<p>The first time we split over 'cho' and 'coo' since both are instances of
+the pattern "'c' followed by some character followed by 'o'". The second
+time we don't split the expression at all. Even though 'ch' is in
+school, there is no character between the 'c' and the 'h'. So 'ch'
+doesn't match to the regular expression 'c.h'. The lesson here is that
+<strong>'.' on its own matches to exactly one instance of any character</strong>. Not
+zero, not two, one.</p>
 <h5>Example 3: The period and the star.</h5>
-<p>The star represents 0 or more repititions of the previous character expressed in the regular expression.  Whenever possible, the star will 'suck up' as much as it can.  Because of this behaviour, star is called a <strong>greedy character</strong>.</p>
+<p>The star represents 0 or more repititions of the previous character
+expressed in the regular expression. Whenever possible, the star will
+'suck up' as much as it can. Because of this behaviour, star is called a
+<strong>greedy character</strong>.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
-5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;I like reading scify books.&quot;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(s.i)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-<span class="p">[</span><span class="s">&#39;I like reading &#39;</span><span class="p">,</span> <span class="s">&#39;sci&#39;</span><span class="p">,</span> <span class="s">&#39;fi books.&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(s.*i)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-<span class="p">[</span><span class="s">&#39;I like reading &#39;</span><span class="p">,</span> <span class="s">&#39;scifi&#39;</span><span class="p">,</span> <span class="n">books</span><span class="o">.</span><span class="s">&#39;]</span>
-<span class="o">&gt;&gt;&gt;</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;I like reading scify</span>
+<span class="n">books</span><span class="o">.</span><span class="s">&quot;&gt;&gt;&gt; re.split(&quot;</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">i</span><span class="p">)</span><span class="s">&quot;, text)[</span>
+<span class="s">&#39;I like reading &#39;</span><span class="p">,</span> <span class="s">&#39;sci&#39;</span><span class="p">,</span> <span class="s">&#39;fi books.</span>
+<span class="s">&#39;]&gt;&gt;&gt; re.split(&quot;(s.*i)&quot;, text)[&#39;</span><span class="n">I</span> <span class="n">li</span>
+<span class="n">ke</span> <span class="n">reading</span> <span class="s">&#39;, &#39;</span><span class="n">scifi</span><span class="s">&#39;, books.&#39;</span><span class="p">]</span><span class="o">&gt;&gt;&gt;</span>
 </pre></div>
 </td></tr></table>
 
-<p>Without the star, the regular expression 's.i' will match to 'sci'.  When the star is added the regular expression matches to more stuff!  The expression 's.*i' matches to 'scifi' because the star indicates that the dot can be repeated 0 or more times. Because the star is greedy it soaks up as many repetitions as possible. </p>
-<p>Lets see what happens when we change the text to "I like science books.".</p>
+<p>Without the star, the regular expression 's.i' will match to 'sci'. When
+the star is added the regular expression matches to more stuff! The
+expression 's.*i' matches to 'scifi' because the star indicates that
+the dot can be repeated 0 or more times. Because the star is greedy it
+soaks up as many repetitions as possible.</p>
+<p>Lets see what happens when we change the text to "I like science
+books.".</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;I like science books.&quot;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(s.*i)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-<span class="p">[</span><span class="s">&#39;I like &#39;</span><span class="p">,</span> <span class="s">&#39;sci&#39;</span><span class="p">,</span> <span class="s">&#39;ence books.&#39;</span><span class="p">]</span>
+3</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;I like science books</span>
+<span class="o">.</span><span class="s">&quot;&gt;&gt;&gt; re.split(&quot;</span><span class="p">(</span><span class="n">s</span><span class="o">.*</span><span class="n">i</span><span class="p">)</span><span class="s">&quot;, text)[&#39;I li</span>
+<span class="n">ke</span> <span class="s">&#39;, &#39;</span><span class="n">sci</span><span class="s">&#39;, &#39;</span><span class="n">ence</span> <span class="n">books</span><span class="o">.</span><span class="s">&#39;]</span>
 </pre></div>
 </td></tr></table>
 
-<p>Now that there is only one 'i' in the text, there are no more characters that the star can suck up, so, "s.*i" matches to 'sci'. </p>
+<p>Now that there is only one 'i' in the text, there are no more characters
+that the star can suck up, so, "s.*i" matches to 'sci'.</p>
 <h5>Example 4: The Question Mark</h5>
-<p>The question matches either 0 or 1 repetitions of the preceeding regular expression. Here are some examples:</p>
+<p>The question matches either 0 or 1 repetitions of the preceeding regular
+expression. Here are some examples:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
 5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;There are num sections in this document.&quot;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(e.*)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-<span class="p">[</span><span class="s">&#39;Th&#39;</span><span class="p">,</span> <span class="s">&#39;ere are num sections in this document.&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(e.?)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-<span class="p">[</span><span class="s">&#39;Th&#39;</span><span class="p">,</span> <span class="s">&#39;er&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;e &#39;</span><span class="p">,</span> <span class="s">&#39;ar&#39;</span><span class="p">,</span> <span class="s">&#39;e &#39;</span><span class="p">,</span> <span class="s">&#39;num s&#39;</span><span class="p">,</span> <span class="s">&#39;ec&#39;</span><span class="p">,</span> <span class="s">&#39;tions in this docum&#39;</span><span class="p">,</span> <span class="s">&#39;en&#39;</span><span class="p">,</span> <span class="s">&#39;t.&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span>
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;There are num sectio</span>
+<span class="n">ns</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">document</span><span class="o">.</span><span class="s">&quot;&gt;&gt;&gt; re.split(&quot;</span><span class="p">(</span>
+<span class="n">e</span><span class="o">.*</span><span class="p">)</span><span class="s">&quot;, text)[&#39;Th&#39;, &#39;ere are num sect</span>
+<span class="n">ions</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">document</span><span class="o">.</span><span class="s">&#39;, &#39;&#39;]&gt;&gt;&gt; re.s</span>
+<span class="n">plit</span><span class="p">(</span><span class="s">&quot;(e.?)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)[</span><span class="s">&#39;Th&#39;</span><span class="p">,</span> <span class="s">&#39;er&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span>
+<span class="s">&#39;e &#39;</span><span class="p">,</span> <span class="s">&#39;ar&#39;</span><span class="p">,</span> <span class="s">&#39;e &#39;</span><span class="p">,</span> <span class="s">&#39;num s&#39;</span><span class="p">,</span> <span class="s">&#39;ec&#39;</span><span class="p">,</span> <span class="s">&#39;ti</span>
+<span class="n">ons</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">docum</span><span class="s">&#39;, &#39;</span><span class="n">en</span><span class="s">&#39;, &#39;</span><span class="n">t</span><span class="o">.</span><span class="s">&#39;]&gt;&gt;&gt;</span>
 </pre></div>
 </td></tr></table>
 
-<p>When we use the question mark instead of the star there are many more matches to the regular expression! The question mark is basically the oposite of a greedy character.  </p>
-<p>Also, notice the occurence of an empty string between the 'er' and the 'e'.  Since we are splitting over the 'er' and the 'e' the split functions wants to put something on either side of these that isn't something else we're splitting over. The only thing between the 'er' and the 'e' is the empty string.  Hopefully this examples helps to understand the whole empty string phenomenon.</p>
+<p>When we use the question mark instead of the star there are many more
+matches to the regular expression! The question mark is basically the
+oposite of a greedy character.</p>
+<p>Also, notice the occurence of an empty string between the 'er' and the
+'e'. Since we are splitting over the 'er' and the 'e' the split
+functions wants to put something on either side of these that isn't
+something else we're splitting over. The only thing between the 'er' and
+the 'e' is the empty string. Hopefully this examples helps to understand
+the whole empty string phenomenon.</p>
 <h5>Example 5: Combining the dot, star, and question mark:</h5>
-<p>Lets see what happens when we combine all three: the dot, the star, and the question mark.</p>
+<p>Lets see what happens when we combine all three: the dot, the star, and
+the question mark.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;There are num sections in this document.&quot;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(e.*?)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-<span class="p">[</span><span class="err">&#39;</span><span class="n">Th</span><span class="err">&#39;</span><span class="p">,</span> <span class="sc">&#39;e&#39;</span><span class="p">,</span> <span class="sc">&#39;r&#39;</span><span class="p">,</span> <span class="sc">&#39;e&#39;</span><span class="p">,</span> <span class="err">&#39;</span> <span class="n">ar</span><span class="err">&#39;</span><span class="p">,</span> <span class="sc">&#39;e&#39;</span><span class="p">,</span> <span class="err">&#39;</span> <span class="n">num</span> <span class="n">s</span><span class="err">&#39;</span><span class="p">,</span> <span class="sc">&#39;e&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">ctions</span> <span class="n">in</span> <span class="n">this</span> <span class="n">docum</span><span class="err">&#39;</span><span class="p">,</span> <span class="sc">&#39;e&#39;</span>
-<span class="p">,</span> <span class="err">&#39;</span><span class="n">nt</span><span class="p">.</span><span class="err">&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;There are num sectio</span>
+<span class="n">ns</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">document</span><span class="o">.</span><span class="s">&quot;&gt;&gt;&gt; re.split(&quot;</span><span class="p">(</span>
+<span class="n">e</span><span class="o">.*</span><span class="err">?</span><span class="p">)</span><span class="s">&quot;, text)[&#39;Th&#39;, &#39;e&#39;, &#39;r&#39;, &#39;e&#39;, &#39;</span>
+<span class="n">ar</span><span class="s">&#39;, &#39;</span><span class="n">e</span><span class="s">&#39;, &#39;</span> <span class="n">num</span> <span class="n">s</span><span class="s">&#39;, &#39;</span><span class="n">e</span><span class="s">&#39;, &#39;</span><span class="n">ctions</span> <span class="ow">in</span>
+<span class="n">this</span> <span class="n">docum</span><span class="s">&#39;, &#39;</span><span class="n">e</span><span class="s">&#39;, &#39;</span><span class="n">nt</span><span class="o">.</span><span class="s">&#39;]&gt;&gt;&gt;</span>
 </pre></div>
 </td></tr></table>
 
-<p>Placing the question mark after a the star makes the regular expression match to the minimal number of characters possible. We'll see this more in the next example...</p>
+<p>Placing the question mark after a the star makes the regular expression
+match to the minimal number of characters possible. We'll see this more
+in the next example...</p>
 <h5>Example #4: Application to my Template Engine:</h5>
-<p>I have been working on writing my own template engine.  In my language, variables will be contained within double curly braces.  I used regular expressions to parse the html template and find all of the variables.  Lets see an example: </p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">html_text</span> <span class="o">=</span> <span class="s">&quot;&lt;html&gt;&lt;title&gt; Hello {{name}}.&lt;/title&gt; Today is {{day}}.&lt;/html&gt;&quot;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;({{.*?}})&quot;</span><span class="p">,</span> <span class="n">html_text</span><span class="p">)</span>
-<span class="p">[</span><span class="s">&#39;&lt;html&gt;&lt;title&gt; Hello &#39;</span><span class="p">,</span> <span class="s">&#39;{{name}}&#39;</span><span class="p">,</span> <span class="s">&#39;.&lt;/title&gt; Today is &#39;</span><span class="p">,</span> <span class="s">&#39;{{day}}&#39;</span><span class="p">,</span> <span class="s">&#39;.&lt;/html&gt;&#39;</span><span class="p">]</span>
-</pre></div>
-</td></tr></table>
-
-<p>Just to make sure we understand what the star and question mark are doing, lets see what happens when either one is removed:</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;({{.*}})&quot;</span><span class="p">,</span> <span class="n">html_text</span><span class="p">)</span>
-<span class="p">[</span><span class="s">&#39;&lt;html&gt;&lt;title&gt; Hello &#39;</span><span class="p">,</span> <span class="s">&#39;{{name}}.&lt;/title&gt; Today is {{day}}&#39;</span><span class="p">,</span> <span class="s">&#39;.&lt;/html&gt;&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;({{.?}})&quot;</span><span class="p">,</span> <span class="n">html_text</span><span class="p">)</span>
-<span class="p">[</span><span class="s">&#39;&lt;html&gt;&lt;title&gt; Hello {{name}}.&lt;/title&gt; Today is {{day}}.&lt;/html&gt;&#39;</span><span class="p">]</span>
-</pre></div>
-</td></tr></table>
-
-<p>When the question mark is removed, the star acts greedily and soaks everything up until the last occurence of '}}'.  When the star is removed, we have no match to our pattern at all.  This is because the variable names inside the curly braces are more than 1 character long.  </p>
-<h4>The plague of the backslash:</h4>
-<p>Now we have a handle on those special functions, lets explore the ... dun dun dun... THE BACKSLASH!</p>
-<p>Beleive it or not, the regular expression for a backslash is FOUR backslashes.  Woah.  Lets walk through why this is the case:</p>
-<p>In python, a backslash is a special character, and so to represent a backslash we actually need to use two backslashes.  So in python two backslashes represents one. I'm not even talking about regular expressions yet, I'm just talking about python strings. Lets verify this: </p>
+<p>I have been working on writing my own template engine. In my language,
+variables will be contained within double curly braces. I used regular
+expressions to parse the html template and find all of the variables.
+Lets see an example:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">backslash</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">&quot;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">backslash</span><span class="p">)</span>
-<span class="mi">1</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="n">backslash</span>
-\
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">html_text</span> <span class="o">=</span> <span class="s">&quot;&lt;html&gt;&lt;title&gt; H</span>
+<span class="n">ello</span> <span class="p">{{</span><span class="n">name</span><span class="p">}}</span><span class="o">.&lt;/</span><span class="n">title</span><span class="o">&gt;</span> <span class="n">Today</span> <span class="ow">is</span> <span class="p">{{</span><span class="n">da</span>
+<span class="n">y</span><span class="p">}}</span><span class="o">.&lt;/</span><span class="n">html</span><span class="o">&gt;</span><span class="s">&quot;&gt;&gt;&gt; re.split(&quot;</span><span class="p">({{</span><span class="o">.*</span><span class="err">?</span><span class="p">}})</span><span class="s">&quot;</span>
+<span class="p">,</span> <span class="n">html_text</span><span class="p">)[</span><span class="s">&#39;&lt;html&gt;&lt;title&gt; Hello &#39;</span><span class="p">,</span>
+<span class="s">&#39;{{name}}&#39;</span><span class="p">,</span> <span class="s">&#39;.&lt;/title&gt; Today is &#39;</span><span class="p">,</span>
+<span class="s">&#39;{{day}}&#39;</span><span class="p">,</span> <span class="s">&#39;.&lt;/html&gt;&#39;</span><span class="p">]</span>
 </pre></div>
 </td></tr></table>
 
-<p>Neat! </p>
-<p>Ok, so this means that we actually have to write a regular expression which will match to two backslashes instead of to a single backslash. Now, in regular expression land, backlash is one of those special characters we talked about previously.  They don't match to themselves.  The regular expression for a backslash is also two backslashes.  So, since we want to match to the python string <code>\\</code> the regular expression to do so becomes <code>\\\\</code>.  </p>
-<p>I hope you've enjoyed this introduction to regular expression in Python.  If anything is confusing, don't hesitate to contact me!</p>
-<p class="subheader">Category: <a href="./category/blog.html">Blog</a>
+<p>Just to make sure we understand what the star and question mark are
+doing, lets see what happens when either one is removed:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;({{.*}})&quot;</span><span class="p">,</span> <span class="n">html_te</span>
+<span class="n">xt</span><span class="p">)[</span><span class="s">&#39;&lt;html&gt;&lt;title&gt; Hello &#39;</span><span class="p">,</span> <span class="s">&#39;{{name}</span>
+<span class="p">}</span><span class="o">.&lt;/</span><span class="n">title</span><span class="o">&gt;</span> <span class="n">Today</span> <span class="ow">is</span> <span class="p">{{</span><span class="n">day</span><span class="p">}}</span><span class="s">&#39;, &#39;</span><span class="o">.&lt;/</span><span class="n">ht</span>
+<span class="n">ml</span><span class="o">&gt;</span><span class="s">&#39;]&gt;&gt;&gt; re.split(&quot;({{.?}})&quot;, html_t</span>
+<span class="n">ext</span><span class="p">)[</span><span class="s">&#39;&lt;html&gt;&lt;title&gt; Hello {{name}}.&lt;</span>
+<span class="o">/</span><span class="n">title</span><span class="o">&gt;</span> <span class="n">Today</span> <span class="ow">is</span> <span class="p">{{</span><span class="n">day</span><span class="p">}}</span><span class="o">.&lt;/</span><span class="n">html</span><span class="o">&gt;</span><span class="s">&#39;]</span>
+</pre></div>
+</td></tr></table>
+
+<p>When the question mark is removed, the star acts greedily and soaks
+everything up until the last occurence of '}}'. When the star is
+removed, we have no match to our pattern at all. This is because the
+variable names inside the curly braces are more than 1 character long.</p>
+<h4>The plague of the backslash:</h4>
+<p>Now we have a handle on those special functions, lets explore the ...
+dun dun dun... THE BACKSLASH!</p>
+<p>Beleive it or not, the regular expression for a backslash is FOUR
+backslashes. Woah. Lets walk through why this is the case:</p>
+<p>In python, a backslash is a special character, and so to represent a
+backslash we actually need to use two backslashes. So in python two
+backslashes represents one. I'm not even talking about regular
+expressions yet, I'm just talking about python strings. Lets verify
+this:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">backslash</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">&quot;</span><span class="o">&gt;&gt;&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">back</span>
+<span class="n">slash</span><span class="p">)</span><span class="mi">1</span><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="n">backslash</span>\
+</pre></div>
+</td></tr></table>
+
+<p>Neat!</p>
+<p>Ok, so this means that we actually have to write a regular expression
+which will match to two backslashes instead of to a single backslash.
+Now, in regular expression land, backlash is one of those special
+characters we talked about previously. They don't match to themselves.
+The regular expression for a backslash is also two backslashes. So,
+since we want to match to the python string <code>\\</code> the regular expression
+to do so becomes <code>\\\\</code>.</p>
+<p>I hope you've enjoyed this introduction to regular expression in Python.
+If anything is confusing, don't hesitate to contact me!</p>
+<p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
 
 </p>
 
@@ -244,14 +337,14 @@
     <aside class="large-3 columns">
         <h5 class="sidebar-title">Site</h5>
         <ul class="side-nav">
-            <li><a href="./archives.html">Archives</a>
-            <li><a href="./tags.html">Tags</a>
+            <li><a href="http://lmontopo.github.io/archives.html">Archives</a>
+            <li><a href="http://lmontopo.github.io/tags.html">Tags</a>
         </ul>
 
 		
         <h5 class="sidebar-title">Categories</h5>
         <ul class="side-nav">
-            <li><a href="./category/blog.html">Blog</a></li>
+            <li><a href="http://lmontopo.github.io/category/blog.html">Blog</a></li>
    
         </ul>
 

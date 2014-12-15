@@ -4,7 +4,7 @@
     <!-- Set the viewport width to device width for mobile -->
     <meta name="viewport" content="width=device-width" />
 
-    <title>The L Blog - Leta Montopoli</title>
+    <title>Scopes got me again!</title>
 
     <link rel="stylesheet" href="http://lmontopo.github.io/theme/css/normalize.css" />
     <link rel="stylesheet" href="http://lmontopo.github.io/theme/css/foundation.min.css" />
@@ -42,16 +42,17 @@
 
     <!-- Main Blog Content -->
     <div class="large-9 columns">
-        
-        
+<article>
+    <header>
+        <h3 class="article-title"><a href="http://lmontopo.github.io/scopes-got-me-again.html" rel="bookmark"
+        title="Permalink to Scopes got me again!">Scopes got me again!</a></h3>
+    </header>
 
-            <article>
-                <a href="http://lmontopo.github.io/scopes-got-me-again.html"><h3 class="article-title">Scopes got me again!</h3></a>
 <h6 class="subheader" title="2014-12-15T00:00:00-05:00">Mon 15 December 2014
 </h6>
 
 
-<p>In a previous blog post I wrote about some of the struggles I encountered with scoping when Margo and I worked on our web framework Chapeau.  This week, scopes got me again!  This time, while I was working on my Template Engine. </p>
+    <p>In a previous blog post I wrote about some of the struggles I encountered with scoping when Margo and I worked on our web framework Chapeau.  This week, scopes got me again!  This time, while I was working on my Template Engine. </p>
 <p>I think that, as a new programmer, its not totally surprising that I've been a bit naive and carefree about scopes and global variables.  However, I think that making mistakes was a good way for me to learn.  Having been tricked by scoping issues twice now, I'll be much more careful with these matters in the future.  </p>
 <p>In this blog post I'm going to present a peice of code I wrote as an example.  It illustrates in a straightforward manner the issues I was facing with my Template Engine.  After presenting the code, I'll explain what is problematic about it. I'll present some examples tests I wrote for it, I'll show the weird things that the tests were doing, and I'll explain what I initially thought was happening and what I learned was <em>actually</em> happening. </p>
 <p>Here's the example file which I've named string_maker.py</p>
@@ -243,324 +244,15 @@ FAILED (failures=1)
 <p>When I re-instantiate the <code>my_HTML = HTMLString()</code> inside each of my test functions, I am creating a local instance of this class.  Local, meaning, in the scope of the function.  Then I call <code>add_to_string</code> which updates the <em>global</em> instance of my_HTML (ie. the instance of the class that is in my code string_maker.py)
 .  <strong>These are not the same object!</strong> So I update the global instance, and then assertEqual on the local instance, which of course still have an empty value string. </p>
 <p>If this isn't making sense, remember that when you create a function you create a scope for that function.  When a function encounters a name its not familiar with, it will first check within its own scope, ie within its own definition, to see if there is anything by that name defined there.  If there isn't, then it will look for things outside of its own scope. As soon as it finds something, it uses it.  </p>
-<p>Take Away:  <strong>You can have a local variable and a global variable that have the same name, but they are not the same thing!!!!</strong> </p><p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
+<p>Take Away:  <strong>You can have a local variable and a global variable that have the same name, but they are not the same thing!!!!</strong> </p>
+<p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
 
 </p>
 
 
 
-            </article>
 
-
-                <hr  class="gradient"/>
-
-
-        
-
-
-            <article>
-                <a href="http://lmontopo.github.io/regular-expressions-in-python-with-lots-of-examples.html"><h3 class="article-title">Regular Expressions in Python - with LOTS of Examples!</h3></a>
-<h6 class="subheader" title="2014-12-04T05:00:00-05:00">Thu 04 December 2014
-</h6>
-
-
-<p>Over the past several days I've learned a great deal about regular
-expressions. I struggled initially with the subject, but I think things
-have finally clicked. So, I'm going to write what I've learned! In this
-blog post I am going to:</p>
-<ul>
-<li>Explain what a regular expression ...</li></ul><p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
-
-</p>
-
-
-
-                <a class="button radius secondary small right" href="http://lmontopo.github.io/regular-expressions-in-python-with-lots-of-examples.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://lmontopo.github.io/i-made-my-first-cookie.html"><h3 class="article-title">I made my first cookie!</h3></a>
-<h6 class="subheader" title="2014-11-27T05:00:00-05:00">Thu 27 November 2014
-</h6>
-
-
-<p>Margo and I have been working on our web-framework, Chapeau. To test out
-its functionality and user-friendliness, we've been using Chapeau to
-build various web-apps. This week we implimented a buzz-feed-style quiz.
-To challenge ourselves (and Chapeau) we structured the app to have a
-separate webpage for each question ...</p><p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
-
-</p>
-
-
-
-                <a class="button radius secondary small right" href="http://lmontopo.github.io/i-made-my-first-cookie.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://lmontopo.github.io/lisp-interpreter-episode-3-the-finally-continued.html"><h3 class="article-title">Lisp Interpreter: Episode 3 (The Finally!) ... Continued.</h3></a>
-<h6 class="subheader" title="2014-11-24T05:00:00-05:00">Mon 24 November 2014
-</h6>
-
-
-<p>In last week's episode we inspected how my program tokenizes and parses
-the user's input. In the spirit of finishing this series of blog posts,
-I have decided today to present an overview of how the rest of my
-program works. We'll walk through the basic algorithm ...</p><p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
-
-</p>
-
-
-
-                <a class="button radius secondary small right" href="http://lmontopo.github.io/lisp-interpreter-episode-3-the-finally-continued.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://lmontopo.github.io/little-lessons-3-uris-urllib-template-engines-and-generators.html"><h3 class="article-title">Little Lessons 3: URI's, 'urllib', Template engines, and generators.</h3></a>
-<h6 class="subheader" title="2014-11-19T05:00:00-05:00">Wed 19 November 2014
-</h6>
-
-
-<p>I've learned so many fun little lessons over the past week, its time for
-another post!</p>
-<h4>What is a URI? Is it the same as a URL?</h4>
-<p>URI stands for uniform resource identifier. A very common form of a URI
-is the URL, which stands for uniform resource locator ...</p><p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
-
-</p>
-
-
-
-                <a class="button radius secondary small right" href="http://lmontopo.github.io/little-lessons-3-uris-urllib-template-engines-and-generators.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://lmontopo.github.io/lisp-interpreter-episode-3-the-finally.html"><h3 class="article-title">Lisp Interpreter: Episode 3 (The Finally!)</h3></a>
-<h6 class="subheader" title="2014-11-18T05:00:00-05:00">Tue 18 November 2014
-</h6>
-
-
-<p>Let me start off by apologizing for the delay. I've been hesitant to
-write this post for several reasons, including:</p>
-<ol>
-<li>Presenting and explaining my entire lisp interpreter is a BIG (and
-    therefore daunting) task.</li>
-<li>There are parts of my code that I'm not entirely satisfied with and
-    I ...</li></ol><p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
-
-</p>
-
-
-
-                <a class="button radius secondary small right" href="http://lmontopo.github.io/lisp-interpreter-episode-3-the-finally.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://lmontopo.github.io/adventures-with-sockets-threads-and-more.html"><h3 class="article-title">Adventures with sockets, threads and more!</h3></a>
-<h6 class="subheader" title="2014-11-11T05:00:00-05:00">Tue 11 November 2014
-</h6>
-
-
-<p>For a while now I've wanted to learn more about the internet, about
-servers, and about how web apps <em>really</em> work. Last week I finished a
-small flaks tutorial. I enjoyed the tutorial and I learned some cool
-things by doing it, yet, I was feeling unsatisfied. The tutorial ...</p><p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
-
-</p>
-
-
-
-                <a class="button radius secondary small right" href="http://lmontopo.github.io/adventures-with-sockets-threads-and-more.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://lmontopo.github.io/little-lessons-episode-2.html"><h3 class="article-title">Little Lessons: Episode 2</h3></a>
-<h6 class="subheader" title="2014-11-06T05:00:00-05:00">Thu 06 November 2014
-</h6>
-
-
-<p>Seeing as there are a whole <strong>bunch</strong> of "little lessons" that I'd like
-to write down and keep track of, I've decided to extend my previous blog
-post "Little Lessons" into a whole series! Get ready!</p>
-<h4>Mutating Iterables:</h4>
-<p>Suppose we have a list and we'd like to ...</p><p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
-
-</p>
-
-
-
-                <a class="button radius secondary small right" href="http://lmontopo.github.io/little-lessons-episode-2.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://lmontopo.github.io/interpreting-the-interpreter-episode-2.html"><h3 class="article-title">Interpreting the Interpreter: Episode 2</h3></a>
-<h6 class="subheader" title="2014-10-30T04:00:00-04:00">Thu 30 October 2014
-</h6>
-
-
-<p>Confession: I am not yet ready to present my final, finished, Lisp
-Interpreter. It will be coming soon, but not today. Today I will
-describe the rollercoaster ride of an experience taking on this project
-has been for me. Then, I'll focus in on a couple things I've ...</p><p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
-
-</p>
-
-
-
-                <a class="button radius secondary small right" href="http://lmontopo.github.io/interpreting-the-interpreter-episode-2.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://lmontopo.github.io/little-lessons.html"><h3 class="article-title">Little Lessons</h3></a>
-<h6 class="subheader" title="2014-10-27T04:00:00-04:00">Mon 27 October 2014
-</h6>
-
-
-<p>This blog post will be dedicated to some of the little (but important!)
-lessons</p>
-<p>I've learned over the past week. Enjoy!</p>
-<h4>The list method "extend" returns None.</h4>
-<p>Before I explain this lesson, let me just back up for a second and
-address the lingo "method".</p>
-<p>Only recently have I ...</p><p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
-
-</p>
-
-
-
-                <a class="button radius secondary small right" href="http://lmontopo.github.io/little-lessons.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://lmontopo.github.io/interpreting-the-interpreter-episode-1.html"><h3 class="article-title">Interpreting the Interpreter: Episode 1</h3></a>
-<h6 class="subheader" title="2014-10-20T04:00:00-04:00">Mon 20 October 2014
-</h6>
-
-
-<p>This episode is all about the experience I had in the initial phases of
-writing a Lisp interpreter.</p>
-<p>I will describe how I started, my thought processes as I progressed,
-some of the code I wrote, how it worked, and, why,</p>
-<p>at day 3, I decided to start from scratch ...</p><p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
-
-</p>
-
-
-
-                <a class="button radius secondary small right" href="http://lmontopo.github.io/interpreting-the-interpreter-episode-1.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://lmontopo.github.io/interpreting-the-interpreter-episode-0.html"><h3 class="article-title">Interpreting the Interpreter: Episode 0</h3></a>
-<h6 class="subheader" title="2014-10-17T04:00:00-04:00">Fri 17 October 2014
-</h6>
-
-
-<p>For a while now, I have been perplexed by the land of compilers and
-interpreters. Thinking of</p>
-<p>these things sparks all sorts of questions in my mind. For instance, if
-a compiler compiles my program,</p>
-<p>but the compiler is itself a program, doesn't something need to compile
-the compiler ...</p><p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
-
-</p>
-
-
-
-                <a class="button radius secondary small right" href="http://lmontopo.github.io/interpreting-the-interpreter-episode-0.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://lmontopo.github.io/what-i-learned-from-crista-lopes.html"><h3 class="article-title">What I learned from Crista Lopes</h3></a>
-<h6 class="subheader" title="2014-10-11T04:00:00-04:00">Sat 11 October 2014
-</h6>
-
-
-<p>The resident at Hacker School during my first week was Crista Lopes. She
-has given some great</p>
-<p>lectures, and she's taught me some cool things!</p>
-<h5>Different Styles of Writing Code</h5>
-<p>On Monday night she spoke to us about coding styles, the topic of her
-latest book. Crista explained</p>
-<p>that ...</p><p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
-
-</p>
-
-
-
-                <a class="button radius secondary small right" href="http://lmontopo.github.io/what-i-learned-from-crista-lopes.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://lmontopo.github.io/the-struggles-i-had-setting-up-this-site.html"><h3 class="article-title">The struggles I had setting up this site.</h3></a>
-<h6 class="subheader" title="2014-10-08T04:00:00-04:00">Wed 08 October 2014
-</h6>
-
-
-<p>For me, setting up my blog was not easy. I think part of this was that I
-was impatient,</p>
-<p>and part of this was because IT IS HARD! I ran into many weird error
-messages and I began</p>
-<p>to get quite impatient and frustrated. Thankfully I got Allison to help ...</p><p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
-
-</p>
-
-
-
-                <a class="button radius secondary small right" href="http://lmontopo.github.io/the-struggles-i-had-setting-up-this-site.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-            <!-- /#posts-list -->
-
+</article>
     </div>
     <!-- End Main Content -->
 

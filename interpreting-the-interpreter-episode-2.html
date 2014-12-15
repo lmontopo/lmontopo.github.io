@@ -6,11 +6,11 @@
 
     <title>Interpreting the Interpreter: Episode 2</title>
 
-    <link rel="stylesheet" href="./theme/css/normalize.css" />
-    <link rel="stylesheet" href="./theme/css/foundation.min.css" />
-    <link rel="stylesheet" href="./theme/css/style.css" />
-    <link rel="stylesheet" href="./theme/css/pygments.css" />	
-    <script src="./theme/js/modernizr.js"></script>
+    <link rel="stylesheet" href="http://lmontopo.github.io/theme/css/normalize.css" />
+    <link rel="stylesheet" href="http://lmontopo.github.io/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="http://lmontopo.github.io/theme/css/style.css" />
+    <link rel="stylesheet" href="http://lmontopo.github.io/theme/css/pygments.css" />	
+    <script src="http://lmontopo.github.io/theme/js/modernizr.js"></script>
 </head>
 
 <body>
@@ -20,7 +20,7 @@
 <div class="top-bar">
 <div class="row">
     <div class="large-9 large-centered columns">
-	    <h1><a href=".">The L Blog</a></h1>
+	    <h1><a href="http://lmontopo.github.io">The L Blog</a></h1>
     </div>
 </div>
 </div>
@@ -30,8 +30,6 @@
 <div class="large-9 columns">
     <ul class="button-group navigation">
 
-            <li><a href="./pages/about.html" class="button secondary small">About</a></li>
-            <li><a href="./pages/contact.html" class="button secondary small">Contact</a></li>
     </ul>
 </div>
 </div>
@@ -46,36 +44,71 @@
     <div class="large-9 columns">
 <article>
     <header>
-        <h3 class="article-title"><a href="./interpreting-the-interpreter-episode-2.html" rel="bookmark"
+        <h3 class="article-title"><a href="http://lmontopo.github.io/interpreting-the-interpreter-episode-2.html" rel="bookmark"
         title="Permalink to Interpreting the Interpreter: Episode 2">Interpreting the Interpreter: Episode 2</a></h3>
     </header>
 
-<h6 class="subheader" title="2014-10-30T00:00:00">Thu 30 October 2014
+<h6 class="subheader" title="2014-10-30T04:00:00-04:00">Thu 30 October 2014
 </h6>
 
 
-    <p>Confession: I am not yet ready to present my final, finished, Lisp Interpreter.  It will be coming soon, but not today.  Today I will describe the rollercoaster ride of an experience taking on this project has been for me.  Then, I'll focus in on a couple things I've learned along the way.  </p>
-<p>Last week Sumana asked me how my interpreter was going, and I explained to her the mixed feelings I was having about the project.  I told her how somedays I feel things are goings great - I'm learning lots, the project is challenging, and I'm excited!  But other days I feel discouraged. I'll put a lot of energy and effort into writing a peice of code for my project only to later realize that this peice of code will not be used at all.  Apparently, this experience is not uncommon. There is an analogy between this experience and hill-climbing which goes something like this: Suppose there are many hills in a region, and we would like to reach the top of the tallest one.  When we are climbing uphill we feel like we are making great progress.  We feel the effort we are putting in is getting us very close to our goal! But then we get to the top and we discover we've been climbing a smaller hill and that the top of the largest hill is still far away.  Furthermore, we realize that to get there, we actually have to go back down the hill we just climbed.  When Suman described to me this analogy, I felt releived.  This was EXACTLY what I had been experiencing!!  It was good to know that I wasn't alone in feeling this way.  And she reminded me that this was all part of the learning process.  Indeed, in climbing these smaller hills, I've still learned a great deal! </p>
-<p>Here is one of the small hills I climbed, and the lessons I learned in doing so. </p>
+    <p>Confession: I am not yet ready to present my final, finished, Lisp
+Interpreter. It will be coming soon, but not today. Today I will
+describe the rollercoaster ride of an experience taking on this project
+has been for me. Then, I'll focus in on a couple things I've learned
+along the way.</p>
+<p>Last week Sumana asked me how my interpreter was going, and I explained
+to her the mixed feelings I was having about the project. I told her how
+somedays I feel things are goings great - I'm learning lots, the project
+is challenging, and I'm excited! But other days I feel discouraged. I'll
+put a lot of energy and effort into writing a peice of code for my
+project only to later realize that this peice of code will not be used
+at all. Apparently, this experience is not uncommon. There is an analogy
+between this experience and hill-climbing which goes something like
+this: Suppose there are many hills in a region, and we would like to
+reach the top of the tallest one. When we are climbing uphill we feel
+like we are making great progress. We feel the effort we are putting in
+is getting us very close to our goal! But then we get to the top and we
+discover we've been climbing a smaller hill and that the top of the
+largest hill is still far away. Furthermore, we realize that to get
+there, we actually have to go back down the hill we just climbed. When
+Suman described to me this analogy, I felt releived. This was EXACTLY
+what I had been experiencing!! It was good to know that I wasn't alone
+in feeling this way. And she reminded me that this was all part of the
+learning process. Indeed, in climbing these smaller hills, I've still
+learned a great deal!</p>
+<p>Here is one of the small hills I climbed, and the lessons I learned in
+doing so.</p>
 <h4>All the way back to basic math.</h4>
-<p>Basic math was one of the first thing that Kuan and I tackled when we begun writing our Lisp Interpreters.  I thought I had conquered that task long ago, but this week I realized I wrong.  The code I had written to interpret basic math looked something like this:</p>
+<p>Basic math was one of the first thing that Kuan and I tackled when we
+begun writing our Lisp Interpreters. I thought I had conquered that task
+long ago, but this week I realized I wrong. The code I had written to
+interpret basic math looked something like this:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">if</span> <span class="n">head</span> <span class="n">in</span> <span class="p">[</span><span class="sc">&#39;+&#39;</span><span class="p">,</span> <span class="sc">&#39;-&#39;</span><span class="p">,</span> <span class="sc">&#39;*&#39;</span><span class="p">,</span> <span class="sc">&#39;/&#39;</span><span class="p">,</span> <span class="sc">&#39;&lt;&#39;</span><span class="p">,</span> <span class="sc">&#39;&gt;&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="o">&lt;=</span><span class="err">&#39;</span><span class="p">,</span> <span class="sc">&#39;=&#39;</span><span class="p">,</span><span class="err">&#39;</span><span class="o">&gt;=</span><span class="err">&#39;</span><span class="p">]</span><span class="o">:</span>
-    <span class="k">if</span> <span class="n">head</span> <span class="o">==</span> <span class="sc">&#39;=&#39;</span><span class="o">:</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="n">eval</span><span class="p">(</span><span class="n">str</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="err">&#39;</span><span class="o">==</span><span class="err">&#39;</span> <span class="o">+</span> <span class="n">str</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
-            <span class="k">return</span> <span class="n">result</span>
-    <span class="nl">else:</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="n">eval</span><span class="p">(</span><span class="n">str</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">head</span> <span class="o">+</span> <span class="n">str</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
-            <span class="k">return</span> <span class="n">result</span>
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">if</span> <span class="n">head</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="s">&#39;/&#39;</span><span class="p">,</span>
+<span class="s">&#39;&lt;&#39;</span><span class="p">,</span> <span class="s">&#39;&gt;&#39;</span><span class="p">,</span> <span class="s">&#39;&lt;=&#39;</span><span class="p">,</span> <span class="s">&#39;=&#39;</span><span class="p">,</span><span class="s">&#39;&gt;=&#39;</span><span class="p">]:</span>    <span class="k">if</span> <span class="n">hea</span>
+<span class="n">d</span> <span class="o">==</span> <span class="s">&#39;=&#39;</span><span class="p">:</span>            <span class="n">result</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">s</span>
+<span class="n">tr</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s">&#39;==&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="k">return</span> <span class="n">result</span>    <span class="k">else</span><span class="p">:</span>
+<span class="n">result</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span>
+<span class="n">head</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>            <span class="n">ret</span>
+<span class="n">urn</span> <span class="n">result</span>
 </pre></div>
 </td></tr></table>
 
-<p>Here, head is the name given to the first element in a list. In this case head is the operator.  Notice that this code works for only two operands.  What I realized this past week is that Scheme actually accepts math expressions with more than 2 arguments.  For example, "(+ 1 1 1)" is a legitimate scheme expression.  And unfortunately, my current code wouldn't interpret it. In the end, I changed the code to look like this: (I'll just present a couple of functions, so that you get the idea)</p>
+<p>Here, head is the name given to the first element in a list. In this
+case head is the operator. Notice that this code works for only two
+operands. What I realized this past week is that Scheme actually accepts
+math expressions with more than 2 arguments. For example, "(+ 1 1 1)" is
+a legitimate scheme expression. And unfortunately, my current code
+wouldn't interpret it. In the end, I changed the code to look like this:
+(I'll just present a couple of functions, so that you get the idea)</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -88,71 +121,74 @@
 10
 11
 12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># ---- Defining Basic Math and Bool Functions ----  </span>
-
-<span class="s-Atom">def</span> <span class="nf">add</span><span class="p">(</span><span class="s-Atom">args</span><span class="p">)</span><span class="s-Atom">:</span>
-    <span class="s-Atom">return</span> <span class="nf">sum</span><span class="p">(</span><span class="s-Atom">args</span><span class="p">)</span>
-
-<span class="s-Atom">def</span> <span class="nf">subtract</span><span class="p">(</span><span class="s-Atom">args</span><span class="p">)</span><span class="s-Atom">:</span>
-    <span class="s-Atom">return</span> <span class="nf">reduce</span><span class="p">(</span><span class="s-Atom">lambda</span> <span class="s-Atom">x</span><span class="p">,</span> <span class="nn">y</span><span class="p">:</span> <span class="s-Atom">x</span> <span class="o">-</span> <span class="s-Atom">y</span><span class="p">,</span> <span class="s-Atom">args</span><span class="p">)</span>
-
-<span class="s-Atom">def</span> <span class="nf">equal</span><span class="p">(</span><span class="s-Atom">args</span><span class="p">)</span><span class="s-Atom">:</span>
-    <span class="s-Atom">return</span> <span class="s-Atom">args</span><span class="p">[</span><span class="m">1</span><span class="s-Atom">:</span><span class="p">]</span> <span class="o">==</span> <span class="s-Atom">args</span><span class="p">[:-</span><span class="m">1</span><span class="p">]</span>
-
-<span class="s-Atom">def</span> <span class="nf">less</span><span class="p">(</span><span class="s-Atom">args</span><span class="p">)</span><span class="s-Atom">:</span>
-    <span class="s-Atom">return</span> <span class="s-Atom">args</span><span class="p">[:-</span><span class="m">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="s-Atom">args</span><span class="p">[</span><span class="m">1</span><span class="s-Atom">:</span><span class="p">]</span>
-
-
-<span class="s-Atom">#</span> <span class="s-Atom">----</span> <span class="nv">Interpreting</span> <span class="nv">Basic</span> <span class="nv">Math</span> <span class="s-Atom">and</span> <span class="nv">Bool</span> <span class="nv">Functions</span> <span class="s-Atom">----</span> 
-
-<span class="s-Atom">if</span> <span class="s-Atom">head</span> <span class="o">==</span> <span class="s-Atom">&#39;+&#39;:</span>
-        <span class="s-Atom">return</span> <span class="nf">add</span><span class="p">(</span><span class="s-Atom">rest</span><span class="p">)</span>
-
-<span class="s-Atom">if</span> <span class="s-Atom">head</span> <span class="o">==</span> <span class="s-Atom">&#39;-&#39;:</span>
-    <span class="s-Atom">return</span> <span class="nf">subtract</span><span class="p">(</span><span class="s-Atom">rest</span><span class="p">)</span>
-
-<span class="s-Atom">if</span> <span class="s-Atom">head</span> <span class="o">==</span> <span class="s-Atom">&#39;=&#39;:</span>
-    <span class="s-Atom">return</span> <span class="nf">equal</span><span class="p">(</span><span class="s-Atom">rest</span><span class="p">)</span>
-
-<span class="s-Atom">if</span> <span class="s-Atom">head</span> <span class="o">==</span> <span class="s-Atom">&#39;&lt;&#39;:</span>
-    <span class="s-Atom">return</span> <span class="nf">less</span><span class="p">(</span><span class="s-Atom">rest</span><span class="p">)</span>
+13</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># ---- Defining Basic Math and B</span>
+<span class="n">ool</span> <span class="n">Functions</span> <span class="o">----</span>  <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="k">def</span> <span class="nf">subtract</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+<span class="p">:</span>    <span class="k">return</span> <span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">-</span>
+<span class="n">y</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span><span class="k">def</span> <span class="nf">equal</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>    <span class="k">return</span> <span class="n">a</span>
+<span class="n">rgs</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">==</span> <span class="n">args</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="k">def</span> <span class="nf">less</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<span class="k">return</span> <span class="n">args</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="c"># ----</span>
+<span class="n">Interpreting</span> <span class="n">Basic</span> <span class="n">Math</span> <span class="ow">and</span> <span class="n">Bool</span> <span class="n">Fu</span>
+<span class="n">nctions</span> <span class="o">----</span> <span class="k">if</span> <span class="n">head</span> <span class="o">==</span> <span class="s">&#39;+&#39;</span><span class="p">:</span>
+<span class="k">return</span> <span class="n">add</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span><span class="k">if</span> <span class="n">head</span> <span class="o">==</span> <span class="s">&#39;-&#39;</span><span class="p">:</span>    <span class="n">r</span>
+<span class="n">eturn</span> <span class="n">subtract</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span><span class="k">if</span> <span class="n">head</span> <span class="o">==</span> <span class="s">&#39;=&#39;</span><span class="p">:</span>
+<span class="k">return</span> <span class="n">equal</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span><span class="k">if</span> <span class="n">head</span> <span class="o">==</span> <span class="s">&#39;&lt;&#39;</span><span class="p">:</span>
+<span class="k">return</span> <span class="n">less</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span>
 </pre></div>
 </td></tr></table>
 
-<p>As you can see, I made use of Python's built in sum function which can handle multiple operands.  Since there isn't a similar function built in for subtraction, I made one with the reduce function.  Since this is the first time I've used the reduce function I'll describe to you what it does.  Reduce takes two arguments: a function and a interable.  I used a list as an iterable, and I used lambda to define the function.  Reduce will take the function and will apply it cumulatively over the inputed iterable.  So, in my subtraction example, if I call subtract([4, 2, 1]) then it will calculate ((4 - 2) - 1) and will return 1.  </p>
-<p>Notice that I didn't use the reduce function for evaluating boolean statements.  I tried to use it, but I was getting wonky results.  This is what I tried:</p>
+<p>As you can see, I made use of Python's built in sum function which can
+handle multiple operands. Since there isn't a similar function built in
+for subtraction, I made one with the reduce function. Since this is the
+first time I've used the reduce function I'll describe to you what it
+does. Reduce takes two arguments: a function and a interable. I used a
+list as an iterable, and I used lambda to define the function. Reduce
+will take the function and will apply it cumulatively over the inputed
+iterable. So, in my subtraction example, if I call subtract([4, 2, 1])
+then it will calculate ((4 - 2) - 1) and will return 1.</p>
+<p>Notice that I didn't use the reduce function for evaluating boolean
+statements. I tried to use it, but I was getting wonky results. This is
+what I tried:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">def</span> <span class="n">equal</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="o">:</span>
-    <span class="k">return</span> <span class="n">reduce</span><span class="p">(</span><span class="n">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">:</span> <span class="n">x</span> <span class="o">==</span> <span class="n">y</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">equal</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>    <span class="k">return</span> <span class="n">reduc</span>
+<span class="n">e</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">==</span> <span class="n">y</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
 </pre></div>
 </td></tr></table>
 
-<p>To test this equal function, I input [1,1,1] and [2,2,2]. The expression "equal([1, 1, 1])" would return True while "equal([2, 2, 2])"" would return False.  After taking the time to think about it, I realized what was happening.  When I set my input to [1, 1, 1], "(1 == 1)" will first be evaluated and will return True.  Then it will take True, and will evalute "(True == 1)", which will again return True!  Indeed, in Python (and if I'm not mistaken, in most computer languages) True is 1 and False is 0.  This expalains why equal([2, 2, 2]) returns False.  Python would first evalute (2 == 2) returning True.  Then it will evaluate "True == 2" and return False.  Pretty neat eh?  Sometimes it pays off to take the time to really think about how your code is working, and why it isn't returning what you anticipate.  </p>
-<p>In the end, I was able to define a successful equal function as described above, by:</p>
+<p>To test this equal function, I input [1,1,1] and [2,2,2]. The expression
+"equal([1, 1, 1])" would return True while "equal([2, 2, 2])"" would
+return False. After taking the time to think about it, I realized what
+was happening. When I set my input to [1, 1, 1], "(1 == 1)" will first
+be evaluated and will return True. Then it will take True, and will
+evalute "(True == 1)", which will again return True! Indeed, in Python
+(and if I'm not mistaken, in most computer languages) True is 1 and
+False is 0. This expalains why equal([2, 2, 2]) returns False. Python
+would first evalute (2 == 2) returning True. Then it will evaluate "True
+== 2" and return False. Pretty neat eh? Sometimes it pays off to take
+the time to really think about how your code is working, and why it
+isn't returning what you anticipate.</p>
+<p>In the end, I was able to define a successful equal function as
+described above, by:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span class="s-Atom">def</span> <span class="nf">equal</span><span class="p">(</span><span class="s-Atom">args</span><span class="p">)</span><span class="s-Atom">:</span>
-    <span class="s-Atom">return</span> <span class="s-Atom">args</span><span class="p">[</span><span class="m">1</span><span class="s-Atom">:</span><span class="p">]</span> <span class="o">==</span> <span class="s-Atom">args</span><span class="p">[:-</span><span class="m">1</span><span class="p">]</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">equal</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>    <span class="k">return</span> <span class="n">args</span><span class="p">[</span>
+<span class="mi">1</span><span class="p">:]</span> <span class="o">==</span> <span class="n">args</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 </pre></div>
 </td></tr></table>
 
-<p>Lets go through what this does when we input, say, args = [arg1, arg2, arg3, arg4].  Two smaller lists are constructed: args[1:] = [arg2, arg3, arg4] and arg[:-1] = [arg1, arg2, arg3].  Then the statement "[arg2, arg3, arg4] == [arg1, arg2, arg3]" is evaluated.  Notice that this is essentially evaluating (arg2 == arg1 and arg3 == arg2 and arg4 == arg3), which return True exactly when all the elements in the list are equal.  I really like this function because I feel its really simple and clean and straight-forward.</p>
-<p>So, as you can see, there were moments this past week when I had to step WAYYY back and re-write code I thought I was already done.  But, in doing so, I learned some really fun and cool things.  Don't be discouraged if you have to go back to something you thought you had finished!  It could turn out to be fun! </p>
-<p class="subheader">Category: <a href="./category/blog.html">Blog</a>
+<p>Lets go through what this does when we input, say, args = [arg1, arg2,
+arg3, arg4]. Two smaller lists are constructed: args[1:] = [arg2, arg3,
+arg4] and arg[:-1] = [arg1, arg2, arg3]. Then the statement "[arg2,
+arg3, arg4] == [arg1, arg2, arg3]" is evaluated. Notice that this is
+essentially evaluating (arg2 == arg1 and arg3 == arg2 and arg4 == arg3),
+which return True exactly when all the elements in the list are equal. I
+really like this function because I feel its really simple and clean and
+straight-forward.</p>
+<p>So, as you can see, there were moments this past week when I had to step
+WAYYY back and re-write code I thought I was already done. But, in doing
+so, I learned some really fun and cool things. Don't be discouraged if
+you have to go back to something you thought you had finished! It could
+turn out to be fun!</p>
+<p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
 
 </p>
 
@@ -167,14 +203,14 @@
     <aside class="large-3 columns">
         <h5 class="sidebar-title">Site</h5>
         <ul class="side-nav">
-            <li><a href="./archives.html">Archives</a>
-            <li><a href="./tags.html">Tags</a>
+            <li><a href="http://lmontopo.github.io/archives.html">Archives</a>
+            <li><a href="http://lmontopo.github.io/tags.html">Tags</a>
         </ul>
 
 		
         <h5 class="sidebar-title">Categories</h5>
         <ul class="side-nav">
-            <li><a href="./category/blog.html">Blog</a></li>
+            <li><a href="http://lmontopo.github.io/category/blog.html">Blog</a></li>
    
         </ul>
 

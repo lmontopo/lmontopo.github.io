@@ -6,11 +6,11 @@
 
     <title>What I learned from Crista Lopes</title>
 
-    <link rel="stylesheet" href="./theme/css/normalize.css" />
-    <link rel="stylesheet" href="./theme/css/foundation.min.css" />
-    <link rel="stylesheet" href="./theme/css/style.css" />
-    <link rel="stylesheet" href="./theme/css/pygments.css" />	
-    <script src="./theme/js/modernizr.js"></script>
+    <link rel="stylesheet" href="http://lmontopo.github.io/theme/css/normalize.css" />
+    <link rel="stylesheet" href="http://lmontopo.github.io/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="http://lmontopo.github.io/theme/css/style.css" />
+    <link rel="stylesheet" href="http://lmontopo.github.io/theme/css/pygments.css" />	
+    <script src="http://lmontopo.github.io/theme/js/modernizr.js"></script>
 </head>
 
 <body>
@@ -20,7 +20,7 @@
 <div class="top-bar">
 <div class="row">
     <div class="large-9 large-centered columns">
-	    <h1><a href=".">The L Blog</a></h1>
+	    <h1><a href="http://lmontopo.github.io">The L Blog</a></h1>
     </div>
 </div>
 </div>
@@ -30,8 +30,6 @@
 <div class="large-9 columns">
     <ul class="button-group navigation">
 
-            <li><a href="./pages/about.html" class="button secondary small">About</a></li>
-            <li><a href="./pages/contact.html" class="button secondary small">Contact</a></li>
     </ul>
 </div>
 </div>
@@ -46,89 +44,150 @@
     <div class="large-9 columns">
 <article>
     <header>
-        <h3 class="article-title"><a href="./what-i-learned-from-crista-lopes.html" rel="bookmark"
+        <h3 class="article-title"><a href="http://lmontopo.github.io/what-i-learned-from-crista-lopes.html" rel="bookmark"
         title="Permalink to What I learned from Crista Lopes">What I learned from Crista Lopes</a></h3>
     </header>
 
-<h6 class="subheader" title="2014-10-11T00:00:00">Sat 11 October 2014
+<h6 class="subheader" title="2014-10-11T04:00:00-04:00">Sat 11 October 2014
 </h6>
 
 
-    <p>The resident at Hacker School during my first week was Crista Lopes. She has given some great 
-lectures, and she's taught me some cool things! </p>
+    <p>The resident at Hacker School during my first week was Crista Lopes. She
+has given some great</p>
+<p>lectures, and she's taught me some cool things!</p>
 <h5>Different Styles of Writing Code</h5>
-<p>On Monday night she spoke to us about coding styles, the topic of her latest book. Crista explained 
-that there are many different styles of code to work with, but that often programmers get stuck in 
-one way of coding.  No style is "better" than another, but some work better in certain situations. 
-Crista suggests that when we set out to write a program we ask ourselves, "what are 
-our constraints?". Our constraint could be something we need to minimize/avoid, or something 
-we want to maximize/include.  Examples of constraints include minimizing the number of lines
-in our code,  including functions, not including functions, and maximizing efficiency.  Theses 
-constraints produce different "styles" of code. As a programmer, it is good to familiarize 
-ourselves with these different styles so that we can write in whichever style is best suited for a
-particular project. </p>
+<p>On Monday night she spoke to us about coding styles, the topic of her
+latest book. Crista explained</p>
+<p>that there are many different styles of code to work with, but that
+often programmers get stuck in</p>
+<p>one way of coding. No style is "better" than another, but some work
+better in certain situations.</p>
+<p>Crista suggests that when we set out to write a program we ask
+ourselves, "what are</p>
+<p>our constraints?". Our constraint could be something we need to
+minimize/avoid, or something</p>
+<p>we want to maximize/include. Examples of constraints include minimizing
+the number of lines</p>
+<p>in our code, including functions, not including functions, and
+maximizing efficiency. Theses</p>
+<p>constraints produce different "styles" of code. As a programmer, it is
+good to familiarize</p>
+<p>ourselves with these different styles so that we can write in whichever
+style is best suited for a</p>
+<p>particular project.</p>
 <h5>Data Types and Data Structures</h5>
-<p>On Wednesday Crista gave a really helpful introductory lecture on data types and data structures.<br />
-Before this lecture I had little knowledge on the subject.  I had heard the words before but not
-really understood their meanings.  Here is how she explained the two concepts: </p>
-<p>A <strong>data type</strong> is something more conceptual.  It refers to our ideas of what can be done with 
-the data and what we want to do with the data. </p>
-<p>The term <strong>data structure</strong>, on the other hand, refers to how we <em>implement</em> the data type.  When we talk
-about data structure we are referring to how a "data type" is actually storred in memory on our
-computer and how we can access that data. </p>
-<p>Crista talked about two common implementations of data in our computer: the array, and the
-list.  An array is a continuous portion of memory in our computer with slots to put our data
-in.  Each slot takes up the same amount of memory, and the total amount of memory is fixed. Any 
-slot of the array can be accessed directly. A list, on the other hand, is NOT continuous.  Different 
-elements of the list can be stored in any location on the computer's harddrive.  Your computer 
-knows which item is first in the list and each item will point to the location in memory where
-the next item on the list is located.  </p>
-<p><em>Ok... but why does all of this matter?!</em> Well, Crista provided us with an example to illustrate why
-these things are important: Suppose we have a list of 500 contacts on our computer.  Our list
-contains the names and telephone numbers of each contact. We can call this data type a 
-"contact list".  We have some choices as to how we can implement this data.  One option would be
-to use the list implementation described above. In this case, to find a contact's telephone number
-we must scan through the list, starting from the top, until we arrive at the name we are looking for.<br />
-Another option would be to implement our contact list as a hash function. </p>
-<p><em>What is a hash function?!</em> 
-I think the best way to illustrate the hash function is by example, the way Crista described it. 
-In our contact list scenario, an example of a hash function would be something that acts as follows: 
-For each contact, the computer associates to it the number of letters in that contact's first name. 
-Then an array, lets call it a, is created in memory. The nth cell of a will "point" to a new list, 
-containing only the contacts whose names have n letters. From there the search starts from the top 
-down, but the list is (hopefully) much smaller in size. Using this hash function is much more 
-efficient than just creating one list containing all of the contacts.  Indeed, computers can 
-compute simple mathematical calculations like this one extremely quickly, while scanning through 
-lists is a more time consuming task. </p>
-<p>At this point, I'd like like to clarify something about data structures and types: What certain 
-programming languages refer to as "lists" and "arrays" are not necessarily implemented as such. 
-Likewise, what is implemented as a list or array or hash function in a programming language is not necessarily 
-called a list, array or hash function. I know that this is kind of confusing, but here are some examples 
-to clarify the situation. What Python calls a "list" of n elements is actually implemented as an array 
-with more than n slots.  The array is created longer than necessary, leaving several slots empty. 
-This makes the array easier to append (ie. add elements to).  Another example in Python is the
-data type "dictionary", which is actually implemented as a hash function. </p>
+<p>On Wednesday Crista gave a really helpful introductory lecture on data
+types and data structures.  </p>
+<p>Before this lecture I had little knowledge on the subject. I had heard
+the words before but not</p>
+<p>really understood their meanings. Here is how she explained the two
+concepts:</p>
+<p>A <strong>data type</strong> is something more conceptual. It refers to our ideas of
+what can be done with</p>
+<p>the data and what we want to do with the data.</p>
+<p>The term <strong>data structure</strong>, on the other hand, refers to how we
+<em>implement</em> the data type. When we talk</p>
+<p>about data structure we are referring to how a "data type" is actually
+storred in memory on our</p>
+<p>computer and how we can access that data.</p>
+<p>Crista talked about two common implementations of data in our computer:
+the array, and the</p>
+<p>list. An array is a continuous portion of memory in our computer with
+slots to put our data</p>
+<p>in. Each slot takes up the same amount of memory, and the total amount
+of memory is fixed. Any</p>
+<p>slot of the array can be accessed directly. A list, on the other hand,
+is NOT continuous. Different</p>
+<p>elements of the list can be stored in any location on the computer's
+harddrive. Your computer</p>
+<p>knows which item is first in the list and each item will point to the
+location in memory where</p>
+<p>the next item on the list is located.</p>
+<p><em>Ok... but why does all of this matter?!</em> Well, Crista provided us with
+an example to illustrate why</p>
+<p>these things are important: Suppose we have a list of 500 contacts on
+our computer. Our list</p>
+<p>contains the names and telephone numbers of each contact. We can call
+this data type a</p>
+<p>"contact list". We have some choices as to how we can implement this
+data. One option would be</p>
+<p>to use the list implementation described above. In this case, to find a
+contact's telephone number</p>
+<p>we must scan through the list, starting from the top, until we arrive at
+the name we are looking for.  </p>
+<p>Another option would be to implement our contact list as a hash
+function.</p>
+<p><em>What is a hash function?!</em></p>
+<p>I think the best way to illustrate the hash function is by example, the
+way Crista described it.</p>
+<p>In our contact list scenario, an example of a hash function would be
+something that acts as follows:</p>
+<p>For each contact, the computer associates to it the number of letters in
+that contact's first name.</p>
+<p>Then an array, lets call it a, is created in memory. The nth cell of a
+will "point" to a new list,</p>
+<p>containing only the contacts whose names have n letters. From there the
+search starts from the top</p>
+<p>down, but the list is (hopefully) much smaller in size. Using this hash
+function is much more</p>
+<p>efficient than just creating one list containing all of the contacts.
+Indeed, computers can</p>
+<p>compute simple mathematical calculations like this one extremely
+quickly, while scanning through</p>
+<p>lists is a more time consuming task.</p>
+<p>At this point, I'd like like to clarify something about data structures
+and types: What certain</p>
+<p>programming languages refer to as "lists" and "arrays" are not
+necessarily implemented as such.</p>
+<p>Likewise, what is implemented as a list or array or hash function in a
+programming language is not necessarily</p>
+<p>called a list, array or hash function. I know that this is kind of
+confusing, but here are some examples</p>
+<p>to clarify the situation. What Python calls a "list" of n elements is
+actually implemented as an array</p>
+<p>with more than n slots. The array is created longer than necessary,
+leaving several slots empty.</p>
+<p>This makes the array easier to append (ie. add elements to). Another
+example in Python is the</p>
+<p>data type "dictionary", which is actually implemented as a hash
+function.</p>
 <h5>Objects, Functions, Etc.</h5>
-<p>On Thursday, I came to Crista with a few questions about some terminology that had been confusing 
-me. I didn't really understand what was meant by the terms "functional programming" and "object 
-oriented programming".  I wondered, "are these terms referring to particular languages or 
-are they referring to a style of writing code"?  According to Crista, these terms mostly apply to the
-style a program is written in.  However, the terms are sometimes used to describe languages.<br />
-(No wonder I was confused!)  Crista explains that when you step far enough away, you can see certain trends in programming languages too.  Some languages 
-might tend towards the functional style, while others might tend towards the object oriented style, 
-for example.  In reality, though, most languages pull from all different ideas.  Python is an 
-example of this. Although Python is often called "object oriented", Python also has functions! 
-Most languages combine these ideas as does Python, though there are some exceptions. Haskel, 
-for example, is a purely functional programming language. </p>
-<p>This leads me to the next question: 
-What is an object and why is it important?  Although I've created classes and objects in 
-Python programs, I wasn't sure I really understood the point. Crista provided me with an 
-explanation that I liked.  She explained how objects are constructs which "wrap around" 
-your data, so that you can't access it directly. This protects the data so that it is less
-likely to be accidentally corrupted.  There are other ways that data can be protected if a 
-language doesn't use classes, but this is just one of those ways. </p>
+<p>On Thursday, I came to Crista with a few questions about some
+terminology that had been confusing</p>
+<p>me. I didn't really understand what was meant by the terms "functional
+programming" and "object</p>
+<p>oriented programming". I wondered, "are these terms referring to
+particular languages or</p>
+<p>are they referring to a style of writing code"? According to Crista,
+these terms mostly apply to the</p>
+<p>style a program is written in. However, the terms are sometimes used to
+describe languages.  </p>
+<p>(No wonder I was confused!) Crista explains that when you step far
+enough away, you can see certain trends in programming languages too.
+Some languages</p>
+<p>might tend towards the functional style, while others might tend towards
+the object oriented style,</p>
+<p>for example. In reality, though, most languages pull from all different
+ideas. Python is an</p>
+<p>example of this. Although Python is often called "object oriented",
+Python also has functions!</p>
+<p>Most languages combine these ideas as does Python, though there are some
+exceptions. Haskel,</p>
+<p>for example, is a purely functional programming language.</p>
+<p>This leads me to the next question:</p>
+<p>What is an object and why is it important? Although I've created classes
+and objects in</p>
+<p>Python programs, I wasn't sure I really understood the point. Crista
+provided me with an</p>
+<p>explanation that I liked. She explained how objects are constructs which
+"wrap around"</p>
+<p>your data, so that you can't access it directly. This protects the data
+so that it is less</p>
+<p>likely to be accidentally corrupted. There are other ways that data can
+be protected if a</p>
+<p>language doesn't use classes, but this is just one of those ways.</p>
 <p><strong>Thanks Crista for visting Hacker School this week!!!!</strong></p>
-<p class="subheader">Category: <a href="./category/blog.html">Blog</a>
+<p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
 
 </p>
 
@@ -143,14 +202,14 @@ language doesn't use classes, but this is just one of those ways. </p>
     <aside class="large-3 columns">
         <h5 class="sidebar-title">Site</h5>
         <ul class="side-nav">
-            <li><a href="./archives.html">Archives</a>
-            <li><a href="./tags.html">Tags</a>
+            <li><a href="http://lmontopo.github.io/archives.html">Archives</a>
+            <li><a href="http://lmontopo.github.io/tags.html">Tags</a>
         </ul>
 
 		
         <h5 class="sidebar-title">Categories</h5>
         <ul class="side-nav">
-            <li><a href="./category/blog.html">Blog</a></li>
+            <li><a href="http://lmontopo.github.io/category/blog.html">Blog</a></li>
    
         </ul>
 
