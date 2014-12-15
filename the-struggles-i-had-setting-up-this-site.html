@@ -53,28 +53,18 @@
 
 
     <p>For me, setting up my blog was not easy. I think part of this was that I
-was impatient,</p>
-<p>and part of this was because IT IS HARD! I ran into many weird error
-messages and I began</p>
-<p>to get quite impatient and frustrated. Thankfully I got Allison to help
-me, and together we</p>
-<p>figured out what was going on and got things up and running. Here I will
-explain what went wrong for me and</p>
-<p>how I fixed it. If you encounter similar difficulties, hopefully this
+was impatient, and part of this was because IT IS HARD! I ran into many weird error
+messages and I began to get quite impatient and frustrated. Thankfully I got Allison to help
+me, and together we figured out what was going on and got things up and running. Here I will
+explain what went wrong for me and how I fixed it. If you encounter similar difficulties, hopefully this
 article will help you.</p>
 <p>The main struggle I encountered began when I tried to publish my page
-through Github.</p>
-<p>There are two different ways one can go about doing this: either as a
-project page, or</p>
-<p>as a user page. Without knowing there was another option, I began
-creating my blog as a</p>
-<p>Github project page. In order to do this, I had to create a repository
-on Github, and then</p>
-<p>create branch of the repository called "gh-pages". "gh-pages" is where I
-needed to push</p>
-<p>the pelican created "output" folder containing all the necessary html to
-create the page.</p>
-<p>To make this push happen, I made use of the "gh-import" package which
+through Github. There are two different ways one can go about doing this: either as a
+project page, or as a user page. Without knowing there was another option, I began
+creating my blog as a Github project page. In order to do this, I had to create a repository
+on Github, and then create branch of the repository called "gh-pages". "gh-pages" is where I
+needed to push the pelican created "output" folder containing all the necessary html to
+create the page. To make this push happen, I made use of the "gh-import" package which
 can be installed using pip.</p>
 <p>Here is what needed to be done next:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -84,115 +74,71 @@ can be installed using pip.</p>
 </td></tr></table>
 
 <p>Here, the first line commits changes made in my output folder to the
-gh-branch of my LOCAL</p>
-<p>repository. (Local meaning, the repository on my own computer, not the
-one store on Github.)</p>
-<p>The second line of this code pushes these changes to the remote
-repository's gh-pages branch</p>
-<p>(ie. the branch of the repository stored on github).Then, in about ten
-minutes time, my website</p>
-<p>was created with url https:://lmontopo.github.io/blog. (here, lmontopo
-is my username on github,</p>
-<p>and blog was the repository I created).</p>
+gh-branch of my LOCAL repository. (Local meaning, the repository on my own computer, not the
+one store on Github.) The second line of this code pushes these changes to the remote
+repository's gh-pages branch (ie. the branch of the repository stored on github).Then, in about ten
+minutes time, my website was created with url https:://lmontopo.github.io/blog. (here, lmontopo
+is my username on github, and blog was the repository I created).</p>
 <p>I wish this were the end of the story, but unfortunately it is not. What
-I realized when my</p>
-<p>webpage was published is that none of pelican's styling information was
-being</p>
-<p>received. My webpage was just a simple plain text webpage and it looked
-extremely ugly.</p>
-<p>What was puzzling was that when I viewed the page source I saw a line in
-the code specifying</p>
-<p>the location of the style sheet as:</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&lt;</span><span class="n">link</span> <span class="n">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;/th</span>
-<span class="n">eme</span><span class="o">/</span><span class="n">css</span><span class="o">/</span><span class="n">main</span><span class="o">.</span><span class="n">css</span><span class="s">&quot; /&gt;</span>
+I realized when my webpage was published is that none of pelican's styling information was
+being received. My webpage was just a simple plain text webpage and it looked
+extremely ugly. What was puzzling was that when I viewed the page source I saw a line in
+the code specifying the location of the style sheet as:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&lt;</span><span class="n">link</span> <span class="n">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;/theme/css/main.css&quot;</span> <span class="o">/&gt;</span>
 </pre></div>
 </td></tr></table>
 
 <p>But when I clicked on this href, it couldn't find the file. Then I
-looked in my github</p>
-<p>repository, and searched for that stylesheet file. I found it. It was
-there. So why couldn't my</p>
-<p>computer find it? Well, it turns out that my computer was looking at the
-wrong url. It expected my</p>
-<p>css style sheet to be found at "username.github.io/theme/css/main.css",
-but in reality it</p>
-<p>was located at "username.github.io/repositoryname/theme/css/main.css".</p>
+looked in my github repository, and searched for that stylesheet file. I found it. It was
+there. So why couldn't my computer find it? Well, it turns out that my computer was looking at the
+wrong url. It expected my css style sheet to be found at "username.github.io/theme/css/main.css",
+but in reality it was located at "username.github.io/repositoryname/theme/css/main.css".</p>
 <p>So, at this point I found out that there was such thing as a github user
-page,</p>
-<p>and I decided to change my page to be one of those instead. I should
-clarify that this</p>
-<p>was not necessary, and this was not the only way to solve my problem!
-Had I decided to</p>
-<p>stay with the gh-pages website, I would have needed to change my default
-root directory.</p>
-<p>This probably is quite easy, although to be honest I don't know exactly
+page, and I decided to change my page to be one of those instead. I should
+clarify that this was not necessary, and this was not the only way to solve my problem!
+Had I decided to stay with the gh-pages website, I would have needed to change my default
+root directory. This probably is quite easy, although to be honest I don't know exactly
 how it is done.</p>
 <p>Since I decided to change to a user github page, this is how I
-proceeded:</p>
-<p>I needed to create a new repository called username.github.io. To
-github, this is a magic</p>
-<p>repository name. Github will know that you are publishing a user webpage
-from the contents</p>
-<p>of this repository and it will do the work for you (just as gh-pages was
-a magical branch name</p>
-<p>for the project pages site.) Then I deleted my old repository. Now, I
-needed to tell my computer</p>
-<p>to connect remotely with this new repository as opposed to the old one.
-(Just because the old</p>
-<p>repository is deleted, doesn't mean my computer won't try to find it.)
+proceeded: I needed to create a new repository called username.github.io. To
+github, this is a magic repository name. Github will know that you are publishing a user webpage
+from the contents of this repository and it will do the work for you (just as gh-pages was
+a magical branch name for the project pages site.) Then I deleted my old repository. Now, I
+needed to tell my computer to connect remotely with this new repository as opposed to the old one.
+(Just because the old repository is deleted, doesn't mean my computer won't try to find it.)
 To do this I type in:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span class="err">$</span> <span class="n">git</span> <span class="n">remote</span> <span class="n">rm</span> <span class="n">origin</span> <span class="err">$</span> <span class="n">git</span> <span class="n">rem</span>
-<span class="n">ote</span> <span class="n">add</span> <span class="n">username</span><span class="o">.</span><span class="n">github</span><span class="o">.</span><span class="n">io</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">g</span>
-<span class="n">ithub</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">username</span><span class="o">/</span><span class="n">username</span><span class="o">.</span><span class="n">github</span><span class="o">.</span><span class="n">i</span>
-<span class="n">o</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="err">$</span> <span class="n">git</span> <span class="n">remote</span> <span class="n">rm</span> <span class="n">origin</span> 
+<span class="err">$</span> <span class="n">git</span> <span class="n">remote</span> <span class="n">add</span> <span class="n">username</span><span class="o">.</span><span class="n">github</span><span class="o">.</span><span class="n">io</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">username</span><span class="o">/</span><span class="n">username</span><span class="o">.</span><span class="n">github</span><span class="o">.</span><span class="n">io</span>
 </pre></div>
 </td></tr></table>
 
 <p>The first line here removes the connection I had to the previous (now
-deleted) repository on Github.</p>
-<p>The second line adds a remote connection to the repository named
-username.github.io found at</p>
-<p>https://github.com/username/username.github.io.</p>
+deleted) repository on Github.  The second line adds a remote connection to the repository named
+username.github.io found at https://github.com/username/username.github.io.</p>
 <p>Great, now all I had to do was push the contents of my local repository
-to the main branch of</p>
-<p>my new remote repository as follows:</p>
+to the main branch of my new remote repository as follows:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span class="err">$</span> <span class="n">ghp</span><span class="o">-</span><span class="kn">import</span> <span class="nn">output</span><span class="err">$</span> <span class="n">git</span> <span class="n">push</span> <span class="ow">or</span>
-<span class="n">igin</span> <span class="o">-</span><span class="n">f</span> <span class="n">gh</span><span class="o">-</span><span class="n">pages</span><span class="p">:</span><span class="n">master</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="err">$</span> <span class="n">ghp</span><span class="o">-</span><span class="kn">import</span> <span class="nn">output</span>
+<span class="err">$</span> <span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="o">-</span><span class="n">f</span> <span class="n">gh</span><span class="o">-</span><span class="n">pages</span><span class="p">:</span><span class="n">master</span>
 </pre></div>
 </td></tr></table>
 
 <p>This created a lovely new webpage for me! Notice, though, that here I
-had to FORCE the push.</p>
-<p>Quite honestly, I am not clear on why this is happening. For now, I have
-decided to create</p>
-<p>a new local branch called "writing" and I will use this for all of my
-version control. This way</p>
-<p>I can continue to force push without worrying about anything being lost.
-This may not be the</p>
-<p>most sophisticated way of handling things, but being quite new to git, I
-am more than satisfied</p>
-<p>with this solution.</p>
+had to FORCE the push. Quite honestly, I am not clear on why this is happening. For now, I have
+decided to create a new local branch called "writing" and I will use this for all of my
+version control. This way I can continue to force push without worrying about anything being lost.
+This may not be the most sophisticated way of handling things, but being quite new to git, I
+am more than satisfied with this solution.</p>
 <p>Another little glitch that occurred along the way, and how I solved it:</p>
 <p>In the process of playing around with my computer, I somehow deleted the
-pelicanconf.py</p>
-<p>file that pelican creates for you when you quickstart. This is the file
-that specifies all</p>
-<p>of your settings. Since it was gone, I had lost my title, and the
-default title "A Pelican</p>
-<p>Blog" appeared. Obviously, this wasn't desirable. This ended up being a
-really easy fix</p>
-<p>because all I needed was to re-create this file and save it the
-directory where my "content"</p>
-<p>folder is found. Then it integrates itself (somewhat magically) into the
-html files. Just</p>
-<p>make sure that you have the correct formatting, as specified on
-pelican's documentation</p>
-<p>site: <a href="http://docs.getpelican.com/en/latest/settings.html">http://docs.getpelican.com/en/latest/settings.html</a></p>
+pelicanconf.py file that pelican creates for you when you quickstart. This is the file
+that specifies all of your settings. Since it was gone, I had lost my title, and the
+default title "A Pelican Blog" appeared. Obviously, this wasn't desirable. This ended up being a
+really easy fix because all I needed was to re-create this file and save it the
+directory where my "content" folder is found. Then it integrates itself (somewhat magically) into the
+html files. Just make sure that you have the correct formatting, as specified on
+pelican's documentation site: <a href="http://docs.getpelican.com/en/latest/settings.html">http://docs.getpelican.com/en/latest/settings.html</a></p>
 <p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
 
 </p>

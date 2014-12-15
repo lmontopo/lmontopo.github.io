@@ -1960,162 +1960,95 @@ python code is compiled into something called "byte-code". Then, an interpreter 
 and executes the byte-code!&lt;/p&gt;
 &lt;p&gt;Cool, eh? Big thanks goes to &lt;a href="http://akaptur.github.io"&gt;Allison Kaptur&lt;/a&gt;
 for explaining this to me and discussing interpreters and compilers with me! You rock!&lt;/p&gt;</summary></entry><entry><title>What I learned from Crista Lopes</title><link href="http://lmontopo.github.io/what-i-learned-from-crista-lopes.html" rel="alternate"></link><updated>2014-10-11T04:00:00-04:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo.github.io,2014-10-11:what-i-learned-from-crista-lopes.html</id><summary type="html">&lt;p&gt;The resident at Hacker School during my first week was Crista Lopes. She
-has given some great&lt;/p&gt;
-&lt;p&gt;lectures, and she's taught me some cool things!&lt;/p&gt;
+has given some great lectures, and she's taught me some cool things!&lt;/p&gt;
 &lt;h5&gt;Different Styles of Writing Code&lt;/h5&gt;
 &lt;p&gt;On Monday night she spoke to us about coding styles, the topic of her
-latest book. Crista explained&lt;/p&gt;
-&lt;p&gt;that there are many different styles of code to work with, but that
-often programmers get stuck in&lt;/p&gt;
-&lt;p&gt;one way of coding. No style is "better" than another, but some work
-better in certain situations.&lt;/p&gt;
-&lt;p&gt;Crista suggests that when we set out to write a program we ask
-ourselves, "what are&lt;/p&gt;
-&lt;p&gt;our constraints?". Our constraint could be something we need to
-minimize/avoid, or something&lt;/p&gt;
-&lt;p&gt;we want to maximize/include. Examples of constraints include minimizing
-the number of lines&lt;/p&gt;
-&lt;p&gt;in our code, including functions, not including functions, and
-maximizing efficiency. Theses&lt;/p&gt;
-&lt;p&gt;constraints produce different "styles" of code. As a programmer, it is
-good to familiarize&lt;/p&gt;
-&lt;p&gt;ourselves with these different styles so that we can write in whichever
-style is best suited for a&lt;/p&gt;
-&lt;p&gt;particular project.&lt;/p&gt;
+latest book. Crista explained that there are many different styles of code to work with, but that
+often programmers get stuck in one way of coding. No style is "better" than another, but some work
+better in certain situations. Crista suggests that when we set out to write a program we ask
+ourselves, "what are our constraints?". Our constraint could be something we need to
+minimize/avoid, or something we want to maximize/include. Examples of constraints include minimizing
+the number of lines in our code, including functions, not including functions, and
+maximizing efficiency. Theses constraints produce different "styles" of code. As a programmer, it is
+good to familiarize ourselves with these different styles so that we can write in whichever
+style is best suited for a particular project.&lt;/p&gt;
 &lt;h5&gt;Data Types and Data Structures&lt;/h5&gt;
 &lt;p&gt;On Wednesday Crista gave a really helpful introductory lecture on data
-types and data structures.  &lt;/p&gt;
-&lt;p&gt;Before this lecture I had little knowledge on the subject. I had heard
-the words before but not&lt;/p&gt;
-&lt;p&gt;really understood their meanings. Here is how she explained the two
+types and data structures.  Before this lecture I had little knowledge on the subject. I had heard
+the words before but not really understood their meanings. Here is how she explained the two
 concepts:&lt;/p&gt;
 &lt;p&gt;A &lt;strong&gt;data type&lt;/strong&gt; is something more conceptual. It refers to our ideas of
-what can be done with&lt;/p&gt;
-&lt;p&gt;the data and what we want to do with the data.&lt;/p&gt;
+what can be done with the data and what we want to do with the data.&lt;/p&gt;
 &lt;p&gt;The term &lt;strong&gt;data structure&lt;/strong&gt;, on the other hand, refers to how we
-&lt;em&gt;implement&lt;/em&gt; the data type. When we talk&lt;/p&gt;
-&lt;p&gt;about data structure we are referring to how a "data type" is actually
-storred in memory on our&lt;/p&gt;
-&lt;p&gt;computer and how we can access that data.&lt;/p&gt;
+&lt;em&gt;implement&lt;/em&gt; the data type. When we talk about data structure we are referring to how a "data type" is actually
+storred in memory on our computer and how we can access that data.&lt;/p&gt;
 &lt;p&gt;Crista talked about two common implementations of data in our computer:
-the array, and the&lt;/p&gt;
-&lt;p&gt;list. An array is a continuous portion of memory in our computer with
-slots to put our data&lt;/p&gt;
-&lt;p&gt;in. Each slot takes up the same amount of memory, and the total amount
-of memory is fixed. Any&lt;/p&gt;
-&lt;p&gt;slot of the array can be accessed directly. A list, on the other hand,
-is NOT continuous. Different&lt;/p&gt;
-&lt;p&gt;elements of the list can be stored in any location on the computer's
-harddrive. Your computer&lt;/p&gt;
-&lt;p&gt;knows which item is first in the list and each item will point to the
-location in memory where&lt;/p&gt;
-&lt;p&gt;the next item on the list is located.&lt;/p&gt;
+the array, and the list. An array is a continuous portion of memory in our computer with
+slots to put our data in. Each slot takes up the same amount of memory, and the total amount
+of memory is fixed. Any slot of the array can be accessed directly. A list, on the other hand,
+is NOT continuous. Different elements of the list can be stored in any location on the computer's
+harddrive. Your computer knows which item is first in the list and each item will point to the
+location in memory where the next item on the list is located.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Ok... but why does all of this matter?!&lt;/em&gt; Well, Crista provided us with
-an example to illustrate why&lt;/p&gt;
-&lt;p&gt;these things are important: Suppose we have a list of 500 contacts on
-our computer. Our list&lt;/p&gt;
-&lt;p&gt;contains the names and telephone numbers of each contact. We can call
-this data type a&lt;/p&gt;
-&lt;p&gt;"contact list". We have some choices as to how we can implement this
-data. One option would be&lt;/p&gt;
-&lt;p&gt;to use the list implementation described above. In this case, to find a
-contact's telephone number&lt;/p&gt;
-&lt;p&gt;we must scan through the list, starting from the top, until we arrive at
-the name we are looking for.  &lt;/p&gt;
-&lt;p&gt;Another option would be to implement our contact list as a hash
+an example to illustrate why these things are important: Suppose we have a list of 500 contacts on
+our computer. Our list contains the names and telephone numbers of each contact. We can call
+this data type a "contact list". We have some choices as to how we can implement this
+data. One option would be to use the list implementation described above. In this case, to find a
+contact's telephone number we must scan through the list, starting from the top, until we arrive at
+the name we are looking for.   Another option would be to implement our contact list as a hash
 function.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;What is a hash function?!&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;I think the best way to illustrate the hash function is by example, the
-way Crista described it.&lt;/p&gt;
-&lt;p&gt;In our contact list scenario, an example of a hash function would be
+way Crista described it. In our contact list scenario, an example of a hash function would be
 something that acts as follows:&lt;/p&gt;
 &lt;p&gt;For each contact, the computer associates to it the number of letters in
-that contact's first name.&lt;/p&gt;
-&lt;p&gt;Then an array, lets call it a, is created in memory. The nth cell of a
-will "point" to a new list,&lt;/p&gt;
-&lt;p&gt;containing only the contacts whose names have n letters. From there the
-search starts from the top&lt;/p&gt;
-&lt;p&gt;down, but the list is (hopefully) much smaller in size. Using this hash
-function is much more&lt;/p&gt;
-&lt;p&gt;efficient than just creating one list containing all of the contacts.
-Indeed, computers can&lt;/p&gt;
-&lt;p&gt;compute simple mathematical calculations like this one extremely
-quickly, while scanning through&lt;/p&gt;
-&lt;p&gt;lists is a more time consuming task.&lt;/p&gt;
+that contact's first name. Then an array, lets call it a, is created in memory. The nth cell of a
+will "point" to a new list, containing only the contacts whose names have n letters. From there the
+search starts from the top down, but the list is (hopefully) much smaller in size. Using this hash
+function is much more efficient than just creating one list containing all of the contacts.
+Indeed, computers can compute simple mathematical calculations like this one extremely
+quickly, while scanning through lists is a more time consuming task.&lt;/p&gt;
 &lt;p&gt;At this point, I'd like like to clarify something about data structures
-and types: What certain&lt;/p&gt;
-&lt;p&gt;programming languages refer to as "lists" and "arrays" are not
-necessarily implemented as such.&lt;/p&gt;
-&lt;p&gt;Likewise, what is implemented as a list or array or hash function in a
-programming language is not necessarily&lt;/p&gt;
-&lt;p&gt;called a list, array or hash function. I know that this is kind of
-confusing, but here are some examples&lt;/p&gt;
-&lt;p&gt;to clarify the situation. What Python calls a "list" of n elements is
-actually implemented as an array&lt;/p&gt;
-&lt;p&gt;with more than n slots. The array is created longer than necessary,
-leaving several slots empty.&lt;/p&gt;
-&lt;p&gt;This makes the array easier to append (ie. add elements to). Another
-example in Python is the&lt;/p&gt;
-&lt;p&gt;data type "dictionary", which is actually implemented as a hash
+and types: What certain programming languages refer to as "lists" and "arrays" are not
+necessarily implemented as such. Likewise, what is implemented as a list or array or hash function in a
+programming language is not necessarily called a list, array or hash function. I know that this is kind of
+confusing, but here are some examples to clarify the situation. What Python calls a "list" of n elements is
+actually implemented as an array with more than n slots. The array is created longer than necessary,
+leaving several slots empty. This makes the array easier to append (ie. add elements to). Another
+example in Python is the data type "dictionary", which is actually implemented as a hash
 function.&lt;/p&gt;
 &lt;h5&gt;Objects, Functions, Etc.&lt;/h5&gt;
 &lt;p&gt;On Thursday, I came to Crista with a few questions about some
-terminology that had been confusing&lt;/p&gt;
-&lt;p&gt;me. I didn't really understand what was meant by the terms "functional
-programming" and "object&lt;/p&gt;
-&lt;p&gt;oriented programming". I wondered, "are these terms referring to
-particular languages or&lt;/p&gt;
-&lt;p&gt;are they referring to a style of writing code"? According to Crista,
-these terms mostly apply to the&lt;/p&gt;
-&lt;p&gt;style a program is written in. However, the terms are sometimes used to
-describe languages.  &lt;/p&gt;
-&lt;p&gt;(No wonder I was confused!) Crista explains that when you step far
+terminology that had been confusing me. I didn't really understand what was meant by the terms "functional
+programming" and "object oriented programming". I wondered, "are these terms referring to
+particular languages or are they referring to a style of writing code"? According to Crista,
+these terms mostly apply to the style a program is written in. However, the terms are sometimes used to
+describe languages.   (No wonder I was confused!) Crista explains that when you step far
 enough away, you can see certain trends in programming languages too.
-Some languages&lt;/p&gt;
-&lt;p&gt;might tend towards the functional style, while others might tend towards
-the object oriented style,&lt;/p&gt;
-&lt;p&gt;for example. In reality, though, most languages pull from all different
-ideas. Python is an&lt;/p&gt;
-&lt;p&gt;example of this. Although Python is often called "object oriented",
-Python also has functions!&lt;/p&gt;
-&lt;p&gt;Most languages combine these ideas as does Python, though there are some
-exceptions. Haskel,&lt;/p&gt;
-&lt;p&gt;for example, is a purely functional programming language.&lt;/p&gt;
-&lt;p&gt;This leads me to the next question:&lt;/p&gt;
-&lt;p&gt;What is an object and why is it important? Although I've created classes
-and objects in&lt;/p&gt;
-&lt;p&gt;Python programs, I wasn't sure I really understood the point. Crista
-provided me with an&lt;/p&gt;
-&lt;p&gt;explanation that I liked. She explained how objects are constructs which
-"wrap around"&lt;/p&gt;
-&lt;p&gt;your data, so that you can't access it directly. This protects the data
-so that it is less&lt;/p&gt;
-&lt;p&gt;likely to be accidentally corrupted. There are other ways that data can
-be protected if a&lt;/p&gt;
-&lt;p&gt;language doesn't use classes, but this is just one of those ways.&lt;/p&gt;
+Some languages might tend towards the functional style, while others might tend towards
+the object oriented style, for example. In reality, though, most languages pull from all different
+ideas. Python is an example of this. Although Python is often called "object oriented",
+Python also has functions! Most languages combine these ideas as does Python, though there are some
+exceptions. Haskel, for example, is a purely functional programming language.&lt;/p&gt;
+&lt;p&gt;This leads me to the next question: What is an object and why is it important? Although I've created classes
+and objects in Python programs, I wasn't sure I really understood the point. Crista
+provided me with an explanation that I liked. She explained how objects are constructs which
+"wrap around" your data, so that you can't access it directly. This protects the data
+so that it is less likely to be accidentally corrupted. There are other ways that data can
+be protected if a language doesn't use classes, but this is just one of those ways.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Thanks Crista for visting Hacker School this week!!!!&lt;/strong&gt;&lt;/p&gt;</summary></entry><entry><title>The struggles I had setting up this site.</title><link href="http://lmontopo.github.io/the-struggles-i-had-setting-up-this-site.html" rel="alternate"></link><updated>2014-10-08T04:00:00-04:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo.github.io,2014-10-08:the-struggles-i-had-setting-up-this-site.html</id><summary type="html">&lt;p&gt;For me, setting up my blog was not easy. I think part of this was that I
-was impatient,&lt;/p&gt;
-&lt;p&gt;and part of this was because IT IS HARD! I ran into many weird error
-messages and I began&lt;/p&gt;
-&lt;p&gt;to get quite impatient and frustrated. Thankfully I got Allison to help
-me, and together we&lt;/p&gt;
-&lt;p&gt;figured out what was going on and got things up and running. Here I will
-explain what went wrong for me and&lt;/p&gt;
-&lt;p&gt;how I fixed it. If you encounter similar difficulties, hopefully this
+was impatient, and part of this was because IT IS HARD! I ran into many weird error
+messages and I began to get quite impatient and frustrated. Thankfully I got Allison to help
+me, and together we figured out what was going on and got things up and running. Here I will
+explain what went wrong for me and how I fixed it. If you encounter similar difficulties, hopefully this
 article will help you.&lt;/p&gt;
 &lt;p&gt;The main struggle I encountered began when I tried to publish my page
-through Github.&lt;/p&gt;
-&lt;p&gt;There are two different ways one can go about doing this: either as a
-project page, or&lt;/p&gt;
-&lt;p&gt;as a user page. Without knowing there was another option, I began
-creating my blog as a&lt;/p&gt;
-&lt;p&gt;Github project page. In order to do this, I had to create a repository
-on Github, and then&lt;/p&gt;
-&lt;p&gt;create branch of the repository called "gh-pages". "gh-pages" is where I
-needed to push&lt;/p&gt;
-&lt;p&gt;the pelican created "output" folder containing all the necessary html to
-create the page.&lt;/p&gt;
-&lt;p&gt;To make this push happen, I made use of the "gh-import" package which
+through Github. There are two different ways one can go about doing this: either as a
+project page, or as a user page. Without knowing there was another option, I began
+creating my blog as a Github project page. In order to do this, I had to create a repository
+on Github, and then create branch of the repository called "gh-pages". "gh-pages" is where I
+needed to push the pelican created "output" folder containing all the necessary html to
+create the page. To make this push happen, I made use of the "gh-import" package which
 can be installed using pip.&lt;/p&gt;
 &lt;p&gt;Here is what needed to be done next:&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
@@ -2125,112 +2058,68 @@ can be installed using pip.&lt;/p&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
 &lt;p&gt;Here, the first line commits changes made in my output folder to the
-gh-branch of my LOCAL&lt;/p&gt;
-&lt;p&gt;repository. (Local meaning, the repository on my own computer, not the
-one store on Github.)&lt;/p&gt;
-&lt;p&gt;The second line of this code pushes these changes to the remote
-repository's gh-pages branch&lt;/p&gt;
-&lt;p&gt;(ie. the branch of the repository stored on github).Then, in about ten
-minutes time, my website&lt;/p&gt;
-&lt;p&gt;was created with url https:://lmontopo.github.io/blog. (here, lmontopo
-is my username on github,&lt;/p&gt;
-&lt;p&gt;and blog was the repository I created).&lt;/p&gt;
+gh-branch of my LOCAL repository. (Local meaning, the repository on my own computer, not the
+one store on Github.) The second line of this code pushes these changes to the remote
+repository's gh-pages branch (ie. the branch of the repository stored on github).Then, in about ten
+minutes time, my website was created with url https:://lmontopo.github.io/blog. (here, lmontopo
+is my username on github, and blog was the repository I created).&lt;/p&gt;
 &lt;p&gt;I wish this were the end of the story, but unfortunately it is not. What
-I realized when my&lt;/p&gt;
-&lt;p&gt;webpage was published is that none of pelican's styling information was
-being&lt;/p&gt;
-&lt;p&gt;received. My webpage was just a simple plain text webpage and it looked
-extremely ugly.&lt;/p&gt;
-&lt;p&gt;What was puzzling was that when I viewed the page source I saw a line in
-the code specifying&lt;/p&gt;
-&lt;p&gt;the location of the style sheet as:&lt;/p&gt;
-&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
-2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;link&lt;/span&gt; &lt;span class="n"&gt;rel&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;stylesheet&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/th&lt;/span&gt;
-&lt;span class="n"&gt;eme&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;css&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;css&lt;/span&gt;&lt;span class="s"&gt;&amp;quot; /&amp;gt;&lt;/span&gt;
+I realized when my webpage was published is that none of pelican's styling information was
+being received. My webpage was just a simple plain text webpage and it looked
+extremely ugly. What was puzzling was that when I viewed the page source I saw a line in
+the code specifying the location of the style sheet as:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;link&lt;/span&gt; &lt;span class="n"&gt;rel&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;stylesheet&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/theme/css/main.css&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;/&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
 &lt;p&gt;But when I clicked on this href, it couldn't find the file. Then I
-looked in my github&lt;/p&gt;
-&lt;p&gt;repository, and searched for that stylesheet file. I found it. It was
-there. So why couldn't my&lt;/p&gt;
-&lt;p&gt;computer find it? Well, it turns out that my computer was looking at the
-wrong url. It expected my&lt;/p&gt;
-&lt;p&gt;css style sheet to be found at "username.github.io/theme/css/main.css",
-but in reality it&lt;/p&gt;
-&lt;p&gt;was located at "username.github.io/repositoryname/theme/css/main.css".&lt;/p&gt;
+looked in my github repository, and searched for that stylesheet file. I found it. It was
+there. So why couldn't my computer find it? Well, it turns out that my computer was looking at the
+wrong url. It expected my css style sheet to be found at "username.github.io/theme/css/main.css",
+but in reality it was located at "username.github.io/repositoryname/theme/css/main.css".&lt;/p&gt;
 &lt;p&gt;So, at this point I found out that there was such thing as a github user
-page,&lt;/p&gt;
-&lt;p&gt;and I decided to change my page to be one of those instead. I should
-clarify that this&lt;/p&gt;
-&lt;p&gt;was not necessary, and this was not the only way to solve my problem!
-Had I decided to&lt;/p&gt;
-&lt;p&gt;stay with the gh-pages website, I would have needed to change my default
-root directory.&lt;/p&gt;
-&lt;p&gt;This probably is quite easy, although to be honest I don't know exactly
+page, and I decided to change my page to be one of those instead. I should
+clarify that this was not necessary, and this was not the only way to solve my problem!
+Had I decided to stay with the gh-pages website, I would have needed to change my default
+root directory. This probably is quite easy, although to be honest I don't know exactly
 how it is done.&lt;/p&gt;
 &lt;p&gt;Since I decided to change to a user github page, this is how I
-proceeded:&lt;/p&gt;
-&lt;p&gt;I needed to create a new repository called username.github.io. To
-github, this is a magic&lt;/p&gt;
-&lt;p&gt;repository name. Github will know that you are publishing a user webpage
-from the contents&lt;/p&gt;
-&lt;p&gt;of this repository and it will do the work for you (just as gh-pages was
-a magical branch name&lt;/p&gt;
-&lt;p&gt;for the project pages site.) Then I deleted my old repository. Now, I
-needed to tell my computer&lt;/p&gt;
-&lt;p&gt;to connect remotely with this new repository as opposed to the old one.
-(Just because the old&lt;/p&gt;
-&lt;p&gt;repository is deleted, doesn't mean my computer won't try to find it.)
+proceeded: I needed to create a new repository called username.github.io. To
+github, this is a magic repository name. Github will know that you are publishing a user webpage
+from the contents of this repository and it will do the work for you (just as gh-pages was
+a magical branch name for the project pages site.) Then I deleted my old repository. Now, I
+needed to tell my computer to connect remotely with this new repository as opposed to the old one.
+(Just because the old repository is deleted, doesn't mean my computer won't try to find it.)
 To do this I type in:&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
-2
-3
-4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;remote&lt;/span&gt; &lt;span class="n"&gt;rm&lt;/span&gt; &lt;span class="n"&gt;origin&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;rem&lt;/span&gt;
-&lt;span class="n"&gt;ote&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="n"&gt;username&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;github&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;io&lt;/span&gt; &lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt;
-&lt;span class="n"&gt;ithub&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;username&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;username&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;github&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;
-&lt;span class="n"&gt;o&lt;/span&gt;
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;remote&lt;/span&gt; &lt;span class="n"&gt;rm&lt;/span&gt; &lt;span class="n"&gt;origin&lt;/span&gt; 
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;remote&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="n"&gt;username&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;github&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;io&lt;/span&gt; &lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;github&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;username&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;username&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;github&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;io&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
 &lt;p&gt;The first line here removes the connection I had to the previous (now
-deleted) repository on Github.&lt;/p&gt;
-&lt;p&gt;The second line adds a remote connection to the repository named
-username.github.io found at&lt;/p&gt;
-&lt;p&gt;https://github.com/username/username.github.io.&lt;/p&gt;
+deleted) repository on Github.  The second line adds a remote connection to the repository named
+username.github.io found at https://github.com/username/username.github.io.&lt;/p&gt;
 &lt;p&gt;Great, now all I had to do was push the contents of my local repository
-to the main branch of&lt;/p&gt;
-&lt;p&gt;my new remote repository as follows:&lt;/p&gt;
+to the main branch of my new remote repository as follows:&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
-2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;ghp&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;output&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;push&lt;/span&gt; &lt;span class="ow"&gt;or&lt;/span&gt;
-&lt;span class="n"&gt;igin&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="n"&gt;gh&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;pages&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;master&lt;/span&gt;
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;ghp&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;output&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;push&lt;/span&gt; &lt;span class="n"&gt;origin&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="n"&gt;gh&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;pages&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;master&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
 &lt;p&gt;This created a lovely new webpage for me! Notice, though, that here I
-had to FORCE the push.&lt;/p&gt;
-&lt;p&gt;Quite honestly, I am not clear on why this is happening. For now, I have
-decided to create&lt;/p&gt;
-&lt;p&gt;a new local branch called "writing" and I will use this for all of my
-version control. This way&lt;/p&gt;
-&lt;p&gt;I can continue to force push without worrying about anything being lost.
-This may not be the&lt;/p&gt;
-&lt;p&gt;most sophisticated way of handling things, but being quite new to git, I
-am more than satisfied&lt;/p&gt;
-&lt;p&gt;with this solution.&lt;/p&gt;
+had to FORCE the push. Quite honestly, I am not clear on why this is happening. For now, I have
+decided to create a new local branch called "writing" and I will use this for all of my
+version control. This way I can continue to force push without worrying about anything being lost.
+This may not be the most sophisticated way of handling things, but being quite new to git, I
+am more than satisfied with this solution.&lt;/p&gt;
 &lt;p&gt;Another little glitch that occurred along the way, and how I solved it:&lt;/p&gt;
 &lt;p&gt;In the process of playing around with my computer, I somehow deleted the
-pelicanconf.py&lt;/p&gt;
-&lt;p&gt;file that pelican creates for you when you quickstart. This is the file
-that specifies all&lt;/p&gt;
-&lt;p&gt;of your settings. Since it was gone, I had lost my title, and the
-default title "A Pelican&lt;/p&gt;
-&lt;p&gt;Blog" appeared. Obviously, this wasn't desirable. This ended up being a
-really easy fix&lt;/p&gt;
-&lt;p&gt;because all I needed was to re-create this file and save it the
-directory where my "content"&lt;/p&gt;
-&lt;p&gt;folder is found. Then it integrates itself (somewhat magically) into the
-html files. Just&lt;/p&gt;
-&lt;p&gt;make sure that you have the correct formatting, as specified on
-pelican's documentation&lt;/p&gt;
-&lt;p&gt;site: &lt;a href="http://docs.getpelican.com/en/latest/settings.html"&gt;http://docs.getpelican.com/en/latest/settings.html&lt;/a&gt;&lt;/p&gt;</summary></entry></feed>
+pelicanconf.py file that pelican creates for you when you quickstart. This is the file
+that specifies all of your settings. Since it was gone, I had lost my title, and the
+default title "A Pelican Blog" appeared. Obviously, this wasn't desirable. This ended up being a
+really easy fix because all I needed was to re-create this file and save it the
+directory where my "content" folder is found. Then it integrates itself (somewhat magically) into the
+html files. Just make sure that you have the correct formatting, as specified on
+pelican's documentation site: &lt;a href="http://docs.getpelican.com/en/latest/settings.html"&gt;http://docs.getpelican.com/en/latest/settings.html&lt;/a&gt;&lt;/p&gt;</summary></entry></feed>
