@@ -47,12 +47,10 @@ the regular expression:
 ##### Example 1: Introductiory Example:
 
 ```python
->>> import re>>> text = 'Hackers
-chool is cool.'>>> re.split("a", tex
-t)['H', 'cker School is cool.']>>> r
-e.split("(a)", text)['H', 'a', 'cker
-school is cool.']
-
+>>> import re>>> text = 'Hackerschool is cool.'
+>>> re.split("a", text)
+['H', 'ckerschool is cool.']
+>>> re.split("(a)", text)['H', 'a', 'ckerschool is cool.']
 ```
 
 As you can see, when we put parentheses around 'a', then 'a' is included
@@ -62,9 +60,8 @@ the array. To do this brackets are put around the part of the regular
 expression we want to keep. Check it out:
 
 ```python
->>> re.split("a(ck)", text)['H',
-'ck', 'erschool is cool.']
-
+>>> re.split("a(ck)", text)
+['H','ck', 'erschool is cool.']
 ```
 
 Here the 'a' is still left out because it wasn't included in the
@@ -91,7 +88,6 @@ so as you'd expect it is going to split on every character...
 '', 'i', '', 's', '', ' ', '', 'c',
 '', 'o', '', 'o', '', 'l', '', '!',
 '']
-
 ```
 
 It might be surprising to you that there are empty string elements
@@ -111,7 +107,6 @@ Now lets combine the dot with other characters:
 >>> re.split("(.ool)", text)['Ha
 ckersc', 'hool', ' is ', 'cool', '!'
 ]
-
 ```
 
 This makes sense - there were two occurences where there appeared "some
@@ -120,10 +115,10 @@ character followed by 'ool'".
 Lets try a couple more examples just to make sure we get the hang of it:
 
 ```python
->>> re.split("(c.o)", text)['Hac
-kers', 'cho', 'ol is ', 'coo', 'l!']
->>> re.split("(c.h)", text)['Hackers
-chool is cool!']
+>>> re.split("(c.o)", text)
+['Hackers', 'cho', 'ol is ', 'coo', 'l!']
+>>> re.split("(c.h)", text)
+['Hackerschool is cool!']
 
 ```
 
@@ -143,12 +138,12 @@ expressed in the regular expression. Whenever possible, the star will
 **greedy character**.
 
 ```python
->>> text = "I like reading scify
-books.">>> re.split("(s.i)", text)[
-'I like reading ', 'sci', 'fi books.
-']>>> re.split("(s.*i)", text)['I li
-ke reading ', 'scifi', books.']>>>
-
+>>> text = "I like reading scify books."
+>>> re.split("(s.i)", text)
+['I like reading ', 'sci', 'fi books.']
+>>> re.split("(s.*i)", text)
+['I like reading ', 'scifi', books.']
+>>>
 ```
 
 Without the star, the regular expression 's.i' will match to 'sci'. When
@@ -161,10 +156,9 @@ Lets see what happens when we change the text to "I like science
 books.".
 
 ```python
->>> text = "I like science books
-.">>> re.split("(s.*i)", text)['I li
-ke ', 'sci', 'ence books.']
-
+>>> text = "I like science books."
+>>> re.split("(s.*i)", text)
+['I like ', 'sci', 'ence books.']
 ```
 
 Now that there is only one 'i' in the text, there are no more characters
@@ -176,14 +170,12 @@ The question matches either 0 or 1 repetitions of the preceeding regular
 expression. Here are some examples:
 
 ```python
->>> text = "There are num sectio
-ns in this document.">>> re.split("(
-e.*)", text)['Th', 'ere are num sect
-ions in this document.', '']>>> re.s
-plit("(e.?)", text)['Th', 'er', '',
-'e ', 'ar', 'e ', 'num s', 'ec', 'ti
-ons in this docum', 'en', 't.']>>>
-
+>>> text = "There are num sections in this document."
+>>> re.split("(e.*)", text)
+['Th', 'ere are num sections in this document.', '']
+>>> re.split("(e.?)", text)
+['Th', 'er', '','e ', 'ar', 'e ', 'num s', 'ec', 'tions in this docum', 'en', 't.']
+>>>
 ```
 
 When we use the question mark instead of the star there are many more
@@ -203,12 +195,11 @@ Lets see what happens when we combine all three: the dot, the star, and
 the question mark.
 
 ```python
->>> text = "There are num sectio
-ns in this document.">>> re.split("(
-e.*?)", text)['Th', 'e', 'r', 'e', '
-ar', 'e', ' num s', 'e', 'ctions in
-this docum', 'e', 'nt.']>>>
-
+>>> text = "There are num sections in this document."
+>>> re.split("(e.*?)", text)
+['Th', 'e', 'r', 'e', 'ar', 'e', ' num s', 'e', 
+'ctions in this docum', 'e', 'nt.']
+>>>
 ```
 
 Placing the question mark after a the star makes the regular expression
@@ -223,26 +214,19 @@ expressions to parse the html template and find all of the variables.
 Lets see an example:
 
 ```python
->>> html_text = "<html><title> H
-ello {{name}}.</title> Today is {{da
-y}}.</html>">>> re.split("({{.*?}})"
-, html_text)['<html><title> Hello ',
-'{{name}}', '.</title> Today is ',
-'{{day}}', '.</html>']
-
+>>> html_text = "<html><title> Hello {{name}}.</title> Today is {{day}}.</html>"
+>>> re.split("({{.*?}})", html_text)
+['<html><title> Hello ','{{name}}', '.</title> Today is ','{{day}}', '.</html>']
 ```
 
 Just to make sure we understand what the star and question mark are
 doing, lets see what happens when either one is removed:
 
 ```python
->>> re.split("({{.*}})", html_te
-xt)['<html><title> Hello ', '{{name}
-}.</title> Today is {{day}}', '.</ht
-ml>']>>> re.split("({{.?}})", html_t
-ext)['<html><title> Hello {{name}}.<
-/title> Today is {{day}}.</html>']
-
+>>> re.split("({{.*}})", html_text)
+['<html><title> Hello ', '{{name}}.</title> Today is {{day}}', '.</html>']
+>>> re.split("({{.?}})", html_text)
+['<html><title> Hello {{name}}.</title> Today is {{day}}.</html>']
 ```
 
 When the question mark is removed, the star acts greedily and soaks
@@ -265,9 +249,11 @@ expressions yet, I'm just talking about python strings. Lets verify
 this:
 
 ```python
->>> backslash = "\\">>> len(back
-slash)1>>> print backslash\
-
+>>> backslash = "\\"
+>>> len(backslash)
+1
+>>> print backslash
+\
 ```
 
 Neat!
