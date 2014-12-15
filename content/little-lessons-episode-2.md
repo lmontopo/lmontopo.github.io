@@ -22,11 +22,14 @@ initially expected. For the purpose of this lesson, it will suffice to
 consider a simple list of integers. Here we go!
 
 ```python
->>> list = [1, 2, 3, 7]>>> print
-list[1, 2, 3, 5]>> for item in list
-: ... item += 2>> print list[1, 2, 3
-, 4]
-
+>>> list = [1,2,3,4]
+>>> print list
+[1, 2, 3, 4]
+>>> for item in list:
+...     item +=2
+... 
+>>> print list
+[1, 2, 3, 4]
 ```
 
 I'm not sure about you, but this was not exactly what I was expecting
@@ -34,9 +37,9 @@ the first time I tried it. Lets add an extra print statement to better
 see whats going on.
 
 ```python
->>> for item in list: ... item +
-= 1... print item 2345
-
+>>> for item in list: 
+... 	item += 1
+... 	print item 2345
 ```
 
 It seems that our code is understanding, and executing, "item += 1",
@@ -49,9 +52,12 @@ so changing 'item' has no effect on our list. Here's how you *can*
 change the elements in the list, as intended:
 
 ```python
->>> list = [1, 2, 3, 4]>>> for i
-in range(len(list)):...     list[i]
-+= 1...>>> list[2, 3, 4, 5]
+>>> list = [1, 2, 3, 4]
+>>> for i in range(len(list)):
+...     list[i] += 1
+...
+>>> list
+[2, 3, 4, 5]
 
 ```
 
@@ -89,10 +95,9 @@ Great, now lets talk about how I implemented my own class of exceptions!
 The implimentation of this class required very little code:
 
 ```python
-class MyError(Exception):    def
-__init__(self, msg):        self.ms
-g = msg
-
+class MyError(Exception):    
+	def __init__(self, msg):        
+		self.msg = msg
 ```
 
 Then I created several different instances of this class. Each instance
@@ -101,14 +106,15 @@ message associated with it. Here is the function I implement in my
 program which takes care of all things to do with being a REPL:
 
 ```python
-def repl(env):    try:         x
-= raw_input('> ')        try:
-print interpret(x, env)
-except MyError, e:             prin
-t(colored(e.msg, 'red'))         ret
-urn repl(scope)    except KeyboardIn
-terrupt:        exit()
-
+def repl(env):    
+	try:         
+		x = raw_input('> ')        
+			try: print interpret(x, env)
+		except MyError, e:   
+			print(colored(e.msg, 'red'))         
+		return repl(scope)    
+	except KeyboardIterrupt:        
+		exit()
 ```
 
 Here my code "tries" to print out the result of calling the interpret

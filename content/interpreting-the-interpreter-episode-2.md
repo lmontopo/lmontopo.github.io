@@ -41,14 +41,13 @@ long ago, but this week I realized I wrong. The code I had written to
 interpret basic math looked something like this:
 
 ```python
-if head in ['+', '-', '*', '/',
-'<', '>', '<=', '=','>=']:    if hea
-d == '=':            result = eval(s
-tr(rest[0]) + '==' + str(rest[1]))
-return result    else:
-result = eval(str(rest[0]) +
-head + str(rest[1]))            ret
-urn result
+if head in ['+', '-', '*', '/','<', '>', '<=', '=','>=']:    
+	if head == '=':            
+		result = eval(str(rest[0]) + '==' + str(rest[1]))
+		return result    
+	else:
+	result = eval(str(rest[0]) +head + str(rest[1]))            
+	return result
 
 ```
 
@@ -61,19 +60,28 @@ wouldn't interpret it. In the end, I changed the code to look like this:
 (I'll just present a couple of functions, so that you get the idea)
 
 ```python
-# ---- Defining Basic Math and B
-ool Functions ----  def add(args):
-return sum(args)def subtract(args)
-:    return reduce(lambda x, y: x -
-y, args)def equal(args):    return a
-rgs[1:] == args[:-1]def less(args):
-return args[:-1] < args[1:]# ----
-Interpreting Basic Math and Bool Fu
-nctions ---- if head == '+':
-return add(rest)if head == '-':    r
-eturn subtract(rest)if head == '=':
-return equal(rest)if head == '<':
-return less(rest)
+# ---- Defining Basic Math and Bool Functions ----  
+def add(args):
+	return sum(args)
+
+def subtract(args):    
+	return reduce(lambda x, y: x -y, args)
+
+def equal(args):    
+	return args[1:] == args[:-1]
+
+def less(args):
+	return args[:-1] < args[1:]
+
+# ----Interpreting Basic Math and Bool Functions ---- 
+if head == '+':
+	return add(rest)
+if head == '-':    
+	return subtract(rest)
+if head == '=':
+	return equal(rest)
+if head == '<':
+	return less(rest)
 
 ```
 
@@ -92,8 +100,8 @@ statements. I tried to use it, but I was getting wonky results. This is
 what I tried:
 
 ```python
-def equal(args):    return reduc
-e(lambda x, y: x == y, args)
+def equal(args):    
+	return reduce(lambda x, y: x == y, args)
 
 ```
 
@@ -114,8 +122,8 @@ In the end, I was able to define a successful equal function as
 described above, by:
 
 ```python
-def equal(args):    return args[
-1:] == args[:-1]
+def equal(args):    
+	return args[1:] == args[:-1]
 
 ```
 
