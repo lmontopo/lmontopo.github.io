@@ -91,12 +91,10 @@ the regular expression:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">re</span><span class="o">&gt;&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&#39;Hackers</span>
-<span class="n">chool</span> <span class="ow">is</span> <span class="n">cool</span><span class="o">.</span><span class="s">&#39;&gt;&gt;&gt; re.split(&quot;a&quot;, tex</span>
-<span class="n">t</span><span class="p">)[</span><span class="s">&#39;H&#39;</span><span class="p">,</span> <span class="s">&#39;cker School is cool.&#39;</span><span class="p">]</span><span class="o">&gt;&gt;&gt;</span> <span class="n">r</span>
-<span class="n">e</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(a)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)[</span><span class="s">&#39;H&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;cker</span>
-<span class="n">school</span> <span class="ow">is</span> <span class="n">cool</span><span class="o">.</span><span class="s">&#39;]</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">re</span><span class="o">&gt;&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&#39;Hackerschool is cool.&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+<span class="p">[</span><span class="s">&#39;H&#39;</span><span class="p">,</span> <span class="s">&#39;ckerschool is cool.&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(a)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)[</span><span class="s">&#39;H&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;ckerschool is cool.&#39;</span><span class="p">]</span>
 </pre></div>
 </td></tr></table>
 
@@ -106,8 +104,8 @@ one character long, and we want only part of the pattern to be kept in
 the array. To do this brackets are put around the part of the regular
 expression we want to keep. Check it out:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;a(ck)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)[</span><span class="s">&#39;H&#39;</span><span class="p">,</span>
-<span class="s">&#39;ck&#39;</span><span class="p">,</span> <span class="s">&#39;erschool is cool.&#39;</span><span class="p">]</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;a(ck)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+<span class="p">[</span><span class="s">&#39;H&#39;</span><span class="p">,</span><span class="s">&#39;ck&#39;</span><span class="p">,</span> <span class="s">&#39;erschool is cool.&#39;</span><span class="p">]</span>
 </pre></div>
 </td></tr></table>
 
@@ -163,10 +161,10 @@ character followed by 'ool'".</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(c.o)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)[</span><span class="s">&#39;Hac</span>
-<span class="n">kers</span><span class="s">&#39;, &#39;</span><span class="n">cho</span><span class="s">&#39;, &#39;</span><span class="n">ol</span> <span class="ow">is</span> <span class="s">&#39;, &#39;</span><span class="n">coo</span><span class="s">&#39;, &#39;</span><span class="n">l</span><span class="err">!</span><span class="s">&#39;]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(c.h)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)[</span><span class="s">&#39;Hackers</span>
-<span class="n">chool</span> <span class="ow">is</span> <span class="n">cool</span><span class="err">!</span><span class="s">&#39;]</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(c.o)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+<span class="p">[</span><span class="s">&#39;Hackers&#39;</span><span class="p">,</span> <span class="s">&#39;cho&#39;</span><span class="p">,</span> <span class="s">&#39;ol is &#39;</span><span class="p">,</span> <span class="s">&#39;coo&#39;</span><span class="p">,</span> <span class="s">&#39;l!&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(c.h)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+<span class="p">[</span><span class="s">&#39;Hackerschool is cool!&#39;</span><span class="p">]</span>
 </pre></div>
 </td></tr></table>
 
@@ -186,11 +184,13 @@ expressed in the regular expression. Whenever possible, the star will
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;I like reading scify</span>
-<span class="n">books</span><span class="o">.</span><span class="s">&quot;&gt;&gt;&gt; re.split(&quot;</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">i</span><span class="p">)</span><span class="s">&quot;, text)[</span>
-<span class="s">&#39;I like reading &#39;</span><span class="p">,</span> <span class="s">&#39;sci&#39;</span><span class="p">,</span> <span class="s">&#39;fi books.</span>
-<span class="s">&#39;]&gt;&gt;&gt; re.split(&quot;(s.*i)&quot;, text)[&#39;</span><span class="n">I</span> <span class="n">li</span>
-<span class="n">ke</span> <span class="n">reading</span> <span class="s">&#39;, &#39;</span><span class="n">scifi</span><span class="s">&#39;, books.&#39;</span><span class="p">]</span><span class="o">&gt;&gt;&gt;</span>
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;I like reading scify books.&quot;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(s.i)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+<span class="p">[</span><span class="s">&#39;I like reading &#39;</span><span class="p">,</span> <span class="s">&#39;sci&#39;</span><span class="p">,</span> <span class="s">&#39;fi books.&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(s.*i)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+<span class="p">[</span><span class="s">&#39;I like reading &#39;</span><span class="p">,</span> <span class="s">&#39;scifi&#39;</span><span class="p">,</span> <span class="n">books</span><span class="o">.</span><span class="s">&#39;]</span>
+<span class="o">&gt;&gt;&gt;</span>
 </pre></div>
 </td></tr></table>
 
@@ -203,9 +203,9 @@ soaks up as many repetitions as possible.</p>
 books.".</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;I like science books</span>
-<span class="o">.</span><span class="s">&quot;&gt;&gt;&gt; re.split(&quot;</span><span class="p">(</span><span class="n">s</span><span class="o">.*</span><span class="n">i</span><span class="p">)</span><span class="s">&quot;, text)[&#39;I li</span>
-<span class="n">ke</span> <span class="s">&#39;, &#39;</span><span class="n">sci</span><span class="s">&#39;, &#39;</span><span class="n">ence</span> <span class="n">books</span><span class="o">.</span><span class="s">&#39;]</span>
+3</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;I like science books.&quot;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(s.*i)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+<span class="p">[</span><span class="s">&#39;I like &#39;</span><span class="p">,</span> <span class="s">&#39;sci&#39;</span><span class="p">,</span> <span class="s">&#39;ence books.&#39;</span><span class="p">]</span>
 </pre></div>
 </td></tr></table>
 
@@ -219,14 +219,12 @@ expression. Here are some examples:</p>
 3
 4
 5
-6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;There are num sectio</span>
-<span class="n">ns</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">document</span><span class="o">.</span><span class="s">&quot;&gt;&gt;&gt; re.split(&quot;</span><span class="p">(</span>
-<span class="n">e</span><span class="o">.*</span><span class="p">)</span><span class="s">&quot;, text)[&#39;Th&#39;, &#39;ere are num sect</span>
-<span class="n">ions</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">document</span><span class="o">.</span><span class="s">&#39;, &#39;&#39;]&gt;&gt;&gt; re.s</span>
-<span class="n">plit</span><span class="p">(</span><span class="s">&quot;(e.?)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)[</span><span class="s">&#39;Th&#39;</span><span class="p">,</span> <span class="s">&#39;er&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span>
-<span class="s">&#39;e &#39;</span><span class="p">,</span> <span class="s">&#39;ar&#39;</span><span class="p">,</span> <span class="s">&#39;e &#39;</span><span class="p">,</span> <span class="s">&#39;num s&#39;</span><span class="p">,</span> <span class="s">&#39;ec&#39;</span><span class="p">,</span> <span class="s">&#39;ti</span>
-<span class="n">ons</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">docum</span><span class="s">&#39;, &#39;</span><span class="n">en</span><span class="s">&#39;, &#39;</span><span class="n">t</span><span class="o">.</span><span class="s">&#39;]&gt;&gt;&gt;</span>
+6</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;There are num sections in this document.&quot;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(e.*)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+<span class="p">[</span><span class="s">&#39;Th&#39;</span><span class="p">,</span> <span class="s">&#39;ere are num sections in this document.&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(e.?)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+<span class="p">[</span><span class="s">&#39;Th&#39;</span><span class="p">,</span> <span class="s">&#39;er&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span><span class="s">&#39;e &#39;</span><span class="p">,</span> <span class="s">&#39;ar&#39;</span><span class="p">,</span> <span class="s">&#39;e &#39;</span><span class="p">,</span> <span class="s">&#39;num s&#39;</span><span class="p">,</span> <span class="s">&#39;ec&#39;</span><span class="p">,</span> <span class="s">&#39;tions in this docum&#39;</span><span class="p">,</span> <span class="s">&#39;en&#39;</span><span class="p">,</span> <span class="s">&#39;t.&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span>
 </pre></div>
 </td></tr></table>
 
@@ -246,11 +244,11 @@ the question mark.</p>
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;There are num sectio</span>
-<span class="n">ns</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">document</span><span class="o">.</span><span class="s">&quot;&gt;&gt;&gt; re.split(&quot;</span><span class="p">(</span>
-<span class="n">e</span><span class="o">.*</span><span class="err">?</span><span class="p">)</span><span class="s">&quot;, text)[&#39;Th&#39;, &#39;e&#39;, &#39;r&#39;, &#39;e&#39;, &#39;</span>
-<span class="n">ar</span><span class="s">&#39;, &#39;</span><span class="n">e</span><span class="s">&#39;, &#39;</span> <span class="n">num</span> <span class="n">s</span><span class="s">&#39;, &#39;</span><span class="n">e</span><span class="s">&#39;, &#39;</span><span class="n">ctions</span> <span class="ow">in</span>
-<span class="n">this</span> <span class="n">docum</span><span class="s">&#39;, &#39;</span><span class="n">e</span><span class="s">&#39;, &#39;</span><span class="n">nt</span><span class="o">.</span><span class="s">&#39;]&gt;&gt;&gt;</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;There are num sections in this document.&quot;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(e.*?)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+<span class="p">[</span><span class="s">&#39;Th&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">,</span> <span class="s">&#39;ar&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">,</span> <span class="s">&#39; num s&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">,</span> 
+<span class="s">&#39;ctions in this docum&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">,</span> <span class="s">&#39;nt.&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span>
 </pre></div>
 </td></tr></table>
 
@@ -264,15 +262,9 @@ expressions to parse the html template and find all of the variables.
 Lets see an example:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">html_text</span> <span class="o">=</span> <span class="s">&quot;&lt;html&gt;&lt;title&gt; H</span>
-<span class="n">ello</span> <span class="p">{{</span><span class="n">name</span><span class="p">}}</span><span class="o">.&lt;/</span><span class="n">title</span><span class="o">&gt;</span> <span class="n">Today</span> <span class="ow">is</span> <span class="p">{{</span><span class="n">da</span>
-<span class="n">y</span><span class="p">}}</span><span class="o">.&lt;/</span><span class="n">html</span><span class="o">&gt;</span><span class="s">&quot;&gt;&gt;&gt; re.split(&quot;</span><span class="p">({{</span><span class="o">.*</span><span class="err">?</span><span class="p">}})</span><span class="s">&quot;</span>
-<span class="p">,</span> <span class="n">html_text</span><span class="p">)[</span><span class="s">&#39;&lt;html&gt;&lt;title&gt; Hello &#39;</span><span class="p">,</span>
-<span class="s">&#39;{{name}}&#39;</span><span class="p">,</span> <span class="s">&#39;.&lt;/title&gt; Today is &#39;</span><span class="p">,</span>
-<span class="s">&#39;{{day}}&#39;</span><span class="p">,</span> <span class="s">&#39;.&lt;/html&gt;&#39;</span><span class="p">]</span>
+3</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">html_text</span> <span class="o">=</span> <span class="s">&quot;&lt;html&gt;&lt;title&gt; Hello {{name}}.&lt;/title&gt; Today is {{day}}.&lt;/html&gt;&quot;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;({{.*?}})&quot;</span><span class="p">,</span> <span class="n">html_text</span><span class="p">)</span>
+<span class="p">[</span><span class="s">&#39;&lt;html&gt;&lt;title&gt; Hello &#39;</span><span class="p">,</span><span class="s">&#39;{{name}}&#39;</span><span class="p">,</span> <span class="s">&#39;.&lt;/title&gt; Today is &#39;</span><span class="p">,</span><span class="s">&#39;{{day}}&#39;</span><span class="p">,</span> <span class="s">&#39;.&lt;/html&gt;&#39;</span><span class="p">]</span>
 </pre></div>
 </td></tr></table>
 
@@ -281,14 +273,10 @@ doing, lets see what happens when either one is removed:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4
-5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;({{.*}})&quot;</span><span class="p">,</span> <span class="n">html_te</span>
-<span class="n">xt</span><span class="p">)[</span><span class="s">&#39;&lt;html&gt;&lt;title&gt; Hello &#39;</span><span class="p">,</span> <span class="s">&#39;{{name}</span>
-<span class="p">}</span><span class="o">.&lt;/</span><span class="n">title</span><span class="o">&gt;</span> <span class="n">Today</span> <span class="ow">is</span> <span class="p">{{</span><span class="n">day</span><span class="p">}}</span><span class="s">&#39;, &#39;</span><span class="o">.&lt;/</span><span class="n">ht</span>
-<span class="n">ml</span><span class="o">&gt;</span><span class="s">&#39;]&gt;&gt;&gt; re.split(&quot;({{.?}})&quot;, html_t</span>
-<span class="n">ext</span><span class="p">)[</span><span class="s">&#39;&lt;html&gt;&lt;title&gt; Hello {{name}}.&lt;</span>
-<span class="o">/</span><span class="n">title</span><span class="o">&gt;</span> <span class="n">Today</span> <span class="ow">is</span> <span class="p">{{</span><span class="n">day</span><span class="p">}}</span><span class="o">.&lt;/</span><span class="n">html</span><span class="o">&gt;</span><span class="s">&#39;]</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;({{.*}})&quot;</span><span class="p">,</span> <span class="n">html_text</span><span class="p">)</span>
+<span class="p">[</span><span class="s">&#39;&lt;html&gt;&lt;title&gt; Hello &#39;</span><span class="p">,</span> <span class="s">&#39;{{name}}.&lt;/title&gt; Today is {{day}}&#39;</span><span class="p">,</span> <span class="s">&#39;.&lt;/html&gt;&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;({{.?}})&quot;</span><span class="p">,</span> <span class="n">html_text</span><span class="p">)</span>
+<span class="p">[</span><span class="s">&#39;&lt;html&gt;&lt;title&gt; Hello {{name}}.&lt;/title&gt; Today is {{day}}.&lt;/html&gt;&#39;</span><span class="p">]</span>
 </pre></div>
 </td></tr></table>
 
@@ -307,8 +295,14 @@ backslashes represents one. I'm not even talking about regular
 expressions yet, I'm just talking about python strings. Lets verify
 this:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">backslash</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">&quot;</span><span class="o">&gt;&gt;&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">back</span>
-<span class="n">slash</span><span class="p">)</span><span class="mi">1</span><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="n">backslash</span>\
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">backslash</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">&quot;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">backslash</span><span class="p">)</span>
+<span class="mi">1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="n">backslash</span>
+\
 </pre></div>
 </td></tr></table>
 
