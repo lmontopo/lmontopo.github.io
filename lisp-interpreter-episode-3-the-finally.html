@@ -73,27 +73,23 @@ things that matter most. Besides, I've gotten really excited this week
 about some other projects, so it could be a while before I get back to
 refacturing the interpreter.</p>
 <p>OK. Lets get started. Here are the first ten lines of code:</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">divisionf</span>
-<span class="n">rom</span> <span class="n">termcolor</span> <span class="kn">import</span> <span class="nn">coloredfrom</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">exit</span><span class="c">#------GlOBAL LISTS-----</span>
-<span class="o">-</span><span class="n">symbol</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="s">&#39;&lt;&#39;</span><span class="p">,</span>
-<span class="s">&#39;&gt;&#39;</span><span class="p">,</span><span class="s">&#39;&lt;=&#39;</span><span class="p">,</span> <span class="s">&#39;=&#39;</span><span class="p">,</span><span class="s">&#39;&gt;=&#39;</span><span class="p">,</span> <span class="s">&#39;abs&#39;</span><span class="p">,</span> <span class="s">&#39;list&#39;</span><span class="p">,</span> <span class="s">&#39;</span>
-<span class="k">if</span><span class="s">&#39;, &#39;</span><span class="ow">not</span><span class="s">&#39;,            &#39;</span><span class="nb">set</span><span class="err">!</span><span class="s">&#39;, &#39;</span><span class="n">begi</span>
-<span class="n">n</span><span class="s">&#39;, &#39;</span><span class="n">let</span><span class="s">&#39;, &#39;</span><span class="n">define</span><span class="s">&#39;, &#39;</span><span class="k">lambda</span><span class="s">&#39;, &#39;</span><span class="n">quot</span>
-<span class="n">e</span><span class="s">&#39;]special = [&#39;</span><span class="nb">set</span><span class="err">!</span><span class="s">&#39;, &#39;</span><span class="n">begin</span><span class="s">&#39;, &#39;</span><span class="n">let</span><span class="s">&#39;</span>
-<span class="p">,</span> <span class="s">&#39;define&#39;</span><span class="p">,</span> <span class="s">&#39;lambda&#39;</span><span class="p">,</span> <span class="s">&#39;cond&#39;</span><span class="p">,</span> <span class="s">&#39;quote</span>
-<span class="s">&#39;, &#39;</span><span class="k">if</span><span class="s">&#39;,     &#39;</span><span class="nb">list</span><span class="s">&#39;, &#39;</span><span class="nb">map</span><span class="s">&#39;, &#39;</span><span class="n">cons</span><span class="s">&#39;,</span>
-<span class="s">&#39;car&#39;</span><span class="p">,</span> <span class="s">&#39;cdr&#39;</span><span class="p">]</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">termcolor</span> <span class="kn">import</span> <span class="n">colored</span>
+<span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="nb">exit</span>
+
+<span class="c"># ------ GlOBAL LISTS ------</span>
+<span class="n">symbol</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="s">&#39;&lt;&#39;</span><span class="p">,</span> <span class="s">&#39;&gt;&#39;</span><span class="p">,</span><span class="s">&#39;&lt;=&#39;</span><span class="p">,</span> <span class="s">&#39;=&#39;</span><span class="p">,</span><span class="s">&#39;&gt;=&#39;</span><span class="p">,</span> <span class="s">&#39;abs&#39;</span><span class="p">,</span> <span class="s">&#39;list&#39;</span><span class="p">,</span> <span class="s">&#39;if&#39;</span><span class="p">,</span> <span class="s">&#39;not&#39;</span><span class="p">,</span>
+            <span class="s">&#39;set!&#39;</span><span class="p">,</span> <span class="s">&#39;begin&#39;</span><span class="p">,</span> <span class="s">&#39;let&#39;</span><span class="p">,</span> <span class="s">&#39;define&#39;</span><span class="p">,</span> <span class="s">&#39;lambda&#39;</span><span class="p">,</span> <span class="s">&#39;quote&#39;</span><span class="p">]</span>
+<span class="n">special</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;set!&#39;</span><span class="p">,</span> <span class="s">&#39;begin&#39;</span><span class="p">,</span> <span class="s">&#39;let&#39;</span><span class="p">,</span> <span class="s">&#39;define&#39;</span><span class="p">,</span> <span class="s">&#39;lambda&#39;</span><span class="p">,</span> <span class="s">&#39;cond&#39;</span><span class="p">,</span> <span class="s">&#39;quote&#39;</span><span class="p">,</span> <span class="s">&#39;if&#39;</span><span class="p">,</span>     
+            <span class="s">&#39;list&#39;</span><span class="p">,</span> <span class="s">&#39;map&#39;</span><span class="p">,</span> <span class="s">&#39;cons&#39;</span><span class="p">,</span> <span class="s">&#39;car&#39;</span><span class="p">,</span> <span class="s">&#39;cdr&#39;</span><span class="p">]</span>
 </pre></div>
 </td></tr></table>
 
@@ -117,25 +113,17 @@ class:</p>
  8
  9
 10
-11
-12
-13
-14
-15</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># --- EXCEPTIONS ---class MyErro</span>
-<span class="n">r</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-<span class="n">msg</span><span class="p">):</span>        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="n">msgif_error</span>
-<span class="o">=</span> <span class="n">MyError</span><span class="p">(</span><span class="s">&quot;Error: you need to specif</span>
-<span class="n">y</span> <span class="n">by</span> <span class="n">a</span> <span class="n">consequence</span> <span class="ow">and</span> <span class="n">an</span> <span class="n">alternate</span><span class="o">.</span>
-<span class="s">&quot;)dict_error = MyError(&quot;</span><span class="n">Error</span><span class="p">:</span> <span class="n">can</span><span class="s">&#39;t</span>
-<span class="n">find</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="o">.</span> <span class="n">Imprope</span>
-<span class="n">r</span> <span class="nb">input</span><span class="o">.</span><span class="s">&quot;)unexpected_error = MyError</span>
-<span class="p">(</span><span class="s">&#39;Error: unexpectedly entered parse</span>
-<span class="n">function</span> <span class="k">with</span> <span class="n">no</span> <span class="nb">input</span><span class="o">.</span><span class="s">&#39;)too_many =</span>
-<span class="n">MyError</span><span class="p">(</span><span class="s">&quot;Error: too many arguments w</span>
-<span class="n">ere</span> <span class="n">inputed</span><span class="o">.</span><span class="s">&quot;)quote_error = MyError(</span>
-<span class="s">&#39;Error: quote only takes one operand</span>
-<span class="o">.</span><span class="s">&#39;)let_error = MyError(&#39;</span><span class="n">Error</span><span class="p">:</span> <span class="n">let</span> <span class="n">m</span>
-<span class="n">ust</span> <span class="n">be</span> <span class="n">followed</span> <span class="n">by</span> <span class="n">a</span> <span class="nb">list</span><span class="o">.</span><span class="s">&#39;)</span>
+11</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># ------ EXCEPTIONS ------</span>
+<span class="k">class</span> <span class="nc">MyError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span>
+
+<span class="n">if_error</span> <span class="o">=</span> <span class="n">MyError</span><span class="p">(</span><span class="s">&quot;Error: you need to specify by a consequence and an alternate.&quot;</span><span class="p">)</span>
+<span class="n">dict_error</span> <span class="o">=</span> <span class="n">MyError</span><span class="p">(</span><span class="s">&quot;Error: can&#39;t find element in dictionary. Improper input.&quot;</span><span class="p">)</span>
+<span class="n">first_error</span> <span class="o">=</span> <span class="n">MyError</span><span class="p">(</span><span class="s">&#39;Error: unexpectedly entered parse function with no input.&#39;</span><span class="p">)</span>
+<span class="n">too_many</span> <span class="o">=</span> <span class="n">MyError</span><span class="p">(</span><span class="s">&quot;Error: too many arguments were inputed.&quot;</span><span class="p">)</span>
+<span class="n">quote_error</span> <span class="o">=</span> <span class="n">MyError</span><span class="p">(</span><span class="s">&#39;Error: quote only takes one operand.&#39;</span><span class="p">)</span>
+<span class="n">let_error</span> <span class="o">=</span> <span class="n">MyError</span><span class="p">(</span><span class="s">&#39;Error: let must be followed by a list.&#39;</span><span class="p">)</span>
 </pre></div>
 </td></tr></table>
 
@@ -149,13 +137,13 @@ parser. Here is my tokenizer:</p>
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># ---- TOKENIZE ------ def token</span>
-<span class="n">izer</span><span class="p">(</span><span class="n">holder</span><span class="p">):</span>    <span class="n">holder</span> <span class="o">=</span> <span class="s">&#39;(&#39;</span> <span class="o">+</span> <span class="n">hold</span>
-<span class="n">er</span> <span class="o">+</span> <span class="s">&#39;)&#39;</span>    <span class="n">holder</span> <span class="o">=</span> <span class="n">holder</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
-<span class="s">&#39;(&#39;</span> <span class="p">,</span> <span class="s">&#39; ( &#39;</span> <span class="p">)</span>    <span class="n">holder</span> <span class="o">=</span> <span class="n">holder</span><span class="o">.</span><span class="n">re</span>
-<span class="n">place</span><span class="p">(</span> <span class="s">&#39;)&#39;</span><span class="p">,</span> <span class="s">&#39; ) &#39;</span> <span class="p">)</span>    <span class="n">final</span> <span class="o">=</span> <span class="n">filte</span>
-<span class="n">r</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span> <span class="o">!=</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">holder</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span>
-<span class="s">&#39;))    return final</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># ------ TOKENIZE ------- </span>
+<span class="k">def</span> <span class="nf">tokenizer</span><span class="p">(</span><span class="n">holder</span><span class="p">):</span>
+    <span class="n">holder</span> <span class="o">=</span> <span class="s">&#39;(&#39;</span> <span class="o">+</span> <span class="n">holder</span> <span class="o">+</span> <span class="s">&#39;)&#39;</span>
+    <span class="n">holder</span> <span class="o">=</span> <span class="n">holder</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span> <span class="s">&#39;(&#39;</span> <span class="p">,</span> <span class="s">&#39; ( &#39;</span> <span class="p">)</span>
+    <span class="n">holder</span> <span class="o">=</span> <span class="n">holder</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span> <span class="s">&#39;)&#39;</span><span class="p">,</span> <span class="s">&#39; ) &#39;</span> <span class="p">)</span>
+    <span class="n">final</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span> <span class="o">!=</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">holder</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">final</span>
 </pre></div>
 </td></tr></table>
 
@@ -204,27 +192,31 @@ with recursion! Here's the code:</p>
 18
 19
 20
-21</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># ---- PARSER ----- def parse(to</span>
-<span class="n">kens</span><span class="p">):</span>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-<span class="k">raise</span> <span class="n">unexpected_error</span>    <span class="n">token</span> <span class="o">=</span>
-<span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>    <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-<span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s">&#39;(&#39;</span><span class="p">:</span>        <span class="n">parsed_input</span>
-<span class="o">=</span> <span class="p">[]</span>         <span class="k">while</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&#39;)&#39;</span>
-<span class="p">:</span>            <span class="n">to_append</span><span class="p">,</span> <span class="n">tokens</span> <span class="o">=</span> <span class="n">par</span>
-<span class="n">se</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>            <span class="n">parsed_input</span><span class="o">.</span><span class="n">a</span>
-<span class="n">ppend</span><span class="p">(</span><span class="n">to_append</span><span class="p">)</span>        <span class="n">tokens</span> <span class="o">=</span> <span class="n">tok</span>
-<span class="n">ens</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>                 <span class="c">#pops off th</span>
-<span class="n">e</span> <span class="s">&#39;)&#39;</span> <span class="n">part</span>        <span class="c">#we add a conditio</span>
-<span class="n">n</span> <span class="n">to</span> <span class="n">check</span> <span class="k">if</span> <span class="n">last</span> <span class="k">return</span>        <span class="k">if</span>
-<span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>            <span class="k">return</span> <span class="n">p</span>
-<span class="n">arsed_input</span><span class="p">,</span> <span class="n">tokens</span>     <span class="c">#if not last</span>
-<span class="k">return</span><span class="p">,</span> <span class="n">need</span> <span class="n">to</span> <span class="k">return</span> <span class="n">current</span> <span class="n">vers</span>
-<span class="n">ion</span> <span class="n">of</span> <span class="n">tokens</span>        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span>
-<span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">:</span>            <span class="k">return</span> <span class="n">parsed_in</span>
-<span class="n">put</span>             <span class="c">#if last return, onl</span>
-<span class="n">y</span> <span class="n">want</span> <span class="n">to</span> <span class="k">return</span> <span class="n">new</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">tokens</span>
-<span class="k">else</span><span class="p">:</span>        <span class="k">return</span> <span class="n">chec</span>
-<span class="n">k_type</span><span class="p">(</span><span class="n">token</span><span class="p">),</span> <span class="n">tokens</span>
+21
+22
+23</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># ---- PARSER ----- </span>
+<span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">first_error</span>
+
+    <span class="n">token</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="s">&#39;(&#39;</span><span class="p">:</span>
+        <span class="n">parsed_input</span> <span class="o">=</span> <span class="p">[]</span> 
+
+        <span class="k">while</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&#39;)&#39;</span><span class="p">:</span>
+            <span class="n">to_append</span><span class="p">,</span> <span class="n">tokens</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+            <span class="n">parsed_input</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">to_append</span><span class="p">)</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>                 <span class="c"># pops off the &#39;)&#39; part</span>
+
+        <span class="c">#we add a condition to check if last return</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">parsed_input</span><span class="p">,</span> <span class="n">tokens</span>     <span class="c"># if not last return, return current version of holder</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="n">parsed_input</span>             <span class="c"># if last return, only return new_holder            </span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">check_type</span><span class="p">(</span><span class="n">token</span><span class="p">),</span> <span class="n">tokens</span>
 </pre></div>
 </td></tr></table>
 

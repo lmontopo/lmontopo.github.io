@@ -48,7 +48,7 @@
         title="Permalink to Adventures with sockets, threads and more!">Adventures with sockets, threads and more!</a></h3>
     </header>
 
-<h6 class="subheader" title="2014-11-11T05:00:00-05:00">Tue 11 November 2014
+<h6 class="subheader" title="2014-11-11T00:00:00-05:00">Tue 11 November 2014
 </h6>
 
 
@@ -78,8 +78,7 @@ and allows users (or programs) to create instances of them at will.
 Sockets are used as the endpoints of any bidirectional communication
 channel. The socket contains the FROM IP address, the TO IP address, the
 FROM port number, and the TO port
-number.^<a href="http://lmontopo.github.io/feeds/leta-montopoli.rss.xml#fn:fn-1">1</a>^
-We can think about the function of sockets to be like plugging chords
+number.<sup id="fnref:1"><a class="footnote-ref" href="#fn:1" rel="footnote">1</a></sup> We can think about the function of sockets to be like plugging chords
 into walls on the two ends of your communcation channel.</p>
 <h5>How does my computer communicate with my router?</h5>
 <p>The short answer: via radio signals. Modern computers come with a built
@@ -134,29 +133,61 @@ real world chat service! Here's our code:</p>
 20
 21
 22
-23</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">###SERVER (On Leta&#39;s Computer)im</span>
-<span class="n">port</span> <span class="n">socketimport</span> <span class="n">threadingserversoc</span>
-<span class="n">ket</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">()</span><span class="n">port</span> <span class="o">=</span> <span class="mi">9999</span><span class="c"># c</span>
-<span class="n">lears</span> <span class="n">the</span> <span class="n">port</span> <span class="n">right</span> <span class="n">away</span> <span class="n">preventing</span>
-<span class="s">&quot;address already in use&quot;</span> <span class="n">errorsserv</span>
-<span class="n">ersocket</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">SOL_SOCKE</span>
-<span class="n">T</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SO_REUSEADDR</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="n">my_ip</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="o">.</span><span class="mf">0.7</span><span class="o">.</span><span class="mi">65</span><span class="n">serversocket</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="n">my_ip</span> <span class="p">,</span> <span class="n">po</span>
-<span class="n">rt</span><span class="p">))</span><span class="c"># queue up to 5 requests:servers</span>
-<span class="n">ocket</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="n">clientsocket</span><span class="p">,</span> <span class="n">addr</span> <span class="o">=</span>
-<span class="n">serversocket</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span><span class="k">def</span> <span class="nf">listen</span><span class="p">(</span><span class="n">conn</span>
-<span class="n">ection</span><span class="p">):</span>    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>        <span class="n">msg</span> <span class="o">=</span>
-<span class="n">clientsocket</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>        <span class="k">if</span> <span class="n">n</span>
-<span class="n">ot</span> <span class="n">msg</span><span class="p">:</span>            <span class="k">break</span>        <span class="k">else</span>
-<span class="p">:</span>            <span class="k">print</span> <span class="s">&#39;friend says&#39;</span><span class="p">,</span> <span class="n">ms</span>
-<span class="n">gdef</span> <span class="n">write</span><span class="p">(</span><span class="n">connection</span><span class="p">):</span>    <span class="k">while</span> <span class="n">Tru</span>
-<span class="n">e</span><span class="p">:</span>        <span class="n">message</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
-<span class="n">clientsocket</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-<span class="n">clientsocket</span><span class="o">.</span><span class="n">close</span><span class="p">()</span><span class="n">t</span> <span class="o">=</span> <span class="n">thread</span>
-<span class="n">ing</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span> <span class="o">=</span> <span class="n">write</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span>
-<span class="n">lientsocket</span><span class="p">])</span><span class="n">r</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">ta</span>
-<span class="n">rget</span> <span class="o">=</span> <span class="n">listen</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">clientsocket</span><span class="p">]</span>
-<span class="p">)</span><span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span><span class="n">r</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">###SERVER (On Leta&#39;s Computer)</span>
+<span class="kn">import</span> <span class="nn">socket</span> 
+<span class="kn">import</span> <span class="nn">threading</span>
+
+<span class="n">serversocket</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">()</span>
+
+<span class="c">#host = socket.gethostname()</span>
+
+<span class="n">port</span> <span class="o">=</span> <span class="mi">9999</span>
+
+<span class="n">serversocket</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">SOL_SOCKET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SO_REUSEADDR</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">serversocket</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="s">&quot;10.0.7.65&quot;</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+
+<span class="c"># queue up to 5 requests:</span>
+<span class="n">serversocket</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">clientsocket</span><span class="p">,</span> <span class="n">addr</span> <span class="o">=</span> <span class="n">serversocket</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">listen</span><span class="p">(</span><span class="n">connection</span><span class="p">):</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">clientsocket</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">msg</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39;friend says&#39;</span><span class="p">,</span> <span class="n">msg</span>
+
+<span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="n">connection</span><span class="p">):</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">clientsocket</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">&#39;HTTP/1.0 200 OK</span><span class="se">\n\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="n">clientsocket</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="n">clientsocket</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span> <span class="o">=</span> <span class="n">write</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">clientsocket</span><span class="p">])</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span> <span class="o">=</span> <span class="n">listen</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">clientsocket</span><span class="p">])</span>
+
+<span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">r</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 </pre></div>
 </td></tr></table>
 
@@ -177,24 +208,42 @@ real world chat service! Here's our code:</p>
 15
 16
 17
-18</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#CLIENT (on Susan&#39;s computer)imp</span>
-<span class="n">ort</span> <span class="n">socketimport</span> <span class="n">threadingdef</span> <span class="n">server</span>
-<span class="p">():</span>    <span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">A</span>
-<span class="n">F_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>    <span class="n">HOST</span><span class="o">=</span>
-<span class="s">&#39;&#39;</span>    <span class="n">SOCKET_LIST</span> <span class="o">=</span> <span class="p">[]</span>    <span class="n">RECV_BUFF</span>
-<span class="n">ER</span> <span class="o">=</span> <span class="mi">4096</span>    <span class="n">PORT</span> <span class="o">=</span> <span class="mi">9999</span>    <span class="n">server_a</span>
-<span class="n">ddr</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;10.0.7.65&quot;</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>    <span class="k">print</span> <span class="o">&gt;</span>
-<span class="o">&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;connecting to </span><span class="si">%s</span><span class="s"> port</span>
-<span class="o">%</span><span class="n">s</span><span class="s">&#39; </span><span class="si">% s</span><span class="s">erver_addr    sock.connect(se</span>
-<span class="n">rver_addr</span><span class="p">)</span>    <span class="k">try</span><span class="p">:</span>        <span class="n">t</span><span class="o">=</span><span class="n">threadin</span>
-<span class="n">g</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">send</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="n">sock</span><span class="p">])</span>
-<span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>        <span class="k">print</span> <span class="s">&quot;hi!!!!</span>
-<span class="n">TESTING</span><span class="err">!!</span><span class="s">&quot;        while True:</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">RECV_BUFFER</span><span class="p">)</span>
-<span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;Leta</span>
-<span class="n">says</span><span class="p">:</span> <span class="o">%</span><span class="n">s</span><span class="s">&#39; </span><span class="si">% d</span><span class="s">ata    finally:</span>
-<span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;closing socket</span>
-<span class="s">&#39;        sock.close()</span>
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#CLIENT (on Susan&#39;s computer)import socket</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+
+<span class="k">def</span> <span class="nf">server</span><span class="p">():</span>
+    <span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+
+    <span class="n">HOST</span><span class="o">=</span> <span class="s">&#39;&#39;</span>
+    <span class="n">SOCKET_LIST</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">RECV_BUFFER</span> <span class="o">=</span> <span class="mi">4096</span>
+    <span class="n">PORT</span> <span class="o">=</span> <span class="mi">9999</span>
+
+    <span class="n">server_addr</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;10.0.7.65&quot;</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
+    <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;connecting to </span><span class="si">%s</span><span class="s"> port </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">server_addr</span>
+    <span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">server_addr</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">t</span><span class="o">=</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">send</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="n">sock</span><span class="p">])</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">print</span> <span class="s">&quot;hi!!!! TESTING!!&quot;</span>
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">RECV_BUFFER</span><span class="p">)</span>
+            <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;Leta says: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">data</span>
+
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;closing socket&#39;</span>
+        <span class="n">sock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 </td></tr></table>
 
@@ -276,27 +325,17 @@ actually starting to change. I don't know very mucha about this, but I
 think HTTP is starting to allow a single socket to handle more than one
 HTTP requests.</p>
 <div class="footnote">
-
-------------------------------------------------------------------------
-
-1.  <div id="fn:fn-1">
-
-    </div>
-
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="highlight"><pre>A Port is just this idea that we&#39;ve implimented on our computers so
+<hr />
+<ol>
+<li id="fn:1">
+<p>A Port is just this idea that we've implimented on our computers so
 that we can have several things going on on one computer. Its kind
 of like apartments on an apartment building. If we have to have
 several separate things going on at different addresses within the
-same machine, ports is the way we&#39;ve done
-that. [↩](http://lmontopo.github.io/feeds/leta-montopoli.rss.xml#fnref:fn-1 &quot;Jump back to footnote 1 in the text&quot;)
-</pre></div>
-</td></tr></table>
-
+same machine, ports is the way we've done
+that. &#160;<a class="footnote-backref" href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
 </div>
 <p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
 

@@ -62,24 +62,27 @@ with a class. It is usually called on an instance of that class. If you've writt
 code in Python you've probably already used methods, even if you didn't know the lingo. Now
 lets talk about extend, a method invoked on lists! Here's a little example to illustrate what it does:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="o">.</span><span class="n">exten</span>
-<span class="n">d</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="nb">list</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="nb">list</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
 </td></tr></table>
 
 <p>Now, consider the following bit of code. Warning: It will produce an
 error!</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span> <span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="o">.</span>
-<span class="n">extend</span><span class="p">([</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">])</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">])</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">])</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">])</span>
 </pre></div>
 </td></tr></table>
 
 <p>I expected to get the list with entries 1 through 9 in return, but
 instead I was greeted with the following message: "AttributeError: 'NoneType' object has no
-attribute 'extend'"
-^<a href="">1</a>. I
-was working with Julia Tufts at the time, and we were both intrigued by this
+attribute 'extend'"<sup id="fnref:1"><a class="footnote-ref" href="#fn:1" rel="footnote">1</a></sup>. 
+I was working with Julia Tufts at the time, and we were both intrigued by this
 message. So we did a little playing around and realized that although the method 'extend' alters the list instance
 it is invoked on, the method actually returns None. So when we extend doubly, in one line, as I did
 above, list.extend([6,7]) returns None, and then we try to extend None with [8,9], producing an error. Cool!</p>
@@ -92,10 +95,14 @@ use recursion to write that code:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">plus_one</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>    <span class="k">if</span> <span class="n">num</span> <span class="o">==</span>
-<span class="mi">1</span><span class="p">:</span>        <span class="k">print</span> <span class="n">num</span>    <span class="k">else</span><span class="p">:</span>
-<span class="k">print</span> <span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;+&#39;</span>         <span class="k">return</span> <span class="n">plus_</span>
-<span class="n">one</span><span class="p">(</span><span class="n">num</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">plus_one</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>    
+    <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>        
+        <span class="k">print</span> <span class="n">num</span>    
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;+&#39;</span>        
+    <span class="k">return</span> <span class="n">plus_one</span><span class="p">(</span><span class="n">num</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
 </pre></div>
 </td></tr></table>
 
@@ -128,17 +135,18 @@ Orwell. Then, suppose I use her app and search for the same book. Her cache will
 stored the results of the previous 1984 book search, so my inquiry can obtain the data directly from her cache instead of trying
 to retrieve the information all over again from the NY Public Library database. Thanks Susan for
 pairing with me!</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5</pre></div></td><td class="code"><div class="highlight"><pre>Ok so I realize now that this may be a bit confusing since the error
-specifies that it is an attribute error instead of a *method* error. I&#39;m not
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>Ok so I realize now that this may be a bit confusing since the error
+specifies that it is an attribute error instead of a <em>method</em> error. I'm not
 exactly clear on the difference between an attribute and a method, but I am pretty sure that a
-method IS an attribute. I think the word &quot;attribute&quot; is just a more general term. So for now, we&#39;ll
-go with that! Hopefully later I&#39;ll write a blog post to clear up the difference!
-</pre></div>
-</td></tr></table>
+method IS an attribute. I think the word "attribute" is just a more general term. So for now, we'll
+go with that! Hopefully later I'll write a blog post to clear up the difference!&#160;<a class="footnote-backref" href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
 <p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
 
 </p>

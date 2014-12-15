@@ -126,12 +126,18 @@ the python's urllib module!! Check it out:</p>
 3
 4
 5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">urllib</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="s">&#39;!!!&#39;</span><span class="p">)</span><span class="s">&#39;</span><span class="si">%21%</span><span class="s">21%2</span>
-<span class="mi">1</span><span class="s">&#39;&gt;&gt;&gt; encoded_input = urllib.quote(&#39;</span>
-<span class="o">&amp;</span><span class="err">!?</span><span class="s">&#39;)&gt;&gt;&gt; print encoded_input</span><span class="si">%26%</span><span class="s">21%3</span>
-<span class="n">F</span><span class="o">&gt;&gt;&gt;</span> <span class="n">decoded_input</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">unquote</span><span class="p">(</span>
-<span class="n">encoded_input</span><span class="p">)</span><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="n">decoded_inpu</span>
-<span class="n">t</span><span class="o">&amp;</span><span class="err">!?</span><span class="o">&gt;&gt;&gt;</span>
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">urllib</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="s">&#39;!!!&#39;</span><span class="p">)</span>
+<span class="s">&#39;</span><span class="si">%21%</span><span class="s">21%21&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">encoded_input</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="s">&#39;&amp;!?&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="n">encoded_input</span>
+<span class="o">%</span><span class="mi">26</span><span class="o">%</span><span class="mi">21</span><span class="o">%</span><span class="mi">3</span><span class="n">F</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">decoded_input</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">unquote</span><span class="p">(</span>
+<span class="n">encoded_input</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="n">decoded_input</span>
+<span class="o">&amp;</span><span class="err">!?</span>
 </pre></div>
 </td></tr></table>
 
@@ -150,8 +156,8 @@ Often, template engines are part of what makes up a web framework.</p>
 <h4>Generators are a kind of python object!</h4>
 <p>You know how you can write lists like:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="s">&#39;abcdefg&#39;</span><span class="p">][</span><span class="s">&#39;a&#39;</span><span class="p">,</span>
-<span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">,</span> <span class="s">&#39;f&#39;</span><span class="p">,</span> <span class="s">&#39;g&#39;</span><span class="p">]</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="s">&#39;abcdefg&#39;</span><span class="p">]</span>
+<span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">,</span> <span class="s">&#39;f&#39;</span><span class="p">,</span> <span class="s">&#39;g&#39;</span><span class="p">]</span>
 </pre></div>
 </td></tr></table>
 
@@ -160,10 +166,8 @@ found out yesterday that if we write the same thing but instead use the
 non-square embraces, then we create something called a generator. Check
 it out:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="s">&#39;abcdefg&#39;</span><span class="p">)</span><span class="o">&lt;</span><span class="n">gener</span>
-<span class="n">ator</span> <span class="nb">object</span> <span class="o">&lt;</span><span class="n">genexpr</span><span class="o">&gt;</span> <span class="n">at</span> <span class="mh">0x10b323910</span>
-<span class="o">&gt;&gt;&gt;&gt;</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="s">&#39;abcdefg&#39;</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">generator</span> <span class="nb">object</span> <span class="o">&lt;</span><span class="n">genexpr</span><span class="o">&gt;</span> <span class="n">at</span> <span class="mh">0x10b323910</span><span class="o">&gt;</span>
 </pre></div>
 </td></tr></table>
 
@@ -183,7 +187,9 @@ instead of 10. (If you aren't familiar with hexidecimal numbers, no
 worries. You can read up on it
 <a href="http://simple.wikipedia.org/wiki/Hexadecimal_numeral_system">here</a>.) So
 we can write:</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="mh">0x1117</span><span class="o">&gt;&gt;&gt;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="mh">0x11</span>
+<span class="mi">17</span>
 </pre></div>
 </td></tr></table>
 

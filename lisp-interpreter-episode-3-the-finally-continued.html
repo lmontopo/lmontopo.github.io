@@ -74,13 +74,11 @@ expression. Here's the function:</p>
 2
 3
 4
-5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">outer_evaluate</span><span class="p">(</span><span class="n">list_input</span><span class="p">,</span> <span class="n">e</span>
-<span class="n">nv</span><span class="p">):</span>    <span class="n">evaluated_list</span> <span class="o">=</span> <span class="p">[]</span>    <span class="k">for</span> <span class="n">e</span>
-<span class="n">xpression</span> <span class="ow">in</span> <span class="n">list_input</span><span class="p">:</span>        <span class="nb">eval</span>
-<span class="n">uated_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">evaluate</span><span class="p">(</span><span class="n">expressio</span>
-<span class="n">n</span><span class="p">,</span> <span class="n">env</span><span class="p">))</span>    <span class="k">return</span> <span class="n">evaluated_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span>
-<span class="p">]</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">outter_evaluate</span><span class="p">(</span><span class="n">list_input</span><span class="p">,</span><span class="n">env</span><span class="p">):</span>
+    <span class="n">evaluated_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">expression</span> <span class="ow">in</span> <span class="n">list_input</span><span class="p">:</span>
+        <span class="n">evaluated_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">evaluate</span><span class="p">(</span><span class="n">expression</span><span class="p">,</span> <span class="n">env</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">evaluated_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 </pre></div>
 </td></tr></table>
 
@@ -130,34 +128,48 @@ Here's some of it:</p>
 25
 26
 27
-28</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">call_special</span><span class="p">(</span><span class="n">list_input</span><span class="p">,</span> <span class="n">env</span>
-<span class="p">):</span>    <span class="n">head</span><span class="p">,</span> <span class="n">rest</span> <span class="o">=</span> <span class="n">list_input</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">li</span>
-<span class="n">st_input</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>    <span class="k">if</span> <span class="n">head</span> <span class="o">==</span> <span class="s">&quot;map&quot;</span><span class="p">:</span>
-<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>            <span class="n">n</span>
-<span class="n">ew_head</span><span class="p">,</span> <span class="n">list_to_act_on</span> <span class="o">=</span> <span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">e</span>
-<span class="n">valuate</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">env</span><span class="p">)</span>            <span class="n">new</span>
-<span class="n">_list</span> <span class="o">=</span> <span class="p">[]</span>            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">li</span>
-<span class="n">st_to_act_on</span><span class="p">:</span>                <span class="n">new_ite</span>
-<span class="n">m</span> <span class="o">=</span> <span class="n">interpret</span><span class="p">(</span><span class="s">&quot;(</span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">new_head</span><span class="p">,</span>
-<span class="n">item</span><span class="p">),</span> <span class="n">env</span><span class="p">)</span>                <span class="n">new_list</span><span class="o">.</span>
-<span class="n">append</span><span class="p">(</span><span class="n">new_item</span><span class="p">)</span>            <span class="k">return</span> <span class="n">n</span>
-<span class="n">ew_list</span>    <span class="k">if</span> <span class="n">head</span> <span class="o">==</span> <span class="s">&#39;define&#39;</span><span class="p">:</span>
-<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>            <span class="k">if</span>
-<span class="nb">type</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span>
-<span class="n">env</span><span class="o">.</span><span class="n">add_values</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">rest</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-<span class="k">else</span><span class="p">:</span>                <span class="n">name</span> <span class="o">=</span>
-<span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>                <span class="n">expressio</span>
-<span class="n">n</span> <span class="o">=</span> <span class="n">MakeLambda</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:],</span> <span class="n">rest</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-<span class="p">)</span>                <span class="n">env</span><span class="o">.</span><span class="n">add_values</span><span class="p">(</span><span class="n">name</span>
-<span class="p">,</span> <span class="n">expression</span><span class="p">)</span>        <span class="k">else</span><span class="p">:</span>
-<span class="k">raise</span> <span class="n">too_many</span>    <span class="k">if</span> <span class="n">head</span> <span class="o">==</span> <span class="s">&#39;lamb</span>
-<span class="n">da</span><span class="s">&#39;:        func = MakeLambda(rest[0</span>
-<span class="p">],</span><span class="n">rest</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>        <span class="n">env</span><span class="o">.</span><span class="n">add_values</span><span class="p">(</span><span class="s">&#39;l</span>
-<span class="n">am</span><span class="s">&#39;, func)        return &#39;</span><span class="n">lam</span><span class="s">&#39;    if</span>
-<span class="n">head</span> <span class="o">==</span> <span class="s">&#39;quote&#39;</span><span class="p">:</span>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span>
-<span class="n">_input</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>            <span class="k">return</span> <span class="n">rest</span>
-<span class="p">[</span><span class="mi">0</span><span class="p">]</span>        <span class="k">else</span><span class="p">:</span>            <span class="k">raise</span> <span class="n">qu</span>
-<span class="n">ote_error</span>
+28
+29
+30
+31
+32
+33
+34
+35</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">call_special</span><span class="p">(</span><span class="n">list_input</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+    <span class="n">head</span><span class="p">,</span> <span class="n">rest</span> <span class="o">=</span> <span class="n">list_input</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">list_input</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="k">if</span> <span class="n">head</span> <span class="o">==</span> <span class="s">&quot;map&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">new_head</span><span class="p">,</span> <span class="n">list_to_act_on</span> <span class="o">=</span> <span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">env</span><span class="p">)</span>
+            <span class="n">new_list</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">list_to_act_on</span><span class="p">:</span>
+                <span class="n">new_item</span> <span class="o">=</span> <span class="n">interpret</span><span class="p">(</span><span class="s">&quot;(</span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">new_head</span><span class="p">,</span> <span class="n">item</span><span class="p">),</span> <span class="n">env</span><span class="p">)</span>
+                <span class="n">new_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_item</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">new_list</span>
+
+
+    <span class="k">if</span> <span class="n">head</span> <span class="o">==</span> <span class="s">&#39;define&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span>
+                <span class="n">env</span><span class="o">.</span><span class="n">add_values</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">rest</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">expression</span> <span class="o">=</span> <span class="n">MakeLambda</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:],</span> <span class="n">rest</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+                <span class="n">env</span><span class="o">.</span><span class="n">add_values</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">expression</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">too_many</span>
+
+    <span class="k">if</span> <span class="n">head</span> <span class="o">==</span> <span class="s">&#39;lambda&#39;</span><span class="p">:</span>
+        <span class="n">func</span> <span class="o">=</span> <span class="n">MakeLambda</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">rest</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="n">env</span><span class="o">.</span><span class="n">add_values</span><span class="p">(</span><span class="s">&#39;lam&#39;</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">&#39;lam&#39;</span>
+
+
+    <span class="k">if</span> <span class="n">head</span> <span class="o">==</span> <span class="s">&#39;quote&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_input</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">quote_error</span>
 </pre></div>
 </td></tr></table>
 
@@ -175,14 +187,16 @@ more magic appears!</p>
 5
 6
 7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">call_regular</span><span class="p">(</span><span class="n">list_input</span><span class="p">,</span><span class="n">env</span><span class="p">)</span>
-<span class="p">:</span>    <span class="n">new_list_input</span> <span class="o">=</span><span class="p">[]</span>    <span class="k">for</span> <span class="n">term</span>
-<span class="ow">in</span> <span class="n">list_input</span><span class="p">:</span>        <span class="n">new_list_input</span>
-<span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">evaluate</span><span class="p">(</span><span class="n">term</span><span class="p">,</span><span class="n">env</span><span class="p">))</span>    <span class="n">list_</span>
-<span class="nb">input</span> <span class="o">=</span> <span class="n">new_list_input</span>    <span class="n">head</span><span class="p">,</span> <span class="n">rest</span>
-<span class="o">=</span> <span class="n">list_input</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">list_input</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-<span class="k">return</span> <span class="n">env</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">head</span><span class="p">)</span><span class="o">.</span><span class="n">do_fun</span><span class="p">(</span><span class="n">rest</span><span class="p">,</span>
-<span class="n">env</span><span class="p">)</span>
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">call_regular</span><span class="p">(</span><span class="n">list_input</span><span class="p">,</span><span class="n">env</span><span class="p">):</span>
+    <span class="n">new_list_input</span> <span class="o">=</span><span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">list_input</span><span class="p">:</span>
+        <span class="n">new_list_input</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">evaluate</span><span class="p">(</span><span class="n">term</span><span class="p">,</span><span class="n">env</span><span class="p">))</span>
+
+    <span class="n">list_input</span> <span class="o">=</span> <span class="n">new_list_input</span>
+    <span class="n">head</span><span class="p">,</span> <span class="n">rest</span> <span class="o">=</span> <span class="n">list_input</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">list_input</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">return</span> <span class="n">env</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">head</span><span class="p">)</span><span class="o">.</span><span class="n">do_fun</span><span class="p">(</span><span class="n">rest</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
 </pre></div>
 </td></tr></table>
 
@@ -205,17 +219,23 @@ Here it is:</p>
  8
  9
 10
-11</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># --- DEFINING SCOPE --- class S</span>
-<span class="n">cope</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-<span class="n">env</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>        <span class="bp">self</span><span class="o">.</span><span class="n">env</span>
-<span class="o">=</span> <span class="n">env</span>        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
-<span class="k">def</span> <span class="nf">add_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">key</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
-<span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>    <span class="k">def</span> <span class="nf">fe</span>
-<span class="n">tch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">sel</span>
-<span class="n">f</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>            <span class="k">return</span> <span class="bp">self</span>
-<span class="o">.</span><span class="n">env</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">!=</span>
-<span class="bp">None</span><span class="p">:</span>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span>
-<span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># --- DEFINING SCOPE --- </span>
+<span class="k">class</span> <span class="nc">Scope</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">env</span> <span class="o">=</span> <span class="n">env</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
+
+    <span class="k">def</span> <span class="nf">add_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">key</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
 </pre></div>
 </td></tr></table>
 
@@ -260,27 +280,35 @@ to. Here's the bit of code that defines these terms:</p>
 18
 19
 20
-21</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># --- CLASS OF FUNCTIONS ---clas</span>
-<span class="n">s</span> <span class="n">MakeLambda</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>    <span class="k">def</span> <span class="nf">__init_</span>
-<span class="n">_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">):</span>        <span class="bp">self</span><span class="o">.</span>
-<span class="n">first</span> <span class="o">=</span> <span class="n">first</span>        <span class="bp">self</span><span class="o">.</span><span class="n">second</span> <span class="o">=</span> <span class="n">s</span>
-<span class="n">econd</span>        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">firs</span>
-<span class="n">t</span>        <span class="bp">self</span><span class="o">.</span><span class="n">exp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">second</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="k">def</span> <span class="nf">do_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
-<span class="n">zipped</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
-<span class="n">temp_scope</span> <span class="o">=</span> <span class="n">Scope</span><span class="p">({},</span> <span class="n">env</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">param</span><span class="p">,</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">zipped</span><span class="p">:</span>
-<span class="n">temp_scope</span><span class="o">.</span><span class="n">add_values</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">a</span>
-<span class="n">rg</span><span class="p">)</span>        <span class="k">return</span> <span class="n">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exp</span><span class="p">,</span>
-<span class="n">temp_scope</span><span class="p">)</span><span class="k">class</span> <span class="nc">MakePyFun</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">everything</span><span class="p">):</span>
-<span class="bp">self</span><span class="o">.</span> <span class="n">everything</span> <span class="o">=</span> <span class="n">everything</span>
-<span class="k">def</span> <span class="nf">do_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arguments</span><span class="p">,</span> <span class="n">env</span><span class="p">)</span>
-<span class="p">:</span>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">arguments</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">everything</span><span class="p">(</span><span class="n">argume</span>
-<span class="n">nts</span><span class="p">)</span>        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">arguments</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
-<span class="p">:</span>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">everything</span><span class="p">(</span>
-<span class="o">*</span><span class="n">arguments</span><span class="p">)</span>
+21
+22
+23
+24
+25</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># ------ CLASSES OF FUNCTIONS ------</span>
+<span class="k">class</span> <span class="nc">MakeLambda</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">first</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">second</span> <span class="o">=</span> <span class="n">second</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">first</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">second</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">do_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+        <span class="n">zipped</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+        <span class="n">temp_scope</span> <span class="o">=</span> <span class="n">Scope</span><span class="p">({},</span> <span class="n">env</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">param</span><span class="p">,</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">zipped</span><span class="p">:</span>
+            <span class="n">temp_scope</span><span class="o">.</span><span class="n">add_values</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exp</span><span class="p">,</span> <span class="n">temp_scope</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">MakePyFun</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">everything</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span> <span class="n">everything</span> <span class="o">=</span> <span class="n">everything</span>
+
+    <span class="k">def</span> <span class="nf">do_fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arguments</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">arguments</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">everything</span><span class="p">(</span><span class="n">arguments</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">arguments</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">everything</span><span class="p">(</span><span class="o">*</span><span class="n">arguments</span><span class="p">)</span>
 </pre></div>
 </td></tr></table>
 
