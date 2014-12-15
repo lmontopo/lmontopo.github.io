@@ -28,12 +28,11 @@ tokenization. I didn't know the meaning of these words until after I had already
 input!) This is the code Kuan and I came up with:
 
 ```python
-holder = input.replace( '(' , '
-( ' )holder = holder.replace( ')', '
-) ' )holder = holder.split(' ')hold
-er = filter(lambda a: a != '', holde
-r)print holder
-
+holder = input.replace( '(' , '( ' )
+holder = holder.replace( ')', ') ' )
+holder = holder.split(' ')
+holder = filter(lambda a: a != '', holder)
+print holder
 ```
 
 Here, 'holder' is what I decided to call the list that is constructed
@@ -47,10 +46,8 @@ input = "(/ (+ 3  2) (- 4 2))"
 This program will return the list:
 
 ```python
-holder = ['(', '/', '(', '+', '3
-', '2', ')', '(', '-', '4', '2', ')'
-, ')']
-
+holder = ['(', '/', '(', '+', '3', '2', ')', 
+'(', '-', '4', '2', ')', ')']
 ```
 
 Notice that before splitting the input, we added space around each of
