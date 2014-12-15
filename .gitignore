@@ -1,3 +1,5 @@
 output
 cache
 *.pyc
+*.pid
+l_blog
