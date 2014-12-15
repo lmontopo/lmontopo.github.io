@@ -38,9 +38,6 @@ little vague, especially the part where I say the interpreter "transforms it int
 interpreter comes across a line of code that reads "( + 1 1 )". Well, python doesn't understand this, but
 if the interpreter changes it to "1 + 1", then python does understand this. 
 
-Hopefully that clarifies things a little. Of course, the discussion I provide of my experience writing an
-interpreter should also help clarify things.
-
 Another thing I'd like to mention is that languages are not always
 either "interpreted" or "compiled". Some languages, Python is one of them, are actually
 implemented with both a compiler and an interpreter. Although people often refer to Python as an

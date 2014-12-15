@@ -47,10 +47,12 @@ the regular expression:
 ##### Example 1: Introductiory Example:
 
 ```python
->>> import re>>> text = 'Hackerschool is cool.'
+>>> import re
+>>> text = 'Hackerschool is cool.'
 >>> re.split("a", text)
 ['H', 'ckerschool is cool.']
->>> re.split("(a)", text)['H', 'a', 'ckerschool is cool.']
+>>> re.split("(a)", text)
+['H', 'a', 'ckerschool is cool.']
 ```
 
 As you can see, when we put parentheses around 'a', then 'a' is included
@@ -80,8 +82,9 @@ matches any character except a newline.
 so as you'd expect it is going to split on every character...
 
 ```python
->>> text = "Hackerschool is cool
-!">>> re.split("(.)", text)['', 'H',
+>>> text = "Hackerschool is cool!"
+>>> re.split("(.)", text)
+['', 'H',
 '', 'a', '', 'c', '', 'k', '', 'e',
 '', 'r', '', 's', '', 'c', '', 'h',
 '', 'o', '', 'o', '', 'l', '', ' ',
@@ -104,9 +107,8 @@ make sense to you now, hopefully it will then.
 Now lets combine the dot with other characters:
 
 ```python
->>> re.split("(.ool)", text)['Ha
-ckersc', 'hool', ' is ', 'cool', '!'
-]
+>>> re.split("(.ool)", text)
+['Hackersc', 'hool', ' is ', 'cool', '!']
 ```
 
 This makes sense - there were two occurences where there appeared "some

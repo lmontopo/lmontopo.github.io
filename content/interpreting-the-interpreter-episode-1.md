@@ -3,9 +3,7 @@ Date: 2014-10-20 04:00
 Author: Leta Montopoli
 Slug: interpreting-the-interpreter-episode-1
 
-This episode is all about the experience I had in the initial phases of
-writing a Lisp interpreter.
-
+**This episode will describe my experience in the initial phases of writing a Lisp interpreter.**
 I will describe how I started, my thought processes as I progressed,
 some of the code I wrote, how it worked, and, why,at day 3, I decided to start from scratch (almost). If you are only
 interested in the final product,skip this episode! If, however, you'd like to get some insight as to how

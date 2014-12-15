@@ -3,11 +3,11 @@ Date: 2014-10-30 04:00
 Author: Leta Montopoli
 Slug: interpreting-the-interpreter-episode-2
 
-Confession: I am not yet ready to present my final, finished, Lisp
+** Confession: I am not yet ready to present my final, finished, Lisp
 Interpreter. It will be coming soon, but not today. Today I will
 describe the rollercoaster ride of an experience taking on this project
-has been for me. Then, I'll focus in on a couple things I've learned
-along the way.
+has been for me. Then I'll focus in on a couple things I've learned
+along the way. **
 
 Last week Sumana asked me how my interpreter was going, and I explained
 to her the mixed feelings I was having about the project. I told her how
