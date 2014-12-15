@@ -16,8 +16,10 @@ code in Python you've probably already used methods, even if you didn't know the
 lets talk about extend, a method invoked on lists! Here's a little example to illustrate what it does:
 
 ```python
->>> list = [1,2,3]>>> list.exten
-d([4,5])>>> print list[1,2,3,4,5]
+>>> list = [1,2,3]
+>>> list.extend([4,5])
+>>> print list
+[1,2,3,4,5]
 
 ```
 
@@ -25,16 +27,15 @@ Now, consider the following bit of code. Warning: It will produce an
 error!
 
 ```python
->>> list = [1,2,3,4,5] >>> list.
-extend([6,7]).extend([8,9])
+>>> list = [1,2,3,4,5] 
+>>> list.extend([6,7]).extend([8,9])
 
 ```
 
 I expected to get the list with entries 1 through 9 in return, but
 instead I was greeted with the following message: "AttributeError: 'NoneType' object has no
-attribute 'extend'"
-^[1]. I
-was working with Julia Tufts at the time, and we were both intrigued by this
+attribute 'extend'"[^1]. 
+I was working with Julia Tufts at the time, and we were both intrigued by this
 message. So we did a little playing around and realized that although the method 'extend' alters the list instance
 it is invoked on, the method actually returns None. So when we extend doubly, in one line, as I did
 above, list.extend([6,7]) returns None, and then we try to extend None with [8,9], producing an error. Cool!
@@ -48,10 +49,12 @@ function that, when given a number, will write out that number as 1 + 1 + 1 ....
 use recursion to write that code:
 
 ```python
-def plus_one(num):    if num ==
-1:        print num    else:
-print '1', '+'         return plus_
-one(num-1):
+def plus_one(num):    
+	if num == 1:        
+		print num    
+	else:
+		print '1', '+'        
+	return plus_one(num-1):
 
 ```
 
@@ -90,10 +93,8 @@ stored the results of the previous 1984 book search, so my inquiry can obtain th
 to retrieve the information all over again from the NY Public Library database. Thanks Susan for
 pairing with me!
 
-[1]:
-
-    Ok so I realize now that this may be a bit confusing since the error
-    specifies that it is an attribute error instead of a *method* error. I'm not
-    exactly clear on the difference between an attribute and a method, but I am pretty sure that a
-    method IS an attribute. I think the word "attribute" is just a more general term. So for now, we'll
-    go with that! Hopefully later I'll write a blog post to clear up the difference!
+[^1]: Ok so I realize now that this may be a bit confusing since the error
+specifies that it is an attribute error instead of a *method* error. I'm not
+exactly clear on the difference between an attribute and a method, but I am pretty sure that a
+method IS an attribute. I think the word "attribute" is just a more general term. So for now, we'll
+go with that! Hopefully later I'll write a blog post to clear up the difference!

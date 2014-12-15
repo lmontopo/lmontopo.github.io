@@ -1,5 +1,5 @@
 Title: Adventures with sockets, threads and more!
-Date: 2014-11-11 05:00
+Date: 2014-11-11 
 Author: Leta Montopoli
 Slug: adventures-with-sockets-threads-and-more
 
@@ -33,8 +33,7 @@ and allows users (or programs) to create instances of them at will.
 Sockets are used as the endpoints of any bidirectional communication
 channel. The socket contains the FROM IP address, the TO IP address, the
 FROM port number, and the TO port
-number.^[1](http://lmontopo.github.io/feeds/leta-montopoli.rss.xml#fn:fn-1)^
-We can think about the function of sockets to be like plugging chords
+number.[^1] We can think about the function of sockets to be like plugging chords
 into walls on the two ends of your communcation channel.
 
 ##### How does my computer communicate with my router?
@@ -75,52 +74,75 @@ her terminal would be sent to mine when she pressed enter. It was like a
 real world chat service! Here's our code:
 
 ```python
-###SERVER (On Leta's Computer)im
-port socketimport threadingserversoc
-ket = socket.socket()port = 9999# c
-lears the port right away preventing
-"address already in use" errorsserv
-ersocket.setsockopt(socket.SOL_SOCKE
-T, socket.SO_REUSEADDR, 1)my_ip = 10
-.0.7.65serversocket.bind((my_ip , po
-rt))# queue up to 5 requests:servers
-ocket.listen(5)clientsocket, addr =
-serversocket.accept()def listen(conn
-ection):    while True:        msg =
-clientsocket.recv(1000)        if n
-ot msg:            break        else
-:            print 'friend says', ms
-gdef write(connection):    while Tru
-e:        message = raw_input('')
-clientsocket.sendall(message)
-clientsocket.close()t = thread
-ing.Thread(target = write, args = [c
-lientsocket])r = threading.Thread(ta
-rget = listen, args = [clientsocket]
-)t.start()r.start()
+###SERVER (On Leta's Computer)
+import socket 
+import threading
 
+serversocket = socket.socket()
+
+#host = socket.gethostname()
+
+port = 9999
+
+serversocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+serversocket.bind(("10.0.7.65", port))
+
+# queue up to 5 requests:
+serversocket.listen(5)
+
+clientsocket, addr = serversocket.accept()
+
+def listen(connection):
+    while True:
+        msg = clientsocket.recv(1000)
+        if not msg:
+            break
+        else:
+            print 'friend says', msg
+
+def write(connection):
+    while True:
+        message = raw_input('')
+        clientsocket.send('HTTP/1.0 200 OK\n\n')
+        clientsocket.sendall(message)
+        clientsocket.close()
+
+t = threading.Thread(target = write, args = [clientsocket])
+r = threading.Thread(target = listen, args = [clientsocket])
+
+t.start()
+r.start()
 ```
 
 ```python
-#CLIENT (on Susan's computer)imp
-ort socketimport threadingdef server
-():    sock = socket.socket(socket.A
-F_INET, socket.SOCK_STREAM)    HOST=
-''    SOCKET_LIST = []    RECV_BUFF
-ER = 4096    PORT = 9999    server_a
-ddr = ("10.0.7.65", PORT)    print >
->sys.stderr, 'connecting to %s port
-%s' % server_addr    sock.connect(se
-rver_addr)    try:        t=threadin
-g.Thread(target=send, args=[sock])
-t.start()        print "hi!!!!
-TESTING!!"        while True:
-data = sock.recv(RECV_BUFFER)
-print >>sys.stderr, 'Leta
-says: %s' % data    finally:
-print >>sys.stderr, 'closing socket
-'        sock.close()
+#CLIENT (on Susan's computer)import socket
+import sys
+import threading
 
+def server():
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    HOST= ''
+    SOCKET_LIST = []
+    RECV_BUFFER = 4096
+    PORT = 9999
+
+    server_addr = ("10.0.7.65", PORT)
+    print >>sys.stderr, 'connecting to %s port %s' % server_addr
+    sock.connect(server_addr)
+
+    try:
+        t=threading.Thread(target=send, args=[sock])
+        t.start()
+        print "hi!!!! TESTING!!"
+        while True:
+            data = sock.recv(RECV_BUFFER)
+            print >>sys.stderr, 'Leta says: %s' % data
+
+    finally:
+        print >>sys.stderr, 'closing socket'
+        sock.close()
 ```
 
 #### QUESTIONS ROUND 2
@@ -210,19 +232,11 @@ actually starting to change. I don't know very mucha about this, but I
 think HTTP is starting to allow a single socket to handle more than one
 HTTP requests.
 
-<div class="footnote">
 
-------------------------------------------------------------------------
 
-1.  <div id="fn:fn-1">
-
-    </div>
-
-    A Port is just this idea that we've implimented on our computers so
-    that we can have several things going on on one computer. Its kind
-    of like apartments on an apartment building. If we have to have
-    several separate things going on at different addresses within the
-    same machine, ports is the way we've done
-    that. [↩](http://lmontopo.github.io/feeds/leta-montopoli.rss.xml#fnref:fn-1 "Jump back to footnote 1 in the text")
-
-</div>
+[^1]: A Port is just this idea that we've implimented on our computers so
+that we can have several things going on on one computer. Its kind
+of like apartments on an apartment building. If we have to have
+several separate things going on at different addresses within the
+same machine, ports is the way we've done
+that. 
