@@ -1,5 +1,6 @@
 Title: Scopes got me again!
 Date: 2010-12-03 10:20
+Categories: Blog
 
 In a previous blog post I wrote about some of the struggles I encountered with scoping when Margo and I worked on our web framework Chapeau.  This week, scopes got me again!  This time, while I was working on my Template Engine. 
 

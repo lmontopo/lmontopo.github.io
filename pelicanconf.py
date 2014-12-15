@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 AUTHOR = u'Leta Montopoli'
-SITENAME = u'l_blog'
+SITENAME = u'The L Blog'
 SITEURL = 'http://lmontopo.github.io'
 TIMEZONE = 'America/Detroit'
 MD_EXTENSIONS = ['codehilite(css_class=highlight, linenums=True)','extra']
@@ -12,6 +12,7 @@ THEME = '../themes/pelican-themes/zurb-F5-basic'
 
 PATH = 'content'
 
+DEFAULT_CATEGORY = 'Blog'
 
 DEFAULT_LANG = u'en'
 
@@ -22,15 +23,6 @@ TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
-# Blogroll
-LINKS = (('Pelican', 'http://getpelican.com/'),
-         ('Python.org', 'http://python.org/'),
-         ('Jinja2', 'http://jinja.pocoo.org/'),
-         ('You can modify those links in your config file', '#'),)
-
-# Social widget
-SOCIAL = (('You can add links in your config file', '#'),
-          ('Another social link', '#'),)
 
 DEFAULT_PAGINATION = False
 
