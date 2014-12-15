@@ -24,13 +24,11 @@ the parsed expression and then it spit out the result of the last
 expression. Here's the function:
 
 ```python
-def outer_evaluate(list_input, e
-nv):    evaluated_list = []    for e
-xpression in list_input:        eval
-uated_list.append(evaluate(expressio
-n, env))    return evaluated_list[-1
-]
-
+def outter_evaluate(list_input,env):
+	evaluated_list = []
+	for expression in list_input:
+		evaluated_list.append(evaluate(expression, env))
+	return evaluated_list[-1]
 ```
 
 Here, 'evaluate' is the main function that interprets the parsed input.
@@ -56,35 +54,42 @@ function because the whole thing is a little long and overwhelming.
 Here's some of it:
 
 ```python
-def call_special(list_input, env
-):    head, rest = list_input[0], li
-st_input[1:]    if head == "map":
-if len(rest) == 2:            n
-ew_head, list_to_act_on = rest[0], e
-valuate(rest[1], env)            new
-_list = []            for item in li
-st_to_act_on:                new_ite
-m = interpret("(%s %s)" %(new_head,
-item), env)                new_list.
-append(new_item)            return n
-ew_list    if head == 'define':
-if len(rest) == 2:            if
-type(rest[0]) is str:
-env.add_values(rest[0], rest[1])
-else:                name =
-rest[0][0]                expressio
-n = MakeLambda(rest[0][1:], rest[1:]
-)                env.add_values(name
-, expression)        else:
-raise too_many    if head == 'lamb
-da':        func = MakeLambda(rest[0
-],rest[1:])        env.add_values('l
-am', func)        return 'lam'    if
-head == 'quote':        if len(list
-_input) == 2:            return rest
-[0]        else:            raise qu
-ote_error
 
+def call_special(list_input, env):
+	head, rest = list_input[0], list_input[1:]
+
+	if head == "map":
+		if len(rest) == 2:
+			new_head, list_to_act_on = rest[0], evaluate(rest[1], env)
+			new_list = []
+			for item in list_to_act_on:
+				new_item = interpret("(%s %s)" %(new_head, item), env)
+				new_list.append(new_item)
+			return new_list
+
+
+	if head == 'define':
+		if len(rest) == 2:
+			if type(rest[0]) is str:
+				env.add_values(rest[0], rest[1])
+			else:
+				name = rest[0][0]
+				expression = MakeLambda(rest[0][1:], rest[1:])
+				env.add_values(name, expression)
+		else:
+			raise too_many
+
+	if head == 'lambda':
+		func = MakeLambda(rest[0],rest[1:])
+		env.add_values('lam', func)
+		return 'lam'
+		
+
+	if head == 'quote':
+		if len(list_input) == 2:
+			return rest[0]
+		else:
+			raise quote_error
 ```
 
 The input is split into the 'head' and 'rest', the 'head' being the
@@ -96,15 +101,15 @@ magic, but first I want to present the 'call\_regular' function, where
 more magic appears!
 
 ```python
-def call_regular(list_input,env)
-:    new_list_input =[]    for term
-in list_input:        new_list_input
-.append(evaluate(term,env))    list_
-input = new_list_input    head, rest
-= list_input[0], list_input[1:]
-return env.fetch(head).do_fun(rest,
-env)
+def call_regular(list_input,env):
+	new_list_input =[]
 
+	for term in list_input:
+		new_list_input.append(evaluate(term,env))
+
+	list_input = new_list_input
+	head, rest = list_input[0], list_input[1:]
+	return env.fetch(head).do_fun(rest, env)
 ```
 
 In contrast to the 'call\_special' function which outlines a specific
@@ -119,18 +124,20 @@ Scope to keep track of my environment throughout the evaluation process.
 Here it is:
 
 ```python
-# --- DEFINING SCOPE --- class S
-cope(object):    def __init__(self,
-env, parent = None):        self.env
-= env        self.parent = parent
-def add_values(self,key,value):
-self.env[key] = value    def fe
-tch(self, key):        if key in sel
-f.env.keys():            return self
-.env[key]        elif self.parent !=
-None:            return self.parent
-.fetch(key)
+# --- DEFINING SCOPE --- 
+class Scope(object):
+	def __init__(self, env, parent = None):
+		self.env = env
+		self.parent = parent
 
+	def add_values(self,key,value):
+		self.env[key] = value
+
+	def fetch(self, key):
+		if key in self.env.keys():
+			return self.env[key]
+		elif self.parent != None:
+			return self.parent.fetch(key)
 ```
 
 Every scope object consists of an environment and a parent. The
@@ -158,27 +165,31 @@ we have yet to discuss is what 'MakeLambda', and 'do\_fun' are refering
 to. Here's the bit of code that defines these terms:
 
 ```python
-# --- CLASS OF FUNCTIONS ---clas
-s MakeLambda(object):    def __init_
-_(self, first, second):        self.
-first = first        self.second = s
-econd        self.params = self.firs
-t        self.exp = self.second[-1]
-def do_fun(self, args, env):
-zipped = zip(self.params, args)
-temp_scope = Scope({}, env)
-for param, arg in zipped:
-temp_scope.add_values(param, a
-rg)        return evaluate(self.exp,
-temp_scope)class MakePyFun(object):
-def __init__(self, everything):
-self. everything = everything
-def do_fun(self, arguments, env)
-:        if len(arguments) > 1:
-return self.everything(argume
-nts)        elif len(arguments) == 1
-:            return self.everything(
-*arguments)
+# ------ CLASSES OF FUNCTIONS ------
+class MakeLambda(object):
+	def __init__(self, first, second):
+		self.first = first
+		self.second = second
+		self.params = self.first
+		self.exp = self.second[-1]
+
+	def do_fun(self, args, env):
+		zipped = zip(self.params, args)
+		temp_scope = Scope({}, env)
+		for param, arg in zipped:
+			temp_scope.add_values(param, arg)
+		return evaluate(self.exp, temp_scope)
+
+
+class MakePyFun(object):
+	def __init__(self, everything):
+		self. everything = everything
+
+	def do_fun(self, arguments, env):
+		if len(arguments) > 1:
+			return self.everything(arguments)
+		elif len(arguments) == 1:
+			return self.everything(*arguments)
 
 ```
 

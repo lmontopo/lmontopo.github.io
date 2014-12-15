@@ -79,13 +79,15 @@ do I decode a special character from its encoded represenation? Using
 the python's urllib module!! Check it out:
 
 ```python
->>> urllib.quote('!!!')'%21%21%2
-1'>>> encoded_input = urllib.quote('
-&!?')>>> print encoded_input%26%21%3
-F>>> decoded_input = urllib.unquote(
-encoded_input)>>> print decoded_inpu
-t&!?>>>
-
+>>> urllib.quote('!!!')
+'%21%21%21'
+>>> encoded_input = urllib.quote('&!?')
+>>> print encoded_input
+%26%21%3F
+>>> decoded_input = urllib.unquote(
+encoded_input)
+>>> print decoded_input
+&!?
 ```
 
 #### What is a template engine?
@@ -107,9 +109,8 @@ Often, template engines are part of what makes up a web framework.
 You know how you can write lists like:
 
 ```python
->>> [x for x in 'abcdefg']['a',
-'b', 'c', 'd', 'e', 'f', 'g']
-
+>>> [x for x in 'abcdefg']
+['a','b', 'c', 'd', 'e', 'f', 'g']
 ```
 
 This way of specifying a list is called a **list comprehension**. I just
@@ -118,10 +119,8 @@ non-square embraces, then we create something called a generator. Check
 it out:
 
 ```python
->>> (x for x in 'abcdefg')<gener
-ator object <genexpr> at 0x10b323910
->>>>
-
+>>> (x for x in 'abcdefg')
+<generator object <genexpr> at 0x10b323910>
 ```
 
 Woah! So whats a generator? I honestly don't know. Yet. All I know is
@@ -144,8 +143,8 @@ worries. You can read up on it
 we can write:
 
 ```python
->>> 0x1117>>>
-
+>>> 0x11
+17
 ```
 
 since 11 is the base 16 representation of the decimal number 17. Mystery

@@ -27,17 +27,15 @@ refacturing the interpreter.
 OK. Lets get started. Here are the first ten lines of code:
 
 ```python
-from __future__ import divisionf
-rom termcolor import coloredfrom sys
-import exit#------GlOBAL LISTS-----
--symbol = ['+', '-', '*', '/', '<',
-'>','<=', '=','>=', 'abs', 'list', '
-if', 'not',            'set!', 'begi
-n', 'let', 'define', 'lambda', 'quot
-e']special = ['set!', 'begin', 'let'
-, 'define', 'lambda', 'cond', 'quote
-', 'if',     'list', 'map', 'cons',
-'car', 'cdr']
+from __future__ import division
+from termcolor import colored
+from sys import exit
+
+# ------ GlOBAL LISTS ------
+symbol = ['+', '-', '*', '/', '<', '>','<=', '=','>=', 'abs', 'list', 'if', 'not',
+    		'set!', 'begin', 'let', 'define', 'lambda', 'quote']
+special = ['set!', 'begin', 'let', 'define', 'lambda', 'cond', 'quote', 'if',     
+			'list', 'map', 'cons', 'car', 'cdr']
 
 ```
 
@@ -54,22 +52,17 @@ Next, we introduce my class of exceptions and some instances of that
 class:
 
 ```python
-# --- EXCEPTIONS ---class MyErro
-r(Exception):    def __init__(self,
-msg):        self.msg = msgif_error
-= MyError("Error: you need to specif
-y by a consequence and an alternate.
-")dict_error = MyError("Error: can't
-find element in dictionary. Imprope
-r input.")unexpected_error = MyError
-('Error: unexpectedly entered parse
-function with no input.')too_many =
-MyError("Error: too many arguments w
-ere inputed.")quote_error = MyError(
-'Error: quote only takes one operand
-.')let_error = MyError('Error: let m
-ust be followed by a list.')
+# ------ EXCEPTIONS ------
+class MyError(Exception):
+	def __init__(self, msg):
+		self.msg = msg
 
+if_error = MyError("Error: you need to specify by a consequence and an alternate.")
+dict_error = MyError("Error: can't find element in dictionary. Improper input.")
+first_error = MyError('Error: unexpectedly entered parse function with no input.')
+too_many = MyError("Error: too many arguments were inputed.")
+quote_error = MyError('Error: quote only takes one operand.')
+let_error = MyError('Error: let must be followed by a list.')
 ```
 
 Then, we start doing some of the gritty work: tokenizing and parsing. I
@@ -78,14 +71,13 @@ call them, the output of the tokenizer will be fed as input to my
 parser. Here is my tokenizer:
 
 ```python
-# ---- TOKENIZE ------ def token
-izer(holder):    holder = '(' + hold
-er + ')'    holder = holder.replace(
-'(' , ' ( ' )    holder = holder.re
-place( ')', ' ) ' )    final = filte
-r(lambda a: a != '', holder.split('
-'))    return final
-
+# ------ TOKENIZE ------- 
+def tokenizer(holder):
+	holder = '(' + holder + ')'
+	holder = holder.replace( '(' , ' ( ' )
+	holder = holder.replace( ')', ' ) ' )
+	final = filter(lambda a: a != '', holder.split(' '))
+	return final
 ```
 
 The tokenizer takes my user's raw input - something like `(+ 2 2)`. It
@@ -117,28 +109,29 @@ Continuing on... the parser! Writing this parser was my first encouter
 with recursion! Here's the code:
 
 ```python
-# ---- PARSER ----- def parse(to
-kens):    if len(tokens) == 0:
-raise unexpected_error    token =
-tokens[0]    tokens = tokens[1:]
-if token == '(':        parsed_input
-= []         while tokens[0] != ')'
-:            to_append, tokens = par
-se(tokens)            parsed_input.a
-ppend(to_append)        tokens = tok
-ens[1:]                 #pops off th
-e ')' part        #we add a conditio
-n to check if last return        if
-len(tokens) > 0:            return p
-arsed_input, tokens     #if not last
-return, need to return current vers
-ion of tokens        elif len(tokens
-) == 0 :            return parsed_in
-put             #if last return, onl
-y want to return new list of tokens
-else:        return chec
-k_type(token), tokens
+# ---- PARSER ----- 
+def parse(tokens):
+	if len(tokens) == 0:
+		raise first_error
+	
+	token = tokens[0]
+	tokens = tokens[1:]
 
+	if token == '(':
+		parsed_input = [] 
+		
+		while tokens[0] != ')':
+			to_append, tokens = parse(tokens)
+			parsed_input.append(to_append)
+		tokens = tokens[1:]					# pops off the ')' part
+		
+		#we add a condition to check if last return
+		if len(tokens) > 0:
+			return parsed_input, tokens 	# if not last return, return current version of holder
+		elif len(tokens) == 0 :
+			return parsed_input				# if last return, only return new_holder			
+	else:
+		return check_type(token), tokens
 ```
 
 To better understand this function, lets look at how
