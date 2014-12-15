@@ -90,15 +90,13 @@ interpret basic math looked something like this:</p>
 4
 5
 6
-7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">if</span> <span class="n">head</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="s">&#39;/&#39;</span><span class="p">,</span>
-<span class="s">&#39;&lt;&#39;</span><span class="p">,</span> <span class="s">&#39;&gt;&#39;</span><span class="p">,</span> <span class="s">&#39;&lt;=&#39;</span><span class="p">,</span> <span class="s">&#39;=&#39;</span><span class="p">,</span><span class="s">&#39;&gt;=&#39;</span><span class="p">]:</span>    <span class="k">if</span> <span class="n">hea</span>
-<span class="n">d</span> <span class="o">==</span> <span class="s">&#39;=&#39;</span><span class="p">:</span>            <span class="n">result</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">s</span>
-<span class="n">tr</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s">&#39;==&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
-<span class="k">return</span> <span class="n">result</span>    <span class="k">else</span><span class="p">:</span>
-<span class="n">result</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span>
-<span class="n">head</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>            <span class="n">ret</span>
-<span class="n">urn</span> <span class="n">result</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">if</span> <span class="n">head</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="s">&#39;/&#39;</span><span class="p">,</span><span class="s">&#39;&lt;&#39;</span><span class="p">,</span> <span class="s">&#39;&gt;&#39;</span><span class="p">,</span> <span class="s">&#39;&lt;=&#39;</span><span class="p">,</span> <span class="s">&#39;=&#39;</span><span class="p">,</span><span class="s">&#39;&gt;=&#39;</span><span class="p">]:</span>    
+    <span class="k">if</span> <span class="n">head</span> <span class="o">==</span> <span class="s">&#39;=&#39;</span><span class="p">:</span>            
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s">&#39;==&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="k">return</span> <span class="n">result</span>    
+    <span class="k">else</span><span class="p">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span><span class="n">head</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">rest</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>            
+    <span class="k">return</span> <span class="n">result</span>
 </pre></div>
 </td></tr></table>
 
@@ -121,19 +119,37 @@ wouldn't interpret it. In the end, I changed the code to look like this:
 10
 11
 12
-13</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># ---- Defining Basic Math and B</span>
-<span class="n">ool</span> <span class="n">Functions</span> <span class="o">----</span>  <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
-<span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="k">def</span> <span class="nf">subtract</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-<span class="p">:</span>    <span class="k">return</span> <span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">-</span>
-<span class="n">y</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span><span class="k">def</span> <span class="nf">equal</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>    <span class="k">return</span> <span class="n">a</span>
-<span class="n">rgs</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">==</span> <span class="n">args</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="k">def</span> <span class="nf">less</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
-<span class="k">return</span> <span class="n">args</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="c"># ----</span>
-<span class="n">Interpreting</span> <span class="n">Basic</span> <span class="n">Math</span> <span class="ow">and</span> <span class="n">Bool</span> <span class="n">Fu</span>
-<span class="n">nctions</span> <span class="o">----</span> <span class="k">if</span> <span class="n">head</span> <span class="o">==</span> <span class="s">&#39;+&#39;</span><span class="p">:</span>
-<span class="k">return</span> <span class="n">add</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span><span class="k">if</span> <span class="n">head</span> <span class="o">==</span> <span class="s">&#39;-&#39;</span><span class="p">:</span>    <span class="n">r</span>
-<span class="n">eturn</span> <span class="n">subtract</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span><span class="k">if</span> <span class="n">head</span> <span class="o">==</span> <span class="s">&#39;=&#39;</span><span class="p">:</span>
-<span class="k">return</span> <span class="n">equal</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span><span class="k">if</span> <span class="n">head</span> <span class="o">==</span> <span class="s">&#39;&lt;&#39;</span><span class="p">:</span>
-<span class="k">return</span> <span class="n">less</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span>
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># ---- Defining Basic Math and Bool Functions ----  </span>
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">subtract</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>    
+    <span class="k">return</span> <span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">-</span><span class="n">y</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">equal</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>    
+    <span class="k">return</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">==</span> <span class="n">args</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">less</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">args</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+<span class="c"># ----Interpreting Basic Math and Bool Functions ---- </span>
+<span class="k">if</span> <span class="n">head</span> <span class="o">==</span> <span class="s">&#39;+&#39;</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">add</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">head</span> <span class="o">==</span> <span class="s">&#39;-&#39;</span><span class="p">:</span>    
+    <span class="k">return</span> <span class="n">subtract</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">head</span> <span class="o">==</span> <span class="s">&#39;=&#39;</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">equal</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">head</span> <span class="o">==</span> <span class="s">&#39;&lt;&#39;</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">less</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span>
 </pre></div>
 </td></tr></table>
 
@@ -150,8 +166,8 @@ then it will calculate ((4 - 2) - 1) and will return 1.</p>
 statements. I tried to use it, but I was getting wonky results. This is
 what I tried:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">equal</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>    <span class="k">return</span> <span class="n">reduc</span>
-<span class="n">e</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">==</span> <span class="n">y</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">equal</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>    
+    <span class="k">return</span> <span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">==</span> <span class="n">y</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
 </pre></div>
 </td></tr></table>
 
@@ -170,8 +186,8 @@ isn't returning what you anticipate.</p>
 <p>In the end, I was able to define a successful equal function as
 described above, by:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">equal</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>    <span class="k">return</span> <span class="n">args</span><span class="p">[</span>
-<span class="mi">1</span><span class="p">:]</span> <span class="o">==</span> <span class="n">args</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">equal</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>    
+    <span class="k">return</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">==</span> <span class="n">args</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 </pre></div>
 </td></tr></table>
 
