@@ -91,10 +91,14 @@ the regular expression:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">re</span><span class="o">&gt;&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&#39;Hackerschool is cool.&#39;</span>
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">re</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&#39;Hackerschool is cool.&#39;</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
 <span class="p">[</span><span class="s">&#39;H&#39;</span><span class="p">,</span> <span class="s">&#39;ckerschool is cool.&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(a)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)[</span><span class="s">&#39;H&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;ckerschool is cool.&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(a)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+<span class="p">[</span><span class="s">&#39;H&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;ckerschool is cool.&#39;</span><span class="p">]</span>
 </pre></div>
 </td></tr></table>
 
@@ -125,8 +129,10 @@ matches any character except a newline.</p>
 5
 6
 7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;Hackerschool is cool</span>
-<span class="err">!</span><span class="s">&quot;&gt;&gt;&gt; re.split(&quot;</span><span class="p">(</span><span class="o">.</span><span class="p">)</span><span class="s">&quot;, text)[&#39;&#39;, &#39;H&#39;,</span>
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;Hackerschool is cool!&quot;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(.)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+<span class="p">[</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;H&#39;</span><span class="p">,</span>
 <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;k&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">,</span>
 <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;s&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;h&#39;</span><span class="p">,</span>
 <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;o&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;o&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39; &#39;</span><span class="p">,</span>
@@ -148,10 +154,8 @@ another occurence of this behaviour in a later example. If it doesn't
 make sense to you now, hopefully it will then.</p>
 <p>Now lets combine the dot with other characters:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(.ool)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)[</span><span class="s">&#39;Ha</span>
-<span class="n">ckersc</span><span class="s">&#39;, &#39;</span><span class="n">hool</span><span class="s">&#39;, &#39;</span> <span class="ow">is</span> <span class="s">&#39;, &#39;</span><span class="n">cool</span><span class="s">&#39;, &#39;</span><span class="err">!</span><span class="s">&#39;</span>
-<span class="p">]</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;(.ool)&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+<span class="p">[</span><span class="s">&#39;Hackersc&#39;</span><span class="p">,</span> <span class="s">&#39;hool&#39;</span><span class="p">,</span> <span class="s">&#39; is &#39;</span><span class="p">,</span> <span class="s">&#39;cool&#39;</span><span class="p">,</span> <span class="s">&#39;!&#39;</span><span class="p">]</span>
 </pre></div>
 </td></tr></table>
 
