@@ -7,7 +7,7 @@ SITENAME = u'The L Blog'
 SITEURL = 'http://lmontopo.github.io'
 TIMEZONE = 'America/Detroit'
 MD_EXTENSIONS = ['codehilite(css_class=highlight, linenums=True)','extra']
-THEME = '../themes/pelican-themes/zurb-F5-basic'
+THEME = 'pelican-themes/zurb-F5-basic'
 
 
 PATH = 'content'
