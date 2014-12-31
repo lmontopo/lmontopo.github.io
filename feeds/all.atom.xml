@@ -2226,4 +2226,7 @@ default title "A Pelican Blog" appeared. Obviously, this wasn't desirable. This 
 really easy fix because all I needed was to re-create this file and save it the
 directory where my "content" folder is found. Then it integrates itself (somewhat magically) into the
 html files. Just make sure that you have the correct formatting, as specified on
-pelican's documentation site: &lt;a href="http://docs.getpelican.com/en/latest/settings.html"&gt;http://docs.getpelican.com/en/latest/settings.html&lt;/a&gt;&lt;/p&gt;</summary></entry></feed>
+pelican's documentation site: &lt;a href="http://docs.getpelican.com/en/latest/settings.html"&gt;http://docs.getpelican.com/en/latest/settings.html&lt;/a&gt;&lt;/p&gt;</summary></entry><entry><title>Welcome</title><link href="http://lmontopo.github.io/welcome.html" rel="alternate"></link><updated>2014-10-01T00:00:00-04:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo.github.io,2014-10-01:welcome.html</id><summary type="html">&lt;p&gt;Hello and welcome to my Blog!  I started this blog in October 2014 to document some of my experiences at Hacker School, and to reflect on the things I've learned.  This blog is mostly for my own benefit; writing about the things I learn helps to solidify them in my mind.  However, these blog posts might also be useful to anyone who is navigating the world of programing.  I hope, if nothing else, you find encouragement from my blog posts. &lt;/p&gt;
+&lt;p&gt;Feel free to reach out at anytime if you have questions and or comments.  My email address is lmontopo@gmail.com. &lt;/p&gt;
+&lt;p&gt;Happy reading, &lt;/p&gt;
+&lt;p&gt;Leta&lt;/p&gt;</summary></entry></feed>
