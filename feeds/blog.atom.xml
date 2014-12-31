@@ -580,7 +580,7 @@ incoming cookies can be read from the inputed dictionary of request
 information. We can create another dictionary out of the received
 cookies and can pass this dictionary into our render function to be
 passed to our html file. Yay!&lt;/p&gt;
-&lt;p&gt;Thanks Margo for working on this project with me, its been an adventure!&lt;/p&gt;</summary></entry><entry><title>Lisp Interpreter: Episode 3 (The Finally!) ... Continued.</title><link href="http://lmontopo.github.io/lisp-interpreter-episode-3-the-finally-continued.html" rel="alternate"></link><updated>2014-11-24T05:00:00-05:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo.github.io,2014-11-24:lisp-interpreter-episode-3-the-finally-continued.html</id><summary type="html">&lt;p&gt;In last week's episode we inspected how my program tokenizes and parses
+&lt;p&gt;Thanks Margo for working on this project with me, its been an adventure!&lt;/p&gt;</summary><category term="Web"></category></entry><entry><title>Lisp Interpreter: Episode 3 (The Finally!) ... Continued.</title><link href="http://lmontopo.github.io/lisp-interpreter-episode-3-the-finally-continued.html" rel="alternate"></link><updated>2014-11-24T05:00:00-05:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo.github.io,2014-11-24:lisp-interpreter-episode-3-the-finally-continued.html</id><summary type="html">&lt;p&gt;In last week's episode we inspected how my program tokenizes and parses
 the user's input. In the spirit of finishing this series of blog posts,
 I have decided today to present an overview of how the rest of my
 program works. We'll walk through the basic algorithm that my program
@@ -1036,7 +1036,7 @@ we can write:&lt;/p&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
 &lt;p&gt;since 11 is the base 16 representation of the decimal number 17. Mystery
-solved.&lt;/p&gt;</summary></entry><entry><title>Lisp Interpreter: Episode 3 (The Finally!)</title><link href="http://lmontopo.github.io/lisp-interpreter-episode-3-the-finally.html" rel="alternate"></link><updated>2014-11-18T05:00:00-05:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo.github.io,2014-11-18:lisp-interpreter-episode-3-the-finally.html</id><summary type="html">&lt;p&gt;Let me start off by apologizing for the delay. I've been hesitant to
+solved.&lt;/p&gt;</summary><category term="Web"></category></entry><entry><title>Lisp Interpreter: Episode 3 (The Finally!)</title><link href="http://lmontopo.github.io/lisp-interpreter-episode-3-the-finally.html" rel="alternate"></link><updated>2014-11-18T05:00:00-05:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo.github.io,2014-11-18:lisp-interpreter-episode-3-the-finally.html</id><summary type="html">&lt;p&gt;Let me start off by apologizing for the delay. I've been hesitant to
 write this post for several reasons, including:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Presenting and explaining my entire lisp interpreter is a BIG (and
@@ -1523,7 +1523,7 @@ same machine, ports is the way we've done
 that. &amp;#160;&lt;a class="footnote-backref" href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;</summary></entry><entry><title>Little Lessons: Episode 2</title><link href="http://lmontopo.github.io/little-lessons-episode-2.html" rel="alternate"></link><updated>2014-11-06T05:00:00-05:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo.github.io,2014-11-06:little-lessons-episode-2.html</id><summary type="html">&lt;p&gt;Seeing as there are a whole &lt;strong&gt;bunch&lt;/strong&gt; of "little lessons" that I'd like
+&lt;/div&gt;</summary><category term="Web"></category><category term="Threading"></category></entry><entry><title>Little Lessons: Episode 2</title><link href="http://lmontopo.github.io/little-lessons-episode-2.html" rel="alternate"></link><updated>2014-11-06T05:00:00-05:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo.github.io,2014-11-06:little-lessons-episode-2.html</id><summary type="html">&lt;p&gt;Seeing as there are a whole &lt;strong&gt;bunch&lt;/strong&gt; of "little lessons" that I'd like
 to write down and keep track of, I've decided to extend my previous blog
 post "Little Lessons" into a whole series! Get ready!&lt;/p&gt;
 &lt;h4&gt;Mutating Iterables:&lt;/h4&gt;
@@ -1904,7 +1904,7 @@ method IS an attribute. I think the word "attribute" is just a more general term
 go with that! Hopefully later I'll write a blog post to clear up the difference!&amp;#160;&lt;a class="footnote-backref" href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;</summary></entry><entry><title>Interpreting the Interpreter: Episode 1</title><link href="http://lmontopo.github.io/interpreting-the-interpreter-episode-1.html" rel="alternate"></link><updated>2014-10-20T04:00:00-04:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo.github.io,2014-10-20:interpreting-the-interpreter-episode-1.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;This episode will describe my experience in the initial phases of writing a Lisp interpreter.&lt;/strong&gt;
+&lt;/div&gt;</summary><category term="Recursion"></category><category term="Lists"></category></entry><entry><title>Interpreting the Interpreter: Episode 1</title><link href="http://lmontopo.github.io/interpreting-the-interpreter-episode-1.html" rel="alternate"></link><updated>2014-10-20T04:00:00-04:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo.github.io,2014-10-20:interpreting-the-interpreter-episode-1.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;This episode will describe my experience in the initial phases of writing a Lisp interpreter.&lt;/strong&gt;
 I will describe how I started, my thought processes as I progressed,
 some of the code I wrote, how it worked, and, why,at day 3, I decided to start from scratch (almost). If you are only
 interested in the final product,skip this episode! If, however, you'd like to get some insight as to how
@@ -2226,7 +2226,4 @@ default title "A Pelican Blog" appeared. Obviously, this wasn't desirable. This 
 really easy fix because all I needed was to re-create this file and save it the
 directory where my "content" folder is found. Then it integrates itself (somewhat magically) into the
 html files. Just make sure that you have the correct formatting, as specified on
-pelican's documentation site: &lt;a href="http://docs.getpelican.com/en/latest/settings.html"&gt;http://docs.getpelican.com/en/latest/settings.html&lt;/a&gt;&lt;/p&gt;</summary></entry><entry><title>Welcome</title><link href="http://lmontopo.github.io/welcome.html" rel="alternate"></link><updated>2014-10-01T00:00:00-04:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo.github.io,2014-10-01:welcome.html</id><summary type="html">&lt;p&gt;Hello and welcome to my Blog!  I started this blog in October 2014 to document some of my experiences at Hacker School, and to reflect on the things I've learned.  This blog is mostly for my own benefit; writing about the things I learn helps to solidify them in my mind.  However, these blog posts might also be useful to anyone who is navigating the world of programing.  I hope, if nothing else, you find encouragement from my blog posts. &lt;/p&gt;
-&lt;p&gt;Feel free to reach out at anytime if you have questions and or comments.  My email address is lmontopo@gmail.com. &lt;/p&gt;
-&lt;p&gt;Happy reading, &lt;/p&gt;
-&lt;p&gt;Leta&lt;/p&gt;</summary></entry></feed>
+pelican's documentation site: &lt;a href="http://docs.getpelican.com/en/latest/settings.html"&gt;http://docs.getpelican.com/en/latest/settings.html&lt;/a&gt;&lt;/p&gt;</summary></entry></feed>
