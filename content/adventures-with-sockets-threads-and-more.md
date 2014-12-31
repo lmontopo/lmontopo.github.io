@@ -2,6 +2,7 @@ Title: Adventures with sockets, threads and more!
 Date: 2014-11-11 
 Author: Leta Montopoli
 Slug: adventures-with-sockets-threads-and-more
+Categories: Blog
 
 For a while now I've wanted to learn more about the internet, about
 servers, and about how web apps *really* work. Last week I finished a

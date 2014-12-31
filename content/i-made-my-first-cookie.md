@@ -2,6 +2,7 @@ Title: I made my first cookie!
 Date: 2014-11-27 05:00
 Author: Leta Montopoli
 Slug: i-made-my-first-cookie
+Categories: Blog
 
 Margo and I have been working on our web-framework, Chapeau. To test out
 its functionality and user-friendliness, we've been using Chapeau to

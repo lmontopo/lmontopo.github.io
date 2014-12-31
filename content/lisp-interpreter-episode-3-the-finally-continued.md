@@ -2,6 +2,7 @@ Title: Lisp Interpreter: Episode 3 (The Finally!) ... Continued.
 Date: 2014-11-24 05:00
 Author: Leta Montopoli
 Slug: lisp-interpreter-episode-3-the-finally-continued
+Categories: Blog
 
 In last week's episode we inspected how my program tokenizes and parses
 the user's input. In the spirit of finishing this series of blog posts,

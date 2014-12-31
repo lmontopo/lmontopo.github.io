@@ -2,6 +2,7 @@ Title: Interpreting the Interpreter: Episode 1
 Date: 2014-10-20 04:00
 Author: Leta Montopoli
 Slug: interpreting-the-interpreter-episode-1
+Categories: Blog
 
 **This episode will describe my experience in the initial phases of writing a Lisp interpreter.**
 I will describe how I started, my thought processes as I progressed,

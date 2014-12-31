@@ -2,6 +2,7 @@ Title: Lisp Interpreter: Episode 3 (The Finally!)
 Date: 2014-11-18 05:00
 Author: Leta Montopoli
 Slug: lisp-interpreter-episode-3-the-finally
+Categories: Blog
 
 Let me start off by apologizing for the delay. I've been hesitant to
 write this post for several reasons, including:

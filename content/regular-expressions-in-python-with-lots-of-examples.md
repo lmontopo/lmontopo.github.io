@@ -2,6 +2,7 @@ Title: Regular Expressions in Python - with LOTS of Examples!
 Date: 2014-12-04 05:00
 Author: Leta Montopoli
 Slug: regular-expressions-in-python-with-lots-of-examples
+Categories: Blog
 
 Over the past several days I've learned a great deal about regular
 expressions. I struggled initially with the subject, but I think things

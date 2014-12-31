@@ -2,6 +2,7 @@ Title: Interpreting the Interpreter: Episode 2
 Date: 2014-10-30 04:00
 Author: Leta Montopoli
 Slug: interpreting-the-interpreter-episode-2
+Categories: Blog
 
 ** Confession: I am not yet ready to present my final, finished, Lisp
 Interpreter. It will be coming soon, but not today. Today I will

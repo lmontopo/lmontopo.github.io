@@ -2,6 +2,7 @@ Title: Little Lessons
 Date: 2014-10-27 04:00
 Author: Leta Montopoli
 Slug: little-lessons
+Categories: Blog
 
 This blog post will be dedicated to some of the little (but important!)
 lessons I've learned over the past week. Enjoy!
