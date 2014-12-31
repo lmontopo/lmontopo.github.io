@@ -2,7 +2,7 @@ Title: The struggles I had setting up this site.
 Date: 2014-10-08 04:00
 Author: Leta Montopoli
 Slug: the-struggles-i-had-setting-up-this-site
-Categories: Blog
+Category: Blog
 
 For me, setting up my blog was not easy. I think part of this was that I
 was impatient, and part of this was because IT IS HARD! I ran into many weird error

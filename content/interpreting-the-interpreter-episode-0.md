@@ -2,7 +2,7 @@ Title: Interpreting the Interpreter: Episode 0
 Date: 2014-10-17 04:00
 Author: Leta Montopoli
 Slug: interpreting-the-interpreter-episode-0
-Categories: Blog
+Category: Blog
 
 For a while now, I have been perplexed by the land of compilers and
 interpreters. Thinking of these things sparks all sorts of questions in my mind. For instance, if

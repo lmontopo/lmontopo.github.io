@@ -2,7 +2,7 @@ Title: What I learned from Crista Lopes
 Date: 2014-10-11 04:00
 Author: Leta Montopoli
 Slug: what-i-learned-from-crista-lopes
-Categories: Blog
+Category: Blog
 
 The resident at Hacker School during my first week was Crista Lopes. She
 has given some great lectures, and she's taught me some cool things!

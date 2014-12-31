@@ -2,7 +2,8 @@ Title: Little Lessons 3: URI's, 'urllib', Template engines, and generators.
 Date: 2014-11-19 05:00
 Author: Leta Montopoli
 Slug: little-lessons-3-uris-urllib-template-engines-and-generators
-Categories: Blog
+Category: Blog
+Tags: Web
 
 I've learned so many fun little lessons over the past week, its time for
 another post!
