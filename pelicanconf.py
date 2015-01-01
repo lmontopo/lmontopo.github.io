@@ -17,14 +17,12 @@ DEFAULT_CATEGORY = 'Blog'
 DEFAULT_LANG = u'en'
 
 # Feed generation is usually not desired when developing
+FEED_DOMAIN = SITEURL
 FEED_ALL_ATOM = None
 CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
-AUTHOR_FEED_RSS = None
-TAG_FEED_RSS = None
-TAG_FEED_ATOM = "feeds/tag_%s.atom.xml"
-
+TAG_FEED_ATOM = None
 
 DEFAULT_PAGINATION = False
 
