@@ -18,7 +18,7 @@ DEFAULT_LANG = u'en'
 
 # Feed generation is usually not desired when developing
 FEED_DOMAIN = SITEURL
-FEED_ALL_ATOM = None
+FEED_ATOM = 'feeds/feed.xml'
 CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
