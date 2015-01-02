@@ -18,7 +18,7 @@ When Casey and I first realized my computer was abnormally slow we set out to do
 
 * `$ chmod` : changes the reading, writing and executing permissions of a file.  I read about this from a book, and then two days later I needed to use this command! I'll talk more in detail about this command in the next seciton. 
 
-* `$ sudo` :  This is a command that I have been using for a while without fully understanding it.  All I understood was that to call certain commands we must first call `sudo` and provide our password.  While this is true, it misses the big picture of what sudo *does*.  Sudo's man page provides a rather good explanation of the command: "**sudo** allows a permitted user to execute a command as the superuser or as another user". In fact, `sudo another_user` can be called to carry out a command as if you were 'another_user'. Superuser[^1] is the default user which is used when no other user is specified.  So, calling `sudo` with no other argument will allow me to call commands as if I were the superuser and give me extra priveledges.  
+* `$ sudo` :  This is a command that I have been using for a while without fully understanding it.  All I understood was that to call certain commands we must first call `sudo` and provide our password.  While this is true, it misses the big picture of what sudo *does*.  Sudo's man page provides a rather good explanation of the command: "**sudo** allows a permitted user to execute a command as the superuser or as another user". In fact, `sudo another_user` can be called to carry out a command as if you were 'another_user'. Superuser[^1] is the default user which is used when no other user is specified.  So, calling `sudo` with no other argument will allow me to call commands as if I were the superuser and give me extra privileges.  
 
 * `$ alias alias_name="command"` : creates an alias for the command!  An **alias** is a shortcut for other bash commands.  A useful tutorial (with examples!) on this topic can be found [here][1].  With [Geoff][4]'s help I made my very first alias for a really ugly looking git command.  Here it is:  
 
@@ -35,14 +35,14 @@ Throughout hacker school I had heard the term "ssh" come up in conversation a fe
 
 **SSH** stands for secure shell.  As far as I understand this specifies a protocol by which 'clients' can log onto a server computer remotely through a command line interface.  For me, setting up my own hackers.cool account helped me understand what this really meant.  I got to see how typing `ssh leta@hackers.cool` into my terminal would remotely connect me to the harckers.cool server.  Here are some of the cool things I observed:
 
-* Other users could write messages in the terminal like `banner Hello` or `echo Hey!`, and they would appear on my terminal too!  This makes sense because we were all remotely connected to the *same* terminal.
+* Other users could write messages in the terminal like `banner Hello` or `echo Hey!`, and they would appear on my terminal too!  This makes sense because we were all remotely connected to the *same* server.
 
 * I made changes to my hackers.cool user home page. This homepage is specified by a file on the *remote* computer and I was changing this file from *my* computer.  I could even check out my homepage on hackers.cool for proof that the changes actually occured. This was an exciting experience for me. 
 
 * Another cool thing I could do was type 'irc', which stands for internet relay chat.  This brings me to a an old school style chat room with other hackers.cool clients! 
 
 **How I set up my hackers.cool account**:  
-On www.hackers.cool you can click on "sing up here" for instructions.  It will ask you for a username and will ask you to provide a public ssh key. I like [Github's][5] simple description of an SSH key as "a way to identify trusted computers without involving passwords".  I'm not exactly sure how they work, but some sort of cryptogrophy is involved for security.  I'd like to find out more about them. 
+On www.hackers.cool you can click on "sign up here" for instructions.  It will ask you for a username and will ask you to provide a public ssh key. I like [Github's][5] simple description of an SSH key as "a way to identify trusted computers without involving passwords".  I'm not exactly sure how they work, but some sort of cryptogrophy is involved for security.  I'd like to find out more about them. 
 
 **How did I transfer my account from Casey's computer to my own?**  
 At some point I had to figure out how to transfer my hackers.cool account from Casey's computer to my own. Since the ssh key associated with my account was on Casey's computer and not my own, something needed to be done before I could log in from my own computer. So, I grabbed a USB stick and moved the .ssh directory onto my computer.  I still wasn't able to log into hackers.cool.  When I tried to I got an error message.  I don't remember exactly what the error message was, but it said something about the permissions of files in my .ssh directory not being secure enough.  It seemed to me that the permissions of these files must have changed during the transfer from Casey's computer to my own.  So, I used **chmod** to change them!  Here are the details: 
@@ -71,7 +71,7 @@ Once I had Casey's computer all set up for me to work on my blog, I added a READ
 
 And generally.... **Back things up.**
 
-[^1]: The superuser is a fairly new concept to me, but this is what I understand so far: A superuser is a user on a computer that has all the special priveledges used for system administration.  Different operating system's have different names for the superuser.  This is not a user that you create  yourself on your computer, it is there without you doing anything.
+[^1]: The superuser is a fairly new concept to me, but this is what I understand so far: A superuser is a user on a computer that has all the special privileges used for system administration.  Different operating system's have different names for the superuser.  This is not a user that you create  yourself on your computer, it is there without you doing anything.
 
 [1]: https://www.digitalocean.com/community/tutorials/an-introduction-to-useful-bash-aliases-and-functions
 [2]: http://todayincode.tumblr.com/
