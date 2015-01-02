@@ -2,7 +2,7 @@ Title: Some things I learned when my computer crashed.
 Date: 2014-12-31
 Categories: Blog
 
-During my last two weeks at Hacker School I encountered some serious troubles with my computer.  Despite becoming overly emotional when I thought my computer was gone for good, I learned some cool things through this experience.  I learned some cool bash commands when [Casey][3] helped me try to diagnose the cause of my computer's distress.  Then, when my computer was unusable, I spent some time reading a bit about bash and I used Casey's to set up my first ssh account! Finally, when I got my computer back in good health, I learned some lessons about good documentation practices and backing things up.  In this blog post I'll write about some of these things I've learned.
+During my last two weeks at Hacker School I encountered some serious troubles with my computer.  Despite becoming overly emotional about the state of my computer, I learned some valuable things through this experience.  I learned some cool bash commands when [Casey][3] helped me try to diagnose the cause of my computer's distress.  Then, when my computer was unusable, I spent some time reading a bit about bash and I used Casey's to set up my first ssh account! Finally, when I got my computer back in good health, I learned some lessons about good documentation practices and backing things up.  In this blog post I'll write about some of these things I've learned.
 
 #### Bash Commands:
 
@@ -10,7 +10,7 @@ When Casey and I first realized my computer was abnormally slow we set out to do
 
 * `$ ps aux` : shows all current processes being run.  This is one of the commands Casey taught me while we were playing detective! 
 
-* `$ dtruss -p PID` :  Another one that Casey taught me!  When dtruss is called on a particular process (here i'm specifying the process by its PID, or "process ID"), your computer will show you all of the system calls that are happening for that process.  If you want, you can also look up the man pages for these system calls to figure out what is happeneing.  Very cool stuff!
+* `$ dtruss -p PID` :  Another one that Casey taught me.  When dtruss is called on a particular process (here i'm specifying the process by its PID, or "process ID"), your computer will show you all of the system calls that are happening for that process.  If you want, you can also look up the man pages for these system calls to figure out what is happening.  Very cool stuff!
 
 * `$ cal` : This one is kind of just for fun.  If you aren't familiar with this command, try it out! 
 
@@ -18,7 +18,7 @@ When Casey and I first realized my computer was abnormally slow we set out to do
 
 * `$ chmod` : changes the reading, writing and executing permissions of a file.  I read about this from a book, and then two days later I needed to use this command! I'll talk more in detail about this command in the next seciton. 
 
-* `$ sudo` :  This is a command that I have been using for a while without fully understanding it.  All I understood was that to call certain commands we must first call `sudo` and provide our password.  While this is true, it misses the big picture of what sudo *does*.  Sudo's man page provides a rather good explanation of the command: "**sudo** allows a permitted user to execute a command as the superuser or as another user". In fact, `sudo another_user` can be called to carry out a command as if you were 'another_user'. Superuser[^1] is the default user which is used when no other user is specified.  So, calling `sudo` with no other argument will allow me to call commands as if I were the superuser and give me extra privileges.  
+* `$ sudo` :  This is a command that I've been using for a while without fully understanding it.  What I understood was that to call certain commands we must first call `sudo` and provide our password.  While this is true, it misses the big picture of what sudo *does*.  Sudo's man page provides a rather good explanation of the command: "**sudo** allows a permitted user to execute a command as the superuser[^1] or as another user". In fact, `sudo another_user` can be called to carry out a command as if you were 'another_user'. The superuser is the default user when no other user is specified.  So, calling `sudo` with no other argument will allow me to call commands as if I were the superuser, thus giving me extra privileges.  
 
 * `$ alias alias_name="command"` : creates an alias for the command!  An **alias** is a shortcut for other bash commands.  A useful tutorial (with examples!) on this topic can be found [here][1].  With [Geoff][4]'s help I made my very first alias for a really ugly looking git command.  Here it is:  
 
