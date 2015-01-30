@@ -1,4 +1,4 @@
-Title: Interviews as an oportunity to learn
+Title: Interviews are oportunities to learn
 Date: 2015-01-29 05:00
 Author: Leta Montopoli
 Slug: opportunity-to-learn
