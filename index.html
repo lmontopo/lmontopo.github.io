@@ -46,83 +46,64 @@
         
 
             <article>
-                <a href="http://lmontopo.github.io/some-things-i-learned-when-my-computer-crashed.html"><h3 class="article-title">Some things I learned when my computer crashed.</h3></a>
-<h6 class="subheader" title="2014-12-31T00:00:00-05:00">Wed 31 December 2014
+                <a href="http://lmontopo.github.io/opportunity-to-learn.html"><h3 class="article-title">Interviews as an oportunity to learn</h3></a>
+<h6 class="subheader" title="2015-01-29T05:00:00-05:00">Thu 29 January 2015
 </h6>
 
 
-<p>During my last two weeks at Hacker School I encountered some serious troubles with my computer.  Despite becoming overly emotional about the state of my computer, I learned some valuable things through this experience.  I learned some cool bash commands when <a href="http://rodarmor.com/">Casey</a> helped me try to diagnose the cause of my computer's distress.  Then, when my computer was unusable, I spent some time reading a bit about bash and I used Casey's to set up my first ssh account! Finally, when I got my computer back in good health, I learned some lessons about good documentation practices and backing things up.  In this blog post I'll write about some of these things I've learned.</p>
-<h4>Bash Commands:</h4>
-<p>When Casey and I first realized my computer was abnormally slow we set out to do some investigating.  We used some bash commands to see what processes were running and what system calls were being made.  Our hope was that we might detect a particular call that my computer was stuck on.  We didn't have much success with our investigation, but it was still super cool peaking behind the scenes!  Our experimentation also make me eager to learn more about the command line. So, while my computer was away being fixed, I spent some time reading more about bash. Here are some of the bash commands I've learned:</p>
-<ul>
-<li>
-<p><code>$ ps aux</code> : shows all current processes being run.  This is one of the commands Casey taught me while we were playing detective! </p>
-</li>
-<li>
-<p><code>$ dtruss -p PID</code> :  Another one that Casey taught me.  When dtruss is called on a particular process (here i'm specifying the process by its PID, or "process ID"), your computer will show you all of the system calls that are happening for that process.  If you want, you can also look up the man pages for these system calls to figure out what is happening.  Very cool stuff!</p>
-</li>
-<li>
-<p><code>$ cal</code> : This one is kind of just for fun.  If you aren't familiar with this command, try it out! </p>
-</li>
-<li>
-<p><code>$ say something</code> :  This one is also just for fun.  The word 'something' can be replaced with whatever you want. <a href="http://todayincode.tumblr.com/">Cerek</a> taught me this command when he made his computer sing rap lyrics. </p>
-</li>
-<li>
-<p><code>$ chmod</code> : changes the reading, writing and executing permissions of a file.  I read about this from a book, and then two days later I needed to use this command! I'll talk more in detail about this command in the next seciton. </p>
-</li>
-<li>
-<p><code>$ sudo</code> :  This is a command that I've been using for a while without fully understanding it.  What I understood was that to call certain commands we must first call <code>sudo</code> and provide our password.  While this is true, it misses the big picture of what sudo <em>does</em>.  Sudo's man page provides a rather good explanation of the command: "<strong>sudo</strong> allows a permitted user to execute a command as the superuser<sup id="fnref:1"><a class="footnote-ref" href="#fn:1" rel="footnote">1</a></sup> or as another user". In fact, <code>sudo another_user</code> can be called to carry out a command as if you were 'another_user'. The superuser is the default user when no other user is specified.  So, calling <code>sudo</code> with no other argument will allow me to call commands as if I were the superuser, thus giving me extra privileges.  </p>
-</li>
-<li>
-<p><code>$ alias alias_name="command"</code> : creates an alias for the command!  An <strong>alias</strong> is a shortcut for other bash commands.  A useful tutorial (with examples!) on this topic can be found <a href="https://www.digitalocean.com/community/tutorials/an-introduction-to-useful-bash-aliases-and-functions">here</a>.  With <a href="http://www.zephyrizing.net/">Geoff</a>'s help I made my very first alias for a really ugly looking git command.  Here it is:  </p>
-</li>
-</ul>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">alias </span><span class="nv">gr</span><span class="o">=</span><span class="s2">&quot;log --graph --full-history --all --color --pretty=tformat:%x1b</span>
-<span class="s2">[31m%h%x09%x1b[32m%d%x1b[0m%x20%s%x20%x1b[33m(%an)%x1b[0m -n15&quot;</span>
+<p>Over the past month I've had my first experience interviewing for development positions.  Its been a somewhat nerve-racking experience but also, at times, enjoyable.  I've come to realize that the best way to approach an interview is with an attitude of excitement and an openness to learn.</p>
+<p>A couple days before my first 'technical' interview I was feeling pretty overwhelemed.  Tom, a Hacker School facilitator, reminded me that <strong>its public knowledge that I haven't been programming forever</strong>.  He continued to explain that its OK I don't know everything, and that I'm not expected to.  This was exactly the reminder I needed to hear. Of <em>course</em> I don't know everything.  I'm just starting out in this field!  Sonali suggested I have fun with my interviews and that I view them as opportunities to learn.  </p>
+<p>Their words of wisdom have really helped me make the most of my interviews. When I stopped putting pressure on myself to be something I'm not (an experienced programmer who knows everything) I could relax, be open to learning, and be genuinely engaged in conversations about programming.  Regardless of whether or not they lead to a job, I am counting my interviews thus far to be a success because of the way I handled them.  I was genuine, I had fun, and I learned cool things.  Win.</p>
+<p>On that note, here's a neat Python thing I learned during a recent technical interview<sup id="fnref:*"><a class="footnote-ref" href="#fn:*" rel="footnote">1</a></sup>: </p>
+<h4>A Python Function's Default Arguments Are Mutable:</h4>
+<p>Without running the python code, guess what the following lines would return in an interactive Python interpreter.  (Actually try to guess them before reading my answer! I've added a blank line where you should be guessing):</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">a</span> <span class="o">=</span> <span class="p">[]):</span>
+<span class="o">...</span> <span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">...</span> <span class="k">return</span> <span class="n">a</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">test</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="n">test</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">c</span> 
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">d</span> <span class="o">=</span> <span class="n">test</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">d</span>
 </pre></div>
 </td></tr></table>
 
-<p>Now I can just type <code>git gr</code> into my command line to produce a pretty graphical representation of my git log.  Great! </p>
-<h4>What is SSH?</h4>
-<p>Throughout hacker school I had heard the term "ssh" come up in conversation a few times, but I never paused to ask about it.  That is, until <a href="http://www.flowerhack.com/">Julia</a> set up an ssh server on "www.hackers.cool" and invited us to all get accounts! So, I learned some stuff about ssh, I set up a hackers.cool account on Casey's computer, and, once I got my computer back from the repair shop, I transfered my account from Casey's computer to my own. Here's are some things I learned:</p>
-<p><strong>SSH</strong> stands for secure shell.  As far as I understand this specifies a protocol by which 'clients' can log onto a server computer remotely through a command line interface.  For me, setting up my own hackers.cool account helped me understand what this really meant.  I got to see how typing <code>ssh leta@hackers.cool</code> into my terminal would remotely connect me to the harckers.cool server.  Here are some of the cool things I observed:</p>
-<ul>
-<li>
-<p>Other users could write messages in the terminal like <code>banner Hello</code> or <code>echo Hey!</code>, and they would appear on my terminal too!  This makes sense because we were all remotely connected to the <em>same</em> server.</p>
-</li>
-<li>
-<p>I made changes to my hackers.cool user home page. This homepage is specified by a file on the <em>remote</em> computer and I was changing this file from <em>my</em> computer.  I could even check out my homepage on hackers.cool for proof that the changes actually occured. This was an exciting experience for me. </p>
-</li>
-<li>
-<p>Another cool thing I could do was type 'irc', which stands for internet relay chat.  This brings me to a an old school style chat room with other hackers.cool clients! </p>
-</li>
-</ul>
-<p><strong>How I set up my hackers.cool account</strong>:<br />
-On www.hackers.cool you can click on "sign up here" for instructions.  It will ask you for a username and will ask you to provide a public ssh key. I like <a href="https://help.github.com/articles/generating-ssh-keys/">Github's</a> simple description of an SSH key as "a way to identify trusted computers without involving passwords".  I'm not exactly sure how they work, but some sort of cryptogrophy is involved for security.  I'd like to find out more about them. </p>
-<p><strong>How did I transfer my account from Casey's computer to my own?</strong><br />
-At some point I had to figure out how to transfer my hackers.cool account from Casey's computer to my own. Since the ssh key associated with my account was on Casey's computer and not my own, something needed to be done before I could log in from my own computer. So, I grabbed a USB stick and moved the .ssh directory onto my computer.  I still wasn't able to log into hackers.cool.  When I tried to I got an error message.  I don't remember exactly what the error message was, but it said something about the permissions of files in my .ssh directory not being secure enough.  It seemed to me that the permissions of these files must have changed during the transfer from Casey's computer to my own.  So, I used <strong>chmod</strong> to change them!  Here are the details: </p>
-<p><strong>How I used chmod</strong>:     <br />
-I used the command <code>chmod 700 file</code> for both files within my .ssh directory.  The number 7 signifies permission to read, write ane execute.  The number 0 specifies no permissions at all. The first digit refers to the user's permissions, the second digit to the 'groups' permissions, and the third to the world.  So by specifying 700, I gave the user reading, writing and executing permissions but gave no permissions to anyone else. The next time I tried to log in with "ssh leta@hackers.cool" I was successful! (The <a href="http://en.wikipedia.org/wiki/Chmod">wikipedia page</a> gives a more thorough description of how chmod can be used.)</p>
-<h4>Tips about Pip:</h4>
-<p>It can actually be super helpful to keep track of any dependencies for a particular project.  I realized this when my computer crashed and none of my git repos included any meta-data about their dependencies. In the future I'm going to use this very easy way to keep track of my python dependencies for each project: </p>
-<ol>
-<li>First, setup a virtual environment for each project, with all of the dependencies installed in this virtual environment.  If this is my setup, then <code>pip freeze</code> will produce a list of all the pip packages installed for this project. (Note:  without a virtual environment for each project, <code>pip freeze</code> would simply produce a list of ALL dependencies for ALL projects.) </li>
-<li>Make a requirements page by typing: <code>pip freeze &gt;&gt; requirements.txt</code>.</li>
-<li>Include the requirements page in my remote repo!</li>
-<li>When I want to run a project on another computer I can run <code>pip install -r requirements.txt</code> and all of the documented packages will be install by pip! Easy!  </li>
-</ol>
-<h4>Documenting Your Workflow and Backing Things Up</h4>
-<p><strong>Include source files in your github repo!</strong>
-When my computer crashed and I wanted to write a blog post from Casey's computer, it occured to me how much it sucked that I only saved my html output, and not my source files of my blog.  With the help of some awesome hackerschoolers, I was able to retreive some old files and get things back up and running.  But, the whole process would have been a lot smoother had I simply included my markdown files in my github repo! </p>
-<p><strong>Add a README with your workflow!</strong>
-Once I had Casey's computer all set up for me to work on my blog, I added a README file to my github repo, speciying my workflow.  This ended up helping me dramatically once I got my own computer back.  Sometimes in the moment I think "oh, I'll remember my workflow".  But maybe I won't!  It's worth taking a minute to include a readme with your workflow, in case you don't remmeber it. :) </p>
-<p>And generally.... <strong>Back things up.</strong></p>
+<p>Have you guessed yet?!
+... </p>
+<p>My guess was <code>[1]</code>, <code>[1]</code>, <code>[1,1]</code> but the correct answer is <code>[1]</code>, <code>[1,1]</code>, <code>[1,1,1]</code>.</p>
+<p><strong>What does all of this mean and what does it tell us about the way Python handles default arguments?</strong></p>
+<p>It means that the default argument binding<sup id="fnref:%"><a class="footnote-ref" href="#fn:%" rel="footnote">2</a></sup> happens at the function's <em>definition</em> not at the function's <em>execution</em>.  In other words, the statement <code>a = []</code> is evaluated when the function definition statement is executed, but not when the function is called and its body is executed.</p>
+<p>Lets dig a little deaper.  Recall that in Python everything, including functions, is an object. When a function definition is executed a new function object is created.  This function object will have an attribute called <code>func_defaults</code> that contains the values of the default arguments.  </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">test</span><span class="o">.</span><span class="n">func_defaults</span>
+<span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],)</span>
+</pre></div>
+</td></tr></table>
+
+<p>Like usual object attributes, func_defaults can be mutated.  In our example, the default argument is mutated when the body of the function is executed. Since the line of code that sets func_defaults to <code>[]</code> is run only when the object is instantiated, these mutations affect the default value for subsequent calls on the function. </p>
+<p>I hope this makes sense!  Feel free to ask questions if it doesn't. :) Also, some useful resources can be found <a href="http://stackoverflow.com/questions/1132941/least-astonishment-in-python-the-mutable-default-argument">here</a> and <a href="http://effbot.org/zone/default-values.htm">here</a>.  </p>
+<p>And to anyone out there currently undergoing interviews: Have fun! Be yourself! Good luck!</p>
 <div class="footnote">
 <hr />
 <ol>
-<li id="fn:1">
-<p>The superuser is a fairly new concept to me, but this is what I understand so far: A superuser is a user on a computer that has all the special privileges used for system administration.  Different operating system's have different names for the superuser.  This is not a user that you create  yourself on your computer, it is there without you doing anything.&#160;<a class="footnote-backref" href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+<li id="fn:*">
+<p>The interviewer agreed that I could write about his question! :)&#160;<a class="footnote-backref" href="#fnref:*" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:%">
+<p>Arugment 'binding' is just a fancy way of specifying that a variables name (ex. <code>a</code>) gets assigned to a peice of data (ex. <code>[]</code>).&#160;<a class="footnote-backref" href="#fnref:%" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div><p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
@@ -136,6 +117,25 @@ Once I had Casey's computer all set up for me to work on my blog, I added a READ
 
                 <hr  class="gradient"/>
 
+
+        
+
+
+            <article>
+                <a href="http://lmontopo.github.io/some-things-i-learned-when-my-computer-crashed.html"><h3 class="article-title">Some things I learned when my computer crashed.</h3></a>
+<h6 class="subheader" title="2014-12-31T00:00:00-05:00">Wed 31 December 2014
+</h6>
+
+
+<p>During my last two weeks at Hacker School I encountered some serious troubles with my computer.  Despite becoming overly emotional about the state of my computer, I learned some valuable things through this experience.  I learned some cool bash commands when <a href="http://rodarmor.com/">Casey</a> helped me try to diagnose the cause of ...</p><p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
+
+</p>
+
+
+
+                <a class="button radius secondary small right" href="http://lmontopo.github.io/some-things-i-learned-when-my-computer-crashed.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
 
         
 

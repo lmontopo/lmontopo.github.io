@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Interviews as an oportunity to learn</title>
+
+    <link rel="stylesheet" href="http://lmontopo.github.io/theme/css/normalize.css" />
+    <link rel="stylesheet" href="http://lmontopo.github.io/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="http://lmontopo.github.io/theme/css/style.css" />
+    <link rel="stylesheet" href="http://lmontopo.github.io/theme/css/pygments.css" />	
+    <script src="http://lmontopo.github.io/theme/js/modernizr.js"></script>
+</head>
+
+<body>
+
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href="http://lmontopo.github.io">The L Blog</a></h1>
+    </div>
+</div>
+</div>
+
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
+
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+<article>
+    <header>
+        <h3 class="article-title"><a href="http://lmontopo.github.io/opportunity-to-learn.html" rel="bookmark"
+        title="Permalink to Interviews as an oportunity to learn">Interviews as an oportunity to learn</a></h3>
+    </header>
+
+<h6 class="subheader" title="2015-01-29T05:00:00-05:00">Thu 29 January 2015
+</h6>
+
+
+    <p>Over the past month I've had my first experience interviewing for development positions.  Its been a somewhat nerve-racking experience but also, at times, enjoyable.  I've come to realize that the best way to approach an interview is with an attitude of excitement and an openness to learn.</p>
+<p>A couple days before my first 'technical' interview I was feeling pretty overwhelemed.  Tom, a Hacker School facilitator, reminded me that <strong>its public knowledge that I haven't been programming forever</strong>.  He continued to explain that its OK I don't know everything, and that I'm not expected to.  This was exactly the reminder I needed to hear. Of <em>course</em> I don't know everything.  I'm just starting out in this field!  Sonali suggested I have fun with my interviews and that I view them as opportunities to learn.  </p>
+<p>Their words of wisdom have really helped me make the most of my interviews. When I stopped putting pressure on myself to be something I'm not (an experienced programmer who knows everything) I could relax, be open to learning, and be genuinely engaged in conversations about programming.  Regardless of whether or not they lead to a job, I am counting my interviews thus far to be a success because of the way I handled them.  I was genuine, I had fun, and I learned cool things.  Win.</p>
+<p>On that note, here's a neat Python thing I learned during a recent technical interview<sup id="fnref:*"><a class="footnote-ref" href="#fn:*" rel="footnote">1</a></sup>: </p>
+<h4>A Python Function's Default Arguments Are Mutable:</h4>
+<p>Without running the python code, guess what the following lines would return in an interactive Python interpreter.  (Actually try to guess them before reading my answer! I've added a blank line where you should be guessing):</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">a</span> <span class="o">=</span> <span class="p">[]):</span>
+<span class="o">...</span> <span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">...</span> <span class="k">return</span> <span class="n">a</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">test</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="n">test</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">c</span> 
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">d</span> <span class="o">=</span> <span class="n">test</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">d</span>
+</pre></div>
+</td></tr></table>
+
+<p>Have you guessed yet?!
+... </p>
+<p>My guess was <code>[1]</code>, <code>[1]</code>, <code>[1,1]</code> but the correct answer is <code>[1]</code>, <code>[1,1]</code>, <code>[1,1,1]</code>.</p>
+<p><strong>What does all of this mean and what does it tell us about the way Python handles default arguments?</strong></p>
+<p>It means that the default argument binding<sup id="fnref:%"><a class="footnote-ref" href="#fn:%" rel="footnote">2</a></sup> happens at the function's <em>definition</em> not at the function's <em>execution</em>.  In other words, the statement <code>a = []</code> is evaluated when the function definition statement is executed, but not when the function is called and its body is executed.</p>
+<p>Lets dig a little deaper.  Recall that in Python everything, including functions, is an object. When a function definition is executed a new function object is created.  This function object will have an attribute called <code>func_defaults</code> that contains the values of the default arguments.  </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">test</span><span class="o">.</span><span class="n">func_defaults</span>
+<span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],)</span>
+</pre></div>
+</td></tr></table>
+
+<p>Like usual object attributes, func_defaults can be mutated.  In our example, the default argument is mutated when the body of the function is executed. Since the line of code that sets func_defaults to <code>[]</code> is run only when the object is instantiated, these mutations affect the default value for subsequent calls on the function. </p>
+<p>I hope this makes sense!  Feel free to ask questions if it doesn't. :) Also, some useful resources can be found <a href="http://stackoverflow.com/questions/1132941/least-astonishment-in-python-the-mutable-default-argument">here</a> and <a href="http://effbot.org/zone/default-values.htm">here</a>.  </p>
+<p>And to anyone out there currently undergoing interviews: Have fun! Be yourself! Good luck!</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:*">
+<p>The interviewer agreed that I could write about his question! :)&#160;<a class="footnote-backref" href="#fnref:*" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:%">
+<p>Arugment 'binding' is just a fancy way of specifying that a variables name (ex. <code>a</code>) gets assigned to a peice of data (ex. <code>[]</code>).&#160;<a class="footnote-backref" href="#fnref:%" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+<p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
+
+</p>
+
+
+
+
+</article>
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="http://lmontopo.github.io/archives.html">Archives</a>
+            <li><a href="http://lmontopo.github.io/tags.html">Tags</a>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="http://lmontopo.github.io/category/about.html">About</a></li>
+            <li><a href="http://lmontopo.github.io/category/blog.html">Blog</a></li>
+   
+        </ul>
+
+		
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <!--                  <p>The L Blog by Leta Montopoli</p> -->
+            </div>
+            </div>
+    </div>
+</footer>
+</body>
+</html>
