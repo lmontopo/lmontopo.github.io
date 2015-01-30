@@ -1,7 +1,7 @@
 Title: Interviews are oportunities to learn
 Date: 2015-01-29 05:00
 Author: Leta Montopoli
-Slug: opportunity-to-learn
+Slug: interviews
 Category: Blog
 
 Over the past month I've had my first experience interviewing for development positions.  Its been a somewhat nerve-racking experience but also, at times, enjoyable.  I've come to realize that the best way to approach an interview is with an attitude of excitement and an openness to learn.
