@@ -86,7 +86,7 @@
 <p>My guess was <code>[1]</code>, <code>[1]</code>, <code>[1,1]</code> but the correct answer is <code>[1]</code>, <code>[1,1]</code>, <code>[1,1,1]</code>.</p>
 <p><strong>What does all of this mean and what does it tell us about the way Python handles default arguments?</strong></p>
 <p>It means that the default argument binding<sup id="fnref:%"><a class="footnote-ref" href="#fn:%" rel="footnote">2</a></sup> happens at the function's <em>definition</em> not at the function's <em>execution</em>.  In other words, the statement <code>a = []</code> is evaluated when the function definition statement is executed, but not when the function is called and its body is executed.</p>
-<p>Lets dig a little deaper.  Recall that in Python everything, including functions, is an object. When a function definition is executed a new function object is created.  This function object will have an attribute called <code>func_defaults</code> that contains the values of the default arguments.  </p>
+<p>Lets dig a little deeper.  Recall that in Python everything, including functions, is an object. When a function definition is executed a new function object is created.  This function object will have an attribute called <code>func_defaults</code> that contains the values of the default arguments.  </p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">test</span><span class="o">.</span><span class="n">func_defaults</span>
 <span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],)</span>
@@ -95,7 +95,7 @@
 
 <p>Like usual object attributes, func_defaults can be mutated.  In our example, the default argument is mutated when the body of the function is executed. Since the line of code that sets func_defaults to <code>[]</code> is run only when the object is instantiated, these mutations affect the default value for subsequent calls on the function. </p>
 <p>I hope this makes sense!  Feel free to ask questions if it doesn't. :) Also, some useful resources can be found <a href="http://stackoverflow.com/questions/1132941/least-astonishment-in-python-the-mutable-default-argument">here</a> and <a href="http://effbot.org/zone/default-values.htm">here</a>.  </p>
-<p>And to anyone out there currently undergoing interviews: Have fun! Be yourself! Good luck!</p>
+<p>And to anyone out there currently undergoing interviews: Try to have fun.  Above all else, be yourself.  You are already impressive.</p>
 <div class="footnote">
 <hr />
 <ol>

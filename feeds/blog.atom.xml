@@ -34,7 +34,7 @@
 &lt;p&gt;My guess was &lt;code&gt;[1]&lt;/code&gt;, &lt;code&gt;[1]&lt;/code&gt;, &lt;code&gt;[1,1]&lt;/code&gt; but the correct answer is &lt;code&gt;[1]&lt;/code&gt;, &lt;code&gt;[1,1]&lt;/code&gt;, &lt;code&gt;[1,1,1]&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;What does all of this mean and what does it tell us about the way Python handles default arguments?&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;It means that the default argument binding&lt;sup id="fnref:%"&gt;&lt;a class="footnote-ref" href="#fn:%" rel="footnote"&gt;2&lt;/a&gt;&lt;/sup&gt; happens at the function's &lt;em&gt;definition&lt;/em&gt; not at the function's &lt;em&gt;execution&lt;/em&gt;.  In other words, the statement &lt;code&gt;a = []&lt;/code&gt; is evaluated when the function definition statement is executed, but not when the function is called and its body is executed.&lt;/p&gt;
-&lt;p&gt;Lets dig a little deaper.  Recall that in Python everything, including functions, is an object. When a function definition is executed a new function object is created.  This function object will have an attribute called &lt;code&gt;func_defaults&lt;/code&gt; that contains the values of the default arguments.  &lt;/p&gt;
+&lt;p&gt;Lets dig a little deeper.  Recall that in Python everything, including functions, is an object. When a function definition is executed a new function object is created.  This function object will have an attribute called &lt;code&gt;func_defaults&lt;/code&gt; that contains the values of the default arguments.  &lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;test&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;func_defaults&lt;/span&gt;
 &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;],)&lt;/span&gt;
@@ -43,7 +43,7 @@
 
 &lt;p&gt;Like usual object attributes, func_defaults can be mutated.  In our example, the default argument is mutated when the body of the function is executed. Since the line of code that sets func_defaults to &lt;code&gt;[]&lt;/code&gt; is run only when the object is instantiated, these mutations affect the default value for subsequent calls on the function. &lt;/p&gt;
 &lt;p&gt;I hope this makes sense!  Feel free to ask questions if it doesn't. :) Also, some useful resources can be found &lt;a href="http://stackoverflow.com/questions/1132941/least-astonishment-in-python-the-mutable-default-argument"&gt;here&lt;/a&gt; and &lt;a href="http://effbot.org/zone/default-values.htm"&gt;here&lt;/a&gt;.  &lt;/p&gt;
-&lt;p&gt;And to anyone out there currently undergoing interviews: Have fun! Be yourself! Good luck!&lt;/p&gt;
+&lt;p&gt;And to anyone out there currently undergoing interviews: Try to have fun.  Above all else, be yourself.  You are already impressive.&lt;/p&gt;
 &lt;div class="footnote"&gt;
 &lt;hr /&gt;
 &lt;ol&gt;
