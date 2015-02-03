@@ -43,7 +43,7 @@ My guess was `[1]`, `[1]`, `[1,1]` but the correct answer is `[1]`, `[1,1]`, `[1
 
 It means that the default argument binding[^%] happens at the function's *definition* not at the function's *execution*.  In other words, the statement `a = []` is evaluated when the function definition statement is executed, but not when the function is called and its body is executed.
 
-Lets dig a little deaper.  Recall that in Python everything, including functions, is an object. When a function definition is executed a new function object is created.  This function object will have an attribute called `func_defaults` that contains the values of the default arguments.  
+Lets dig a little deeper.  Recall that in Python everything, including functions, is an object. When a function definition is executed a new function object is created.  This function object will have an attribute called `func_defaults` that contains the values of the default arguments.  
 
 ```python
 >>> test.func_defaults
@@ -54,7 +54,7 @@ Like usual object attributes, func_defaults can be mutated.  In our example, the
 
 I hope this makes sense!  Feel free to ask questions if it doesn't. :) Also, some useful resources can be found [here][1] and [here][2].  
 
-And to anyone out there currently undergoing interviews: Have fun! Be yourself! Good luck!
+And to anyone out there currently undergoing interviews: Try to have fun.  Above all else, be yourself.  You are already impressive.
 
 
 [1]: http://stackoverflow.com/questions/1132941/least-astonishment-in-python-the-mutable-default-argument
