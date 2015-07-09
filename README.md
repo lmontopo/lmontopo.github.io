@@ -2,11 +2,11 @@ lmontopo.github.io
 ==================
 
 
-This is the repository containing everything related to my blog.  The source 'branch' contains all of my .md files,
+This is the repository containing everything related to my blog.  The 'source' branch contains all of my .md files,
 while the 'master' branch contains all of the resulting html files.  The 'master' branch is the one that github is 
 using to publish my blog. 
 
-##### Instructions for getting this blog setup on another computer:
+##### Instructions for getting this blog setup on another computer (i.e. in case mine crashes!):
 
 1. clone my repository
 2. create a virtual environment
