@@ -1,6 +1,7 @@
 Title: Some things I learned when my computer crashed. 
 Date: 2014-12-31
 Categories: Blog
+Tags: Bash, Documentation
 
 During my last two weeks at Hacker School I encountered some serious troubles with my computer.  Despite becoming overly emotional about the state of my computer, I learned some valuable things through this experience.  I learned some cool bash commands when [Casey][3] helped me try to diagnose the cause of my computer's distress.  Then, when my computer was unusable, I spent some time reading a bit about bash and I used Casey's to set up my first ssh account! Finally, when I got my computer back in good health, I learned some lessons about good documentation practices and backing things up.  In this blog post I'll write about some of these things I've learned.
 

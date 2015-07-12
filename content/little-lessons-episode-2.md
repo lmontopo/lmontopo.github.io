@@ -3,6 +3,7 @@ Date: 2014-11-06 05:00
 Author: Leta Montopoli
 Slug: little-lessons-episode-2
 Category: Blog
+Tags: Python
 
 Seeing as there are a whole **bunch** of "little lessons" that I'd like
 to write down and keep track of, I've decided to extend my previous blog
