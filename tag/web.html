@@ -46,134 +46,83 @@
         
 
             <article>
-                <a href="http://lmontopo.github.io/i-made-my-first-cookie.html"><h3 class="article-title">I made my first cookie!</h3></a>
-<h6 class="subheader" title="2014-11-27T05:00:00-05:00">Thu 27 November 2014
+                <a href="http://lmontopo.github.io/how-the-internet-works.html"><h3 class="article-title">How the Internet Works</h3></a>
+<h6 class="subheader" title="2015-09-10T05:00:00-04:00">Thu 10 September 2015
 </h6>
 
 
-<p>Margo and I have been working on our web-framework, Chapeau. To test out
-its functionality and user-friendliness, we've been using Chapeau to
-build various web-apps. This week we implimented a buzz-feed-style quiz.
-To challenge ourselves (and Chapeau) we structured the app to have a
-separate webpage for each question, and then a final webpage displaying
-the result. This forced us to address the issues: 'Does Chapeau allow
-data to be transfered between non-adjacent webpages?' and 'Does Chapeau
-allow for the data to be accessed directly and used in a calculation'?
-As we tried to answer these questions and broaden the functionality of
-Chapeau, the framework took on several variations. In this blog post
-I'll begin by describing how Chapeau works for very simple web-apps, and
-then I'll continue by explaining some of the changes we made to Chapeau
-as we worked towards our buzz-feed-style quiz.</p>
-<h4>Simple Web Apps</h4>
-<p>Chapeau's design makes very simple web-apps just that: very simple. To
-make such an app, a developer needs only to define a dicitonary matching
-URL's to their corresponding html pages. Then calling Chapeau's 'go'
-function on the dictionary gets everything going. Pretty simple right?
-Beleive it or not, with Chapeau, an app this simple can even pass
-variables from an html form to the webpage that follows. The app itself
-(by 'app' I mean the python code) does not need to be changed to include
-this feature. Adding very basic variable passing to a Chapeau app is
-just a matter of formatting your html pages accordingly. Here's how to
-do it:</p>
+<h2>What is the internet?</h2>
+<p>One thing I’d like to clarify right off the bat is that when we connect to the internet we are connecting to other physical computers.  Any service accessed through the internet- email, Skype, reading the news online- is the result of obtaining data from one or more physical computers.  The internet isn’t some magical entity where resources appear out of thin air.  Indeed, files saved on an online storage system are physically stored on one or more physical computer somewhere in the world. Those of you who already knew this might find it silly of me to point this out, but I’m sure that there are people out there who have this misconception - I used to be one of them.</p>
+<p>In order to understand the structure of the internet, we'll begin by talking about computer networks in general.</p>
+<h3>Types of Networks</h3>
+<p>Different types of computer networks can be classified by size. Lets start with the smallest and work our way up to the largest - the internet:  </p>
 <ul>
-<li>The form must specify either 'method = get' or 'method = post',
-    since Chapeau deals only with post and get requests.</li>
-<li>The form's action needs to specify the URL that this form redirects
-    to.</li>
-<li>The html page corresponding to this URL should have '%(key)s'
-    wherever this key's value is meant to appear.</li>
+<li>The smallest type of network is a <strong>Personal Area Network</strong> (PAN).  A good example of this type of network is the use of bluetooth. In a personal area network computers are interacting with each other over a very short distance. </li>
+<li>The second smallest type of network is a <strong>Local Area Network</strong>, or LAN.  These networks span the area of a house, or a few floors of an office building.  As an example: consider how the computers in an office building are often all connected to the same printer.   Another example of the use of a LAN would be you pinging <sup id="fnref:1"><a class="footnote-ref" href="#fn:1" rel="footnote">1</a></sup> your co-workers computer when you’re both in the office.  The 'ping' would travel from your computer to your office's router<sup id="fnref:2"><a class="footnote-ref" href="#fn:2" rel="footnote">2</a></sup> and then to your coworker's computer.  </li>
+<li>At a larger scale we have <strong>Metropolitan Area Network</strong> (MAN) which can span the distance of a few blocks or the entire city.  An example of a MAN would be the network of computers that are serviced by a particular Internet Service Provider (ISP) within the city of Toronto.  Indeed all of the modems which provide the LANs with internet, are connected to each other through Internet Exchange Points (IXPs) within the city.</li>
+<li>Anything larger than a MAN is considered to be a <strong>Wide Area Network</strong>, or WAN. The largest WAN is the internet, connecting computers all over the earth.  </li>
 </ul>
-<p>How is this all working? In the background Chapeau parses the request
-made from the form's submission. Chapeau finds the user's input in this
-request and stores it in a dictionary of key-value pairs called params.
-The specified html file is then read in as a string with '%params'
-tacked on to the end. Python's built in string formatting takes care of
-the rest, and the page renders with the desired arguments! Easy-peasy.</p>
-<p>But what if we wanted to mutate the user input in some way? Or what if
-we wanted to <em>use</em> the input to perform some sort of analysis or
-calculation? Perhaps we want to create some results for a quiz? Our
-initial version of Chapeau could not handle such situations.</p>
-<h4>Adding Functions</h4>
-<p>To extend Chapeau's usability Margo and I decided that web developers
-would have the choice to route a URL to a path or to a function. If a
-URL is routed to a function then this function would have a few
-structural constraints. Initially, these were the constraints we
-implimented:</p>
-<ul>
-<li>Chapeau will be passing a dictionary into the function, so the
-    function must be defined to accept it. This dictionary will contain
-    some of the request information and will look something like:
-    '{'type': 'get', 'query': 'query_string', 'path': 'url' , 'body':
-    'user_input_from_post_form'}'. (Basically this dictionary stores
-    all of the request information except for the headers.)</li>
-<li>The function must return two objects: a path and a dictionary. The
-    path will specify the next html page to be rendered and the
-    dictionary will be the same one that the function receives, but
-    possibly with some mutated data.</li>
-</ul>
-<p>The dictionary that the function takes in gives the developer access to
-the user input that was just aquired. If the developer wanted to mutate
-this user input in anyway, they could do so. Alternatively, if the
-developper wants user input to be saved so that it can be obtained
-later, Margo and I figured this could be done as well. The developper
-could create a global dictionary that they can add to when user input is
-submitted, and that they could read from later. Problem solved. Except
-not really.</p>
-<p>More experienced developpers might already see the problem we've
-created. Consider the buzz-feed-style quiz that Margo and I wanted to
-create. Suppose that we implimented this app by storing the user input
-in a global dictionary. This dictionary is updated after every question
-is answered. When the results page needs to be rendered all of the user
-input is obtained from the global dictionary. But suppose two clients,
-client1 and client2, are taking the quiz simultaneously. Client1 inputs
-their answer to question 1 first, and chooses 'grapes'. Before client1
-finishes the quiz client2 submits their answer to question 1 as
-'oranges'. When our app goes to fetch the results of client1, their
-'grapes' answer will have been overwritten by 'oranges'. Afterall, we've
-only implimented one global dictionary for our entire client base. Oups.</p>
-<h4>Finally, adding Cookies!</h4>
-<p>At this point Margo and I weren't really sure how to solve this issue.
-How do we keep track of which answer corresponds to which client? For
-advice, we turned to our trusted friend
-<a href="http://www.greghendershott.com">Greg</a> who suggested we use cookies!</p>
-<p><strong>What is a cookie, and how do I make one?</strong></p>
-<p>A cookie is a very small peice of data that will be sent from a server
-and stored temporarily on a client's computer. To create a cookie, the
-server needs to include a 'Set-Cookie' header in their HTTP response to
-the client. This will prompt the client's browser to create a 'cookie'
-to store the specified data. When a browser has a cookie from our server
-any HTTP request it sends to us will include a 'Cookie' header
-containing the data we asked it to store.</p>
-<p><strong>How does this help our situation?</strong></p>
-<p>Margo and I used cookies to store every quiz answer submited from a
-client. Then, when the client's browser sends our server an HTTP request
-asking for their results page, this request will include all of that
-client's quiz answers - stored in the form of cookies! Great!</p>
-<p>Now lets talk about how we implimented this. To create cookies Margo and
-I changed the constraints of our functions (the ones that URL's are
-routed to) as follows:</p>
-<ul>
-<li>Chapeau will now pass to these functions both the dictionary
-    containing the request information and a client object. So these
-    functions must now accept two parameters! The dicitonary accepted
-    contains everything the previous one does, but also includes
-    '{header: {all of the headers and their values}}'.</li>
-<li>The functions must call Chapeau's render function: render(client,
-    path/to/html/file, args, header) before returning None.</li>
-</ul>
-<p>Now that <em>all</em> of the request information is passed to the developper,
-cookies can be read. Since the developer is now also in charge of
-calling the render function, they have control over any headers they
-want to include in their response. The header parameter in the render
-function is optional, and when unspecified it will be set to None. The
-args parameter is a dictionary of variables that we want to pass to the
-html file. So, in our buzz-feed-style-quiz, every client's answer will
-be saved in a cookie. When we want to render the results page all of the
-incoming cookies can be read from the inputed dictionary of request
-information. We can create another dictionary out of the received
-cookies and can pass this dictionary into our render function to be
-passed to our html file. Yay!</p>
-<p>Thanks Margo for working on this project with me, its been an adventure!</p><p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
+<p>The internet can be thought of as a compilation of some of these smaller networks.  One might call it a 'network of networks'. </p>
+<p><strong>Let's walk through some of the networks I'm connected to when I access the internet from my apartment in Toronto.</strong>  At the smallest level I'm connected to my LAN through my router.  This router communicates with my modem which allows me access to the city-wide network of computers serviced by my internet provider, a MAN.  Then, all of the internet providers within Toronto connect to each other at IXPs to create an even larger MAN.  And all of these large MANs accross the globe connect to one another through various IXPs, creating what we call the internet!  The following image <sup id="fnref:3"><a class="footnote-ref" href="#fn:3" rel="footnote">3</a></sup> serves as a good visual depiction of the internet as a network of networks:</p>
+<p><img alt="Pelican" src="../images/lan_man_wan.jpg" /></p>
+<h3>Physically how are computers connected?</h3>
+<p>Sometimes transmission happens wirelessly, other times it happens through physical wires. 
+Bluetooth and wifi are examples of a wireless network connections.  In these situations radio signals are used to carry data from one computer to the next.  Most of these wireless networks happen over very short distances.  Between cities and countries and continents, computers are usually connected through wires.  Yes, <em>wires are literally in the ocean, connecting continents so that we can chat to people across the globe.</em></p>
+<p>Cool. Now we have an idea of what the internet <em>is</em>.  It is a network of computer networks connecting computers accross the globe.  These connections can be wireless or through wires.  But <em>how</em> does it work?</p>
+<h2>How is data transmitted?</h2>
+<p>How do computers understand each other?  How does a message get to the appropriate computer? Introducing... the protocol stack!</p>
+<h3>The Protocol Stack</h3>
+<p>A <strong>protocol</strong> is just a set of rules that computers obey when they exchange data.  Every type of communication that occurs over the internet uses a set of protocols specified by its corresponding protocol stack.  Different applications (skype, email, etc) may use different protocol stacks.  Here is a diagram depicting the primary layers in the stack: </p>
+<p><img alt="Pelican" src="../images/protocol_stack.png" /></p>
+<p>As you can see from the diagram, when data gets sent from Computer 1 to Computer 2, Computer 1 first has to prepare the data for its transmission by going through each of the layers of the protocol stack to add information, package it up, possibly encode or translate it.  When the data is ready, it is passed through the internet from Computer 1 to Computer 2, where the data is unpacked and transformed into its original form.  Lets start from the bottom and work our way up, describing briefly each of these layers.  </p>
+<h4>Hardware Layer:</h4>
+<p>This layer is responsible for translating messages from your computer's native language (in 0s and 1s) to signals that can be transmitted either through wire or radio signals.  Most laptops today have hardware specific for both the ethernet cable and for wifi.  Note that different hardware is required in your computer for each kind of physical connection.  Often the protocol associated with this hardware requires that the unique address on the associated hardware be specified when going from one computer to the next.  This address is called the <strong>Media Access Control address</strong>, or MAC address.  </p>
+<p><em>You can find your computer's MAC addresses, by typing the following command into your terminal:</em> <code>$ networksetup -listallhardwareports</code>.  <em>You should see several different types of hardware appear, including wifi and ethernet, each with their own 'ethernet address'.  This 'ethernet address' is that hardware's MAC address! A couple of my entries look like this:</em> </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre>Hardware Port: Ethernet
+Device: en0
+Ethernet Address: 9f:68:90:ce:82:62
+
+Hardware Port: Wi-Fi
+Device: en1
+Ethernet Address: 70:27:92:c6:db:63
+</pre></div>
+</td></tr></table>
+
+<h4>Internet Protocol Layer:</h4>
+<p>Every computer on the internet is marked with a ‘unique’ address called an <strong>Internet Protocol address</strong>, or IP address.  In order for data to move from one computer to the next, it must be labeled with the target IP address and the sender’s IP address.  IP addresses can be split into two categories, <em>public</em> and <em>private</em>.   Public IPs are given to every computer ‘visible’ on the internet and are guaranteed to be unique. Private IPs  are given to computers within the same Local Area Network and need only be unique with respect to the other IPs on that network.  When you connect to your wifi at home, your router is acting as your gateway to the internet and your private IP allows your router to distinguish your computer from others on the local network.  </p>
+<p>IP addresses can also be <em>static</em> or <em>dynamic</em>.  Static IP addresses are permanent; they don't change.  A computer with a static IP address will have the exact same IP address for the duration of its contract with an Internet Service Provider.  This requires the ISP to effectively <em>reserve</em> an IP address for a single computer.  In contrast, dynamic IP addresses are temporary in nature.  A computer is re-assigned a dynamic IP address each time it connects to the internet (or, sometimes, even mid-session). Consequently, ISPs can <em>re-use</em> dynamic IP addresses.  For example, consider the dynamic IP address that is assigned to my computer when I connect to the wifi at a local coffee shop.  This IP address is not reserved for my computer alone, and may be re-assigned to another computer when I leave.  Because they are re-usable, dynamic IP addresses are less costly than static IPs.  Most personal devices will make use of dynamic IPs, while servers usually rely on static IP addresses.</p>
+<h4>Transport Protocol Layer:</h4>
+<p>Among other things, the transport protocol is in charge of labelling which port number on a receiving computer a message is sent to.  You can think of the port as being analogous to specifying a person’s name on a letter to distinguish which person in a house the letter is being sent to.  Since your computer has multiple applications accessing the internet, the port number specifies which application incoming data is meant for. This allows multiple processes to share the same hardware resources without interfering with one another.  Without port numbers, a computer's operating system would have a hard time knowing which application (a web browser, email service) an incoming message was meant for. </p>
+<p>Other responsibilities of the transport layer may include segmentation and desegmentation of the data, ensuring sent data is received, and ensuring it is received in the desired order.</p>
+<h4>Application Level Protocol:</h4>
+<p>Specific to the application, be it email, skype, or the world wide web. In the following example we will discuss the Hyper Text Transfer Protocol (HTTP), which is a popular Application Level Protocol.</p>
+<p><strong>Classic Example: Suppose I’m connecting to the internet through my apartment’s wifi and I type www.wikipedia.com into my browser and press enter.</strong></p>
+<p><em>Here the application in use is the world wide web.  The request will be formatted according to the application level protocols specifications (in this case HTTP): <code>HTTP 1.1/ GET wiki/main_page</code>.  This tells the application on the receiving end that we are using HTTP protocol and that we wish to GET (meaning retrieve) the resource specified.  This message will get passed from our browser (the application) to the computer’s operating system where the transport protocol will do its work.  In this example TCP, Transmission Control Protocol will be used.  When necessary, TCP will split the message into smaller (more manageable) chunks called packets before sending. In this case, each packet will also be labeled so that the receiver knows in which order the packets should be read.  TCP will also attach the port number (in this case 80) to each packet.  Next, the Internet Protocol further packages each packet with the sender and receiver's IP addresses, before handing over control to the hardware/link layer.  This layer wraps the packages with the wifi MAC address on your computer and translates messages into radio signals to be sent to the router.  This message will go from computer to computer, continually unpacked and repackaged by the hardware layers as it travels, until it reaches its destination, where the wiki/main_page resource lives.  The destination computer will translate the message into its native language through the hardware layer.  Then the TCP layer will ensure that each package has arrived (remember that they are labelled) and if one is missing, the computer will send out a request for the missing packet.  If all have arrived, it will place them in order, and send them to the appropriate computer application.  This main wiki page will then be retrieved from the application, and the process of packaging it up for sending will commence.  The resource will be wrapped with the message <code>HTTP 1.1 200 OK</code> before being split up into manageable chunks, labeled, then repackaged with the IP address of the destination and sender, and further translated and prepared by the hardware layer before being sent out.  When the message finds its way back to our computer, it will be unpacked by each layer until the contents of the message, the wiki/main_page, is provided to our browser to display.</em> </p>
+<h3>Stay Tuned... Domain Names and Routing!</h3>
+<p>At this point we’ve answered a lot of questions in regards to how the internet works.  But, there’s still a big missing piece of the puzzle, namely, how does my computer know the IP address of the computer we want a resource from, and how does my router know how to navigate to that computer? </p>
+<h4>Thanks</h4>
+<p>Thanks for reading along on this journey to better understand the internet.  There is, of course, still lots of details that I have left out of this discussion, and much that I still have to learn, but I think I've provided enough details to staisfy some itching curiousities.  Don't hesitate to reach out if anything is unclear or if you have any questions!  I can't guarantee I have all the answers, but if I don't, I might be curious as well!  </p>
+<p>Big thanks to <a href="http://individual.utoronto.ca/jnlantos/">Jasmin Lantos</a> for studying this topic with me during our 10% time at <a href="https://securitycompass.com/">Security Compass</a>! </p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>For anyone unfamiliar with the PING command, try it out!  Simply type <code>ping ip_address</code> to effectively 'ping' the computer with the corresponding IP address.  You can also ping a server by their hostname. &#160;<a class="footnote-backref" href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>The difference between a router and a modem confsed me at first, so I'm going to take a moment to describe their purposes in your home.  Your router is what allows several computer to connect to the internet simultaneously.  The router is connected to the motem, and the motem is what is needed to gain access to the internet through your Internet Service Provider.  This means that if you only want one computer to have access to the internet at a time in your househole, you only need a motem, not a router. Similarily, if you just wanted to communicate with other computers in your home, and not to other computers in the world, you could just use a router and do away with the motem and the internet service provider.  Sometimes you can buy a box that is both a router and a motem all in one.  &#160;<a class="footnote-backref" href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>This image is adapted from <a href="http://www.gta.ufrj.br/ensino/eel879/trabalhos_vf_2008_2/igorcamp/LAN_MAN_WAN.JPG">http://www.gta.ufrj.br/ensino/eel879/trabalhos_vf_2008_2/igorcamp/LAN_MAN_WAN.JPG</a>&#160;<a class="footnote-backref" href="#fnref:3" rev="footnote" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div><p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
 
     Tagged: 
     <a href="http://lmontopo.github.io/tag/web.html">Web </a>
@@ -186,6 +135,31 @@ passed to our html file. Yay!</p>
 
                 <hr  class="gradient"/>
 
+
+        
+
+
+            <article>
+                <a href="http://lmontopo.github.io/i-made-my-first-cookie.html"><h3 class="article-title">I made my first cookie!</h3></a>
+<h6 class="subheader" title="2014-11-27T05:00:00-05:00">Thu 27 November 2014
+</h6>
+
+
+<p>Margo and I have been working on our web-framework, Chapeau. To test out
+its functionality and user-friendliness, we've been using Chapeau to
+build various web-apps. This week we implimented a buzz-feed-style quiz.
+To challenge ourselves (and Chapeau) we structured the app to have a
+separate webpage for each question ...</p><p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
+
+    Tagged: 
+    <a href="http://lmontopo.github.io/tag/web.html">Web </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="http://lmontopo.github.io/i-made-my-first-cookie.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
 
         
 
@@ -234,28 +208,6 @@ things by doing it, yet, I was feeling unsatisfied. The tutorial ...</p><p class
 
 
                 <a class="button radius secondary small right" href="http://lmontopo.github.io/adventures-with-sockets-threads-and-more.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://lmontopo.github.io/how-the-internet-works.html"><h3 class="article-title">How the Internet Works</h3></a>
-<h6 class="subheader" title="2011-09-10T05:00:00-04:00">Sat 10 September 2011
-</h6>
-
-
-<h2>What is the internet?</h2>
-<p>One thing I’d like to clarify right off the bat is that when we connect to the internet we are connecting to other physical computers.  Any service accessed through the internet- email, Skype, reading the news online- is the result of obtaining data from one ...</p><p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
-
-    Tagged: 
-    <a href="http://lmontopo.github.io/tag/web.html">Web </a>
-</p>
-
-
-
-                <a class="button radius secondary small right" href="http://lmontopo.github.io/how-the-internet-works.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 
