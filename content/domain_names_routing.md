@@ -1,5 +1,5 @@
 Title: How the Internet Works: Domain Names and Routing
-Date: 2015-09-12 05:00
+Date: 2015-09-14 05:00
 Author: Leta Montopoli
 Slug: how-the-internet-works-2
 Category: Blog
