@@ -46,80 +46,62 @@
         
 
             <article>
-                <a href="http://lmontopo.github.io/how-the-internet-works.html"><h3 class="article-title">How the Internet Works</h3></a>
-<h6 class="subheader" title="2015-09-10T05:00:00-04:00">Thu 10 September 2015
+                <a href="http://lmontopo.github.io/how-the-internet-works-2.html"><h3 class="article-title">How the Internet Works: Domain Names and Routing</h3></a>
+<h6 class="subheader" title="2015-09-12T05:00:00-04:00">Sat 12 September 2015
 </h6>
 
 
-<h2>What is the internet?</h2>
-<p>One thing I’d like to clarify right off the bat is that when we connect to the internet we are connecting to other physical computers.  Any service accessed through the internet- email, Skype, reading the news online- is the result of obtaining data from one or more physical computers.  The internet isn’t some magical entity where resources appear out of thin air.  Indeed, files saved on an online storage system are physically stored on one or more physical computer somewhere in the world. Those of you who already knew this might find it silly of me to point this out, but I’m sure that there are people out there who have this misconception - I used to be one of them.</p>
-<p>In order to understand the structure of the internet, we'll begin by talking about computer networks in general.</p>
-<h3>Types of Networks</h3>
-<p>Different types of computer networks can be classified by size. Lets start with the smallest and work our way up to the largest - the internet:  </p>
+<p>This blog post is a continuation of my previous post <a href="http://lmontopo.github.io/how-the-internet-works.html">How the Internet Works</a>.  Here, I hope to answer the following questions: </p>
 <ul>
-<li>The smallest type of network is a <strong>Personal Area Network</strong> (PAN).  A good example of this type of network is the use of bluetooth. In a personal area network computers are interacting with each other over a very short distance. </li>
-<li>The second smallest type of network is a <strong>Local Area Network</strong>, or LAN.  These networks span the area of a house, or a few floors of an office building.  As an example: consider how the computers in an office building are often all connected to the same printer.   Another example of the use of a LAN would be you pinging <sup id="fnref:1"><a class="footnote-ref" href="#fn:1" rel="footnote">1</a></sup> your co-workers computer when you’re both in the office.  The 'ping' would travel from your computer to your office's router<sup id="fnref:2"><a class="footnote-ref" href="#fn:2" rel="footnote">2</a></sup> and then to your coworker's computer.  </li>
-<li>At a larger scale we have <strong>Metropolitan Area Network</strong> (MAN) which can span the distance of a few blocks or the entire city.  An example of a MAN would be the network of computers that are serviced by a particular Internet Service Provider (ISP) within the city of Toronto.  Indeed all of the modems which provide the LANs with internet, are connected to each other through Internet Exchange Points (IXPs) within the city.</li>
-<li>Anything larger than a MAN is considered to be a <strong>Wide Area Network</strong>, or WAN. The largest WAN is the internet, connecting computers all over the earth.  </li>
+<li>
+<p><strong>Since we don't usually specify the IP address of the computer we wish to connect with, how does our computer successfully connect with it?</strong> </p>
+</li>
+<li>
+<p><strong>Assuming the IP address of the destination computer is known, How does a request from my computer actually make it to the computer with this IP?  How does it know where that computer is?</strong></p>
+</li>
 </ul>
-<p>The internet can be thought of as a compilation of some of these smaller networks.  One might call it a 'network of networks'. </p>
-<p><strong>Let's walk through some of the networks I'm connected to when I access the internet from my apartment in Toronto.</strong>  At the smallest level I'm connected to my LAN through my router.  This router communicates with my modem which allows me access to the city-wide network of computers serviced by my internet provider, a MAN.  Then, all of the internet providers within Toronto connect to each other at IXPs to create an even larger MAN.  And all of these large MANs accross the globe connect to one another through various IXPs, creating what we call the internet!  The following image <sup id="fnref:3"><a class="footnote-ref" href="#fn:3" rel="footnote">3</a></sup> serves as a good visual depiction of the internet as a network of networks:</p>
-<p><img alt="Pelican" src="../images/lan_man_wan.jpg" /></p>
-<h3>Physically how are computers connected?</h3>
-<p>Sometimes transmission happens wirelessly, other times it happens through physical wires. 
-Bluetooth and wifi are examples of a wireless network connections.  In these situations radio signals are used to carry data from one computer to the next.  Most of these wireless networks happen over very short distances.  Between cities and countries and continents, computers are usually connected through wires.  Yes, <em>wires are literally in the ocean, connecting continents so that we can chat to people across the globe.</em></p>
-<p>Cool. Now we have an idea of what the internet <em>is</em>.  It is a network of computer networks connecting computers accross the globe.  These connections can be wireless or through wires.  But <em>how</em> does it work?</p>
-<h2>How is data transmitted?</h2>
-<p>How do computers understand each other?  How does a message get to the appropriate computer? Introducing... the protocol stack!</p>
-<h3>The Protocol Stack</h3>
-<p>A <strong>protocol</strong> is just a set of rules that computers obey when they exchange data.  Every type of communication that occurs over the internet uses a set of protocols specified by its corresponding protocol stack.  Different applications (skype, email, etc) may use different protocol stacks.  Here is a diagram depicting the primary layers in the stack: </p>
-<p><img alt="Pelican" src="../images/protocol_stack.png" /></p>
-<p>As you can see from the diagram, when data gets sent from Computer 1 to Computer 2, Computer 1 first has to prepare the data for its transmission by going through each of the layers of the protocol stack to add information, package it up, possibly encode or translate it.  When the data is ready, it is passed through the internet from Computer 1 to Computer 2, where the data is unpacked and transformed into its original form.  Lets start from the bottom and work our way up, describing briefly each of these layers.  </p>
-<h4>Hardware Layer:</h4>
-<p>This layer is responsible for translating messages from your computer's native language (in 0s and 1s) to signals that can be transmitted either through wire or radio signals.  Most laptops today have hardware specific for both the ethernet cable and for wifi.  Note that different hardware is required in your computer for each kind of physical connection.  Often the protocol associated with this hardware requires that the unique address on the associated hardware be specified when going from one computer to the next.  This address is called the <strong>Media Access Control address</strong>, or MAC address.  </p>
-<p><em>You can find your computer's MAC addresses, by typing the following command into your terminal:</em> <code>$ networksetup -listallhardwareports</code>.  <em>You should see several different types of hardware appear, including wifi and ethernet, each with their own 'ethernet address'.  This 'ethernet address' is that hardware's MAC address! A couple of my entries look like this:</em> </p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7</pre></div></td><td class="code"><div class="highlight"><pre>Hardware Port: Ethernet
-Device: en0
-Ethernet Address: 9f:68:90:ce:82:62
-
-Hardware Port: Wi-Fi
-Device: en1
-Ethernet Address: 70:27:92:c6:db:63
-</pre></div>
-</td></tr></table>
-
-<h4>Internet Protocol Layer:</h4>
-<p>Every computer on the internet is marked with a ‘unique’ address called an <strong>Internet Protocol address</strong>, or IP address.  In order for data to move from one computer to the next, it must be labeled with the target IP address and the sender’s IP address.  IP addresses can be split into two categories, <em>public</em> and <em>private</em>.   Public IPs are given to every computer ‘visible’ on the internet and are guaranteed to be unique. Private IPs  are given to computers within the same Local Area Network and need only be unique with respect to the other IPs on that network.  When you connect to your wifi at home, your router is acting as your gateway to the internet and your private IP allows your router to distinguish your computer from others on the local network.  </p>
-<p>IP addresses can also be <em>static</em> or <em>dynamic</em>.  Static IP addresses are permanent; they don't change.  A computer with a static IP address will have the exact same IP address for the duration of its contract with an Internet Service Provider.  This requires the ISP to effectively <em>reserve</em> an IP address for a single computer.  In contrast, dynamic IP addresses are temporary in nature.  A computer is re-assigned a dynamic IP address each time it connects to the internet (or, sometimes, even mid-session). Consequently, ISPs can <em>re-use</em> dynamic IP addresses.  For example, consider the dynamic IP address that is assigned to my computer when I connect to the wifi at a local coffee shop.  This IP address is not reserved for my computer alone, and may be re-assigned to another computer when I leave.  Because they are re-usable, dynamic IP addresses are less costly than static IPs.  Most personal devices will make use of dynamic IPs, while servers usually rely on static IP addresses.</p>
-<h4>Transport Protocol Layer:</h4>
-<p>Among other things, the transport protocol is in charge of labelling which port number on a receiving computer a message is sent to.  You can think of the port as being analogous to specifying a person’s name on a letter to distinguish which person in a house the letter is being sent to.  Since your computer has multiple applications accessing the internet, the port number specifies which application incoming data is meant for. This allows multiple processes to share the same hardware resources without interfering with one another.  Without port numbers, a computer's operating system would have a hard time knowing which application (a web browser, email service) an incoming message was meant for. </p>
-<p>Other responsibilities of the transport layer may include segmentation and desegmentation of the data, ensuring sent data is received, and ensuring it is received in the desired order.</p>
-<h4>Application Level Protocol:</h4>
-<p>Specific to the application, be it email, skype, or the world wide web. In the following example we will discuss the Hyper Text Transfer Protocol (HTTP), which is a popular Application Level Protocol.</p>
-<p><strong>Classic Example: Suppose I’m connecting to the internet through my apartment’s wifi and I type www.wikipedia.com into my browser and press enter.</strong></p>
-<p><em>Here the application in use is the world wide web.  The request will be formatted according to the application level protocols specifications (in this case HTTP): <code>HTTP 1.1/ GET wiki/main_page</code>.  This tells the application on the receiving end that we are using HTTP protocol and that we wish to GET (meaning retrieve) the resource specified.  This message will get passed from our browser (the application) to the computer’s operating system where the transport protocol will do its work.  In this example TCP, Transmission Control Protocol will be used.  When necessary, TCP will split the message into smaller (more manageable) chunks called packets before sending. In this case, each packet will also be labeled so that the receiver knows in which order the packets should be read.  TCP will also attach the port number (in this case 80) to each packet.  Next, the Internet Protocol further packages each packet with the sender and receiver's IP addresses, before handing over control to the hardware/link layer.  This layer wraps the packages with the wifi MAC address on your computer and translates messages into radio signals to be sent to the router.  This message will go from computer to computer, continually unpacked and repackaged by the hardware layers as it travels, until it reaches its destination, where the wiki/main_page resource lives.  The destination computer will translate the message into its native language through the hardware layer.  Then the TCP layer will ensure that each package has arrived (remember that they are labelled) and if one is missing, the computer will send out a request for the missing packet.  If all have arrived, it will place them in order, and send them to the appropriate computer application.  This main wiki page will then be retrieved from the application, and the process of packaging it up for sending will commence.  The resource will be wrapped with the message <code>HTTP 1.1 200 OK</code> before being split up into manageable chunks, labeled, then repackaged with the IP address of the destination and sender, and further translated and prepared by the hardware layer before being sent out.  When the message finds its way back to our computer, it will be unpacked by each layer until the contents of the message, the wiki/main_page, is provided to our browser to display.</em> </p>
-<h3>Stay Tuned... Domain Names and Routing!</h3>
-<p>At this point we’ve answered a lot of questions in regards to how the internet works.  But, there’s still a big missing piece of the puzzle, namely, how does my computer know the IP address of the computer we want a resource from, and how does my router know how to navigate to that computer? </p>
-<h4>Thanks</h4>
-<p>Thanks for reading along on this journey to better understand the internet.  There is, of course, still lots of details that I have left out of this discussion, and much that I still have to learn, but I think I've provided enough details to staisfy some itching curiousities.  Don't hesitate to reach out if anything is unclear or if you have any questions!  I can't guarantee I have all the answers, but if I don't, I might be curious as well!  </p>
-<p>Big thanks to <a href="http://individual.utoronto.ca/jnlantos/">Jasmin Lantos</a> for studying this topic with me during our 10% time at <a href="https://securitycompass.com/">Security Compass</a>! </p>
+<h2>The Domain Name System</h2>
+<p>A <strong>domain name</strong> is a human readable address of a computer on the internet.  Domain names are used all the time for activities requiring the internet, including sending emails and browsing web pages.  The part of a URL<sup id="fnref:1"><a class="footnote-ref" href="#fn:1" rel="footnote">1</a></sup> that appears after the protocol but before the file path is the domain name.  For example, <code>lmontopo.github.io</code> is the domain name in the URL of this blog post: <code>https://lmontopo.github.io/how-the-internet-works-2.html</code>.  </p>
+<p>The term <strong>Domain Name System (DNS)</strong> refers to the internet service of translating domain names into IP addresses.  It consists of a distributed<sup id="fnref:2"><a class="footnote-ref" href="#fn:2" rel="footnote">2</a></sup> database of IP address and domain name pairs.  Hundreds of servers known as <strong>DNS servers</strong> are dedicated to working together to translate domain names into IP addresses.  There are two kinds of DNS servers: caching servers and authoritative name servers:  </p>
+<ul>
+<li>
+<p><strong>Authoritative Servers</strong> are responsible for maintaining a database of the IP addresses of domains within its 'authority'. <em>What does this mean?</em> Well, these servers are organized in a heiarchy that matches the structure of the domain names themselves.  Indeed, domain names consist of one or more domains separated by dots.  The rightmost domain is the <em>top-level domain</em>.  Examples of top-level domains include <code>com</code>, <code>org</code> and <code>edu</code>. Directly left of the top-level domain is the second-level domain, preceeded by more sub-domains until the leftmost word, the <em>host</em>.  An authoritative DNS server handles a specific level in this heiarchy and knows the IP addresses of all hosts and subdomains under it. So, for example, an authoritative DNS server with authority over the <code>github.io</code> domain would know the IP address of host <code>lmontopo.github.io</code>.</p>
+</li>
+<li>
+<p><strong>Caching Servers</strong> are your computer's first point of contact with the DNS. Your computer is automatically<sup id="fnref:3"><a class="footnote-ref" href="#fn:3" rel="footnote">3</a></sup> configured with the IP address of a caching DNS server (usually provided by your Internet Service Provider) so that your computer knows who to contact for DNS resolution.  These caching servers communicate back and forth with authoritative name servers on your behalf until they find one that can resolve the supplied domain name into an IP address. </p>
+</li>
+</ul>
+<p><strong>OK, I know this stuff can be confusing, but if you've made it this far, bear with me!</strong></p>
+<p><em>Let's go through an example to better understand how this works: Suppose we request the IP address of the domain name 'www.wikipedia.org'</em>:</p>
+<p>As previously explained, our computer will first send a request to the DNS Server (a cache server) specified in its network configuration settings.  Lets call this cache server Jane, since we'll be talking about it lots.  Our computer will ask Jane something like “Can you tell me the IP address of www.wikipedia.org?”. Usually the DNS server provided by our ISP will have a cache<sup id="fnref:4"><a class="footnote-ref" href="#fn:4" rel="footnote">4</a></sup> of frequently resolved domain names.  Assuming Jane has one, she'll search her cache for this domain name.  If Jane finds it she'll get back to us straight away with the desired IP address. Otherwise Jane will strip the host from the domain name and search her cache for a server with authority over the remaining name: <code>wikipedia.com</code>. If Jane find this server's IP in her cache she'll send our original request-“Can you tell me the IP address of www.wikipedia.org?”- to this server.  For now, lets assume Jane's cache doesn't contain 'wikipedia.com'.  Then Jane will again search her cache for the server with authority over the <code>com</code> domain.  (Notice that each time the authoritative DNS server strips of the leftmost word off the domain name.)  Finally, if Jane doesn't find this server's IP, she'll resort to contacting the <strong>DNS Root Servers</strong>.  Root servers are the Authoritative DNS Servers which reside at the top of the heiarchy, right above above top level DNS servers.  <em>(Cache servers, like Jane, are pre-configured with a list of root servers so that they always have someone to contact.)</em> In this case the root server would respond with a list of server IPs of the <code>com</code> domain.  Jane would then contact one of the servers from this list, and ask it to resolve <code>www.wikipedia.com</code>.  The <code>com</code> DNS server would give Jane some IPs of DNS servers with authority over the <code>wikipedia.com</code> domain.  Jane could then contact one of these servers, any of which could resolve <code>www.wikipedia.com</code>.  When Jane finally gets the translation she sends us back our desired IP address.  Jane will also keep (at least temporarily) a cache of the IP addresses that were just discovered: IPs of <code>com</code> domain servers, <code>wikipedia.com</code> domain servers and the IP address of <code>www.wikipedia.com</code>.  The following picture demontstrates this process:<sup id="fnref:5"><a class="footnote-ref" href="#fn:5" rel="footnote">5</a></sup></p>
+<p><img alt="Pelican" src="../images/example_lookup.png" /></p>
+<p><em>Cool Trick: you can actually bypass the whole Domain Name Resolution Process by typing in the IP address of the computer you wish to communicate with.</em></p>
+<h2>Routing</h2>
+<p>Once we know the IP address of the computer we want to talk to, how does our request make its way to that computer?  </p>
+<p>The answer, is <strong>routers</strong>.  Routers connect</p>
+<p>Routers are connected between networks to control the flow of messages between them. The main responsibilitis of a router are to ensure messages get sent where they are intended, and to ensure messages don't get sent into networks where they weren't intended.  But how does it do this?  </p>
+<p>Well, each router usually knows about the IP addresses within its sub-networks but not about the IP addresses in networks above it (similar to the DNS system!).  At a high level, we can imagine that a request arrives at its destination IP address by first travelling up this hierarchy of routers until a router that knows about the destination's IP address is reached. At this point the request would begin to travel back down the chain in the direction of the desired computer. </p>
+<p><strong>Although this gives us a nice idea of how routing works, in reality there's a bit more to it.</strong> The picture I painted seems to imply that the computer at the ‘top’ of this chain is all knowing -i.e. it knows all the IP addresses of every computer below it- and that is not the case. Each router has a configuration table which lists patterns of IP addresses, and rules to follow based on those patterns. The router will scan the destination address and match that IP address against the patterns in its table. When the router finds the category that the IP fits into, it follows the related instructions to go in a specific direction. Before actually sending out information in this direction, the router will check to see if that direction is satisfactory (i.e. flow is OK there, and nothing seems broken). If all is well it will go ahead. Otherwise it will check the configuration table for an alternate route. Because many different routes exist between two computers on the internet, a request made to google.com one minute might take a completely different route than the next minute. And that's part of the beauty of routing, is that its adaptable and can act accordingly.</p>
+<p>In order for routers to do their job, they are also performing <strong>Network Address Translations</strong> (NAT).  Remember last time how I mentioned that your personal computer's public IP is your router's IP?  Well, your router has to translate all of the traffic coming from your local network, re-addressing it with its own IP address.  Then the router has to keep track of which incoming messages (all of which are addressed to <em>its</em> IP address!) are meant for which computer in its local Network.  Even more complicated, routers may have to deal with situations where a private IP in your local network overlaps with a public IP address somewhere in the internet.  In some cases this might cause issues, but other times your router may successfully create a 'lookup table' to keep track of which computer is which, and translate IP addresses to compensate.</p>
+<h3>Thanks Again</h3>
+<p>Well, thats it (for now!) on how the internet works.  I hope that if you've made it this far you've enjoyed the journey.  As always, feel free to reach out to me if you have any questions!  I am no expert, but if there's something I can help you understand I'd be happy to do so!</p>
 <div class="footnote">
 <hr />
 <ol>
 <li id="fn:1">
-<p>For anyone unfamiliar with the PING command, try it out!  Simply type <code>ping ip_address</code> to effectively 'ping' the computer with the corresponding IP address.  You can also ping a server by their hostname. &#160;<a class="footnote-backref" href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+<p>URL stands for Uniform Resource Locator and refers to the web address used to locate a web page on the World Wide Web.&#160;<a class="footnote-backref" href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
 <li id="fn:2">
-<p>The difference between a router and a modem confsed me at first, so I'm going to take a moment to describe their purposes in your home.  Your router is what allows several computer to connect to the internet simultaneously.  The router is connected to the motem, and the motem is what is needed to gain access to the internet through your Internet Service Provider.  This means that if you only want one computer to have access to the internet at a time in your househole, you only need a motem, not a router. Similarily, if you just wanted to communicate with other computers in your home, and not to other computers in the world, you could just use a router and do away with the motem and the internet service provider.  Sometimes you can buy a box that is both a router and a motem all in one.  &#160;<a class="footnote-backref" href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+<p>The word <em>distributed</em> in this context just means that the database is stored over many computers, as opposed to a single database on a single computer.  &#160;<a class="footnote-backref" href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 <li id="fn:3">
-<p>This image is adapted from <a href="http://www.gta.ufrj.br/ensino/eel879/trabalhos_vf_2008_2/igorcamp/LAN_MAN_WAN.JPG">http://www.gta.ufrj.br/ensino/eel879/trabalhos_vf_2008_2/igorcamp/LAN_MAN_WAN.JPG</a>&#160;<a class="footnote-backref" href="#fnref:3" rev="footnote" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+<p>Of course, you can override this setting if you'd like to use some other Domain Name System Server.&#160;<a class="footnote-backref" href="#fnref:3" rev="footnote" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>A <strong>cache</strong> is just a fancy word for data that is stored on a machine.  Usually this data is the result of a computation or process that it previously performed, so that if it needs the result again it can provide it more quickly. &#160;<a class="footnote-backref" href="#fnref:4" rev="footnote" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p>I got this great image from the wikipedia page on the Domain Name System.  You can find it <a href="https://en.wikipedia.org/wiki/Domain_Name_System#/media/File:An_example_of_theoretical_DNS_recursion.svg">here</a>.&#160;<a class="footnote-backref" href="#fnref:5" rev="footnote" title="Jump back to footnote 5 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div><p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
@@ -135,6 +117,28 @@ Ethernet Address: 70:27:92:c6:db:63
 
                 <hr  class="gradient"/>
 
+
+        
+
+
+            <article>
+                <a href="http://lmontopo.github.io/how-the-internet-works.html"><h3 class="article-title">How the Internet Works</h3></a>
+<h6 class="subheader" title="2015-09-10T05:00:00-04:00">Thu 10 September 2015
+</h6>
+
+
+<h2>What is the internet?</h2>
+<p>One thing I’d like to clarify right off the bat is that when we connect to the internet we are connecting to other physical computers.  Any service accessed through the internet- email, Skype, reading the news online- is the result of obtaining data from one ...</p><p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
+
+    Tagged: 
+    <a href="http://lmontopo.github.io/tag/web.html">Web </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="http://lmontopo.github.io/how-the-internet-works.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
 
         
 
