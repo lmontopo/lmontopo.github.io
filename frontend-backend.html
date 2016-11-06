@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
+
+    <title>What's frontend, what's backend?</title>
+
+    <link rel="stylesheet" href="http://lmontopo.github.io/theme/css/normalize.css" />
+    <link rel="stylesheet" href="http://lmontopo.github.io/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="http://lmontopo.github.io/theme/css/style.css" />
+    <link rel="stylesheet" href="http://lmontopo.github.io/theme/css/pygments.css" />	
+    <script src="http://lmontopo.github.io/theme/js/modernizr.js"></script>
+</head>
+
+<body>
+
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href="http://lmontopo.github.io">The L Blog</a></h1>
+    </div>
+</div>
+</div>
+
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
+
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+<article>
+    <header>
+        <h3 class="article-title"><a href="http://lmontopo.github.io/frontend-backend.html" rel="bookmark"
+        title="Permalink to What's frontend, what's backend?">What's frontend, what's backend?</a></h3>
+    </header>
+
+<h6 class="subheader" title="2016-11-06T05:00:00-05:00">Sun 06 November 2016
+</h6>
+
+
+    <p>Last week a co-worker of mine asked me to clarify for him what the difference was between backend and frontend web development.  I had been asked this quesiton before, but this was the first time I felt I provided a clear explanation and was able to instill knowledge.</p>
+<p>So, here, I'd like jot down a lof of the key points which I think helped to clarify the meaning of and the difference between 'frontend' and 'backend' development:</p>
+<ul>
+<li><strong>Backend code is run on the server computer while frontend code is run on the client computer.</strong>  </li>
+<li>Being a <em>fullstack developer</em> means that you write (or can write) both backend and frontend code. </li>
+<li>The backend takes care of any logic that the server needs to run before a response can be sent to the client.  This includes things like retreiving data from a database, authenticating a user or making some calculations.</li>
+<li>The frontend code takes care of any logic that needs to run locally - on the clients computer - in response to user interactions.  This includes any subsequent network calls for updated data.</li>
+<li>Frontend code is usually written in JavaScript, which your browser can interpret.</li>
+</ul>
+<h4>Why can't I write frontend in Python (or can I)?</h4>
+<ul>
+<li>Just like all browsers know how to turn HTML and CSS into pretty pages, all browsers know how to 
+interpret JavaScript;  <strong>All browsers have built in JavaScript interpreters.</strong> <ul>
+<li>Check it out!  In Chrome right click on a page and click on the 'inspect'.  Then click on the 'console' tab.  You are now looking at a JavaScript Interpreter!  For fun, write the following: <code>alert('Leta is cool')</code>.</li>
+</ul>
+</li>
+<li>Python interpreters aren't currently built into browsers.  It's not that they <em>couldn't be</em> it's just that they <em>aren't</em>.  If I wanted to write frontend logic in Python I'd have two choices: <ol>
+<li>Write a browser plugin to be able to interpret Python, and prompt users to install it to view my web app. <em>(This type of thing has been done in order to run Java on the frontend! Remember those annoying Java plugin installation promps?)</em></li>
+<li>Compile my Python code down to JavaScript before sending it to the client.  This is a bit of a hack, though, because technically javaScript is still what would be running on the client side.</li>
+</ol>
+</li>
+</ul>
+<h4>Where do HTML and CSS fit in?</h4>
+<ul>
+<li>Often HTML and CSS are considered frontend.  The reason being is that, like JavaScript, they are interpreted by your browser.</li>
+<li>I consider HTML to be backend only in the context of a template that will be compiled by a template enginge.  In this case one is writting an HTML page with added template language logic which will render more HTML depending on the data that is fed into it. </li>
+<li>To me, this falls under the backend umbrella because the templatign engine will turn this template into a finished HTML file on the surver side before sending the final HTML file to the client.</li>
+<li>Some people agree with me on this distinction, others disagree (and that's OK!)</li>
+</ul>
+<h4>Further readings</h4>
+<p>If you're curious to know a little more, specifically about why / how JavaScript became the only language built into browsers, I recommend reading <a href="https://www.reddit.com/r/learnprogramming/comments/3frml2/why_is_javascript_the_only_frontend_programming/?st=iv70e8ah&amp;sh=d65bf9be">this</a> thread on reddit.  I found it to be well explained and pretty thorough! </p>
+<p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
+
+    Tagged: 
+    <a href="http://lmontopo.github.io/tag/web.html">Web </a>
+</p>
+
+
+
+
+</article>
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="http://lmontopo.github.io/archives.html">Archives</a>
+            <li><a href="http://lmontopo.github.io/tags.html">Tags</a>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="http://lmontopo.github.io/category/about.html">About</a></li>
+            <li><a href="http://lmontopo.github.io/category/blog.html">Blog</a></li>
+   
+        </ul>
+
+		
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <!--                  <p>The L Blog by Leta Montopoli</p> -->
+            </div>
+            </div>
+    </div>
+</footer>
+</body>
+</html>

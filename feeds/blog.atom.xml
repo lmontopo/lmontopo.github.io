@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>The L Blog</title><link href="http://lmontopo.github.io/" rel="alternate"></link><link href="http://lmontopo.github.io/feeds/blog.atom.xml" rel="self"></link><id>http://lmontopo.github.io/</id><updated>2015-09-14T05:00:00-04:00</updated><entry><title>How the Internet Works: Domain Names and Routing</title><link href="http://lmontopo.github.io/how-the-internet-works-2.html" rel="alternate"></link><updated>2015-09-14T05:00:00-04:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo.github.io,2015-09-14:how-the-internet-works-2.html</id><summary type="html">&lt;p&gt;This blog post is a continuation of my previous post &lt;a href="http://lmontopo.github.io/how-the-internet-works.html"&gt;How the Internet Works&lt;/a&gt;.  Here, I hope to answer the following questions: &lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>The L Blog</title><link href="http://lmontopo.github.io/" rel="alternate"></link><link href="http://lmontopo.github.io/feeds/blog.atom.xml" rel="self"></link><id>http://lmontopo.github.io/</id><updated>2016-11-06T05:00:00-05:00</updated><entry><title>What's frontend, what's backend?</title><link href="http://lmontopo.github.io/frontend-backend.html" rel="alternate"></link><updated>2016-11-06T05:00:00-05:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo.github.io,2016-11-06:frontend-backend.html</id><summary type="html">&lt;p&gt;Last week a co-worker of mine asked me to clarify for him what the difference was between backend and frontend web development.  I had been asked this quesiton before, but this was the first time I felt I provided a clear explanation and was able to instill knowledge.&lt;/p&gt;
+&lt;p&gt;So, here, I'd like jot down a lof of the key points which I think helped to clarify the meaning of and the difference between 'frontend' and 'backend' development:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Backend code is run on the server computer while frontend code is run on the client computer.&lt;/strong&gt;  &lt;/li&gt;
+&lt;li&gt;Being a &lt;em&gt;fullstack developer&lt;/em&gt; means that you write (or can write) both backend and frontend code. &lt;/li&gt;
+&lt;li&gt;The backend takes care of any logic that the server needs to run before a response can be sent to the client.  This includes things like retreiving data from a database, authenticating a user or making some calculations.&lt;/li&gt;
+&lt;li&gt;The frontend code takes care of any logic that needs to run locally - on the clients computer - in response to user interactions.  This includes any subsequent network calls for updated data.&lt;/li&gt;
+&lt;li&gt;Frontend code is usually written in JavaScript, which your browser can interpret.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Why can't I write frontend in Python (or can I)?&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Just like all browsers know how to turn HTML and CSS into pretty pages, all browsers know how to 
+interpret JavaScript;  &lt;strong&gt;All browsers have built in JavaScript interpreters.&lt;/strong&gt; &lt;ul&gt;
+&lt;li&gt;Check it out!  In Chrome right click on a page and click on the 'inspect'.  Then click on the 'console' tab.  You are now looking at a JavaScript Interpreter!  For fun, write the following: &lt;code&gt;alert('Leta is cool')&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Python interpreters aren't currently built into browsers.  It's not that they &lt;em&gt;couldn't be&lt;/em&gt; it's just that they &lt;em&gt;aren't&lt;/em&gt;.  If I wanted to write frontend logic in Python I'd have two choices: &lt;ol&gt;
+&lt;li&gt;Write a browser plugin to be able to interpret Python, and prompt users to install it to view my web app. &lt;em&gt;(This type of thing has been done in order to run Java on the frontend! Remember those annoying Java plugin installation promps?)&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;Compile my Python code down to JavaScript before sending it to the client.  This is a bit of a hack, though, because technically javaScript is still what would be running on the client side.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Where do HTML and CSS fit in?&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Often HTML and CSS are considered frontend.  The reason being is that, like JavaScript, they are interpreted by your browser.&lt;/li&gt;
+&lt;li&gt;I consider HTML to be backend only in the context of a template that will be compiled by a template enginge.  In this case one is writting an HTML page with added template language logic which will render more HTML depending on the data that is fed into it. &lt;/li&gt;
+&lt;li&gt;To me, this falls under the backend umbrella because the templatign engine will turn this template into a finished HTML file on the surver side before sending the final HTML file to the client.&lt;/li&gt;
+&lt;li&gt;Some people agree with me on this distinction, others disagree (and that's OK!)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Further readings&lt;/h4&gt;
+&lt;p&gt;If you're curious to know a little more, specifically about why / how JavaScript became the only language built into browsers, I recommend reading &lt;a href="https://www.reddit.com/r/learnprogramming/comments/3frml2/why_is_javascript_the_only_frontend_programming/?st=iv70e8ah&amp;amp;sh=d65bf9be"&gt;this&lt;/a&gt; thread on reddit.  I found it to be well explained and pretty thorough! &lt;/p&gt;</summary><category term="Web"></category></entry><entry><title>How the Internet Works: Domain Names and Routing</title><link href="http://lmontopo.github.io/how-the-internet-works-2.html" rel="alternate"></link><updated>2015-09-14T05:00:00-04:00</updated><author><name>Leta Montopoli</name></author><id>tag:lmontopo.github.io,2015-09-14:how-the-internet-works-2.html</id><summary type="html">&lt;p&gt;This blog post is a continuation of my previous post &lt;a href="http://lmontopo.github.io/how-the-internet-works.html"&gt;How the Internet Works&lt;/a&gt;.  Here, I hope to answer the following questions: &lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Since we don't usually specify the IP address of the computer we wish to connect with, how does our computer successfully connect with it?&lt;/strong&gt; &lt;/p&gt;

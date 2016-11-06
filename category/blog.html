@@ -46,65 +46,42 @@
         
 
             <article>
-                <a href="http://lmontopo.github.io/how-the-internet-works-2.html"><h3 class="article-title">How the Internet Works: Domain Names and Routing</h3></a>
-<h6 class="subheader" title="2015-09-14T05:00:00-04:00">Mon 14 September 2015
+                <a href="http://lmontopo.github.io/frontend-backend.html"><h3 class="article-title">What's frontend, what's backend?</h3></a>
+<h6 class="subheader" title="2016-11-06T05:00:00-05:00">Sun 06 November 2016
 </h6>
 
 
-<p>This blog post is a continuation of my previous post <a href="http://lmontopo.github.io/how-the-internet-works.html">How the Internet Works</a>.  Here, I hope to answer the following questions: </p>
+<p>Last week a co-worker of mine asked me to clarify for him what the difference was between backend and frontend web development.  I had been asked this quesiton before, but this was the first time I felt I provided a clear explanation and was able to instill knowledge.</p>
+<p>So, here, I'd like jot down a lof of the key points which I think helped to clarify the meaning of and the difference between 'frontend' and 'backend' development:</p>
 <ul>
-<li>
-<p><strong>Since we don't usually specify the IP address of the computer we wish to connect with, how does our computer successfully connect with it?</strong> </p>
-</li>
-<li>
-<p><strong>Assuming the IP address of the destination computer is known, How does a request from my computer actually make it to the computer with this IP?  How does it know where that computer is?</strong></p>
-</li>
+<li><strong>Backend code is run on the server computer while frontend code is run on the client computer.</strong>  </li>
+<li>Being a <em>fullstack developer</em> means that you write (or can write) both backend and frontend code. </li>
+<li>The backend takes care of any logic that the server needs to run before a response can be sent to the client.  This includes things like retreiving data from a database, authenticating a user or making some calculations.</li>
+<li>The frontend code takes care of any logic that needs to run locally - on the clients computer - in response to user interactions.  This includes any subsequent network calls for updated data.</li>
+<li>Frontend code is usually written in JavaScript, which your browser can interpret.</li>
 </ul>
-<h2>The Domain Name System</h2>
-<p>A <strong>domain name</strong> is a human readable address of a computer on the internet.  Domain names are used all the time for activities requiring the internet, including sending emails and browsing web pages.  The part of a URL<sup id="fnref:1"><a class="footnote-ref" href="#fn:1" rel="footnote">1</a></sup> that appears after the protocol but before the file path is the domain name.  For example, <code>lmontopo.github.io</code> is the domain name in the URL of this blog post: <code>https://lmontopo.github.io/how-the-internet-works-2.html</code>.  </p>
-<p>The term <strong>Domain Name System (DNS)</strong> refers to the internet service of translating domain names into IP addresses.  It consists of a distributed<sup id="fnref:2"><a class="footnote-ref" href="#fn:2" rel="footnote">2</a></sup> database of IP address and domain name pairs.  Hundreds of servers known as <strong>DNS servers</strong> are dedicated to working together to translate domain names into IP addresses.  There are two kinds of DNS servers: caching servers and authoritative name servers:  </p>
+<h4>Why can't I write frontend in Python (or can I)?</h4>
 <ul>
-<li>
-<p><strong>Authoritative Servers</strong> are responsible for maintaining a database of the IP addresses of domains within its 'authority'. <em>What does this mean?</em> Well, these servers are organized in a heiarchy that matches the structure of the domain names themselves.  Indeed, domain names consist of one or more domains separated by dots.  The rightmost domain is the <em>top-level domain</em>.  Examples of top-level domains include <code>com</code>, <code>org</code> and <code>edu</code>. Directly left of the top-level domain is the second-level domain, preceeded by more sub-domains until the leftmost word, the <em>host</em>.  An authoritative DNS server handles a specific level in this heiarchy and knows the IP addresses of all hosts and subdomains under it. So, for example, an authoritative DNS server with authority over the <code>github.io</code> domain would know the IP address of host <code>lmontopo.github.io</code>.</p>
-</li>
-<li>
-<p><strong>Caching Servers</strong> are your computer's first point of contact with the DNS. Your computer is automatically<sup id="fnref:3"><a class="footnote-ref" href="#fn:3" rel="footnote">3</a></sup> configured with the IP address of a caching DNS server (usually provided by your Internet Service Provider) so that your computer knows who to contact for DNS resolution.  These caching servers communicate back and forth with authoritative name servers on your behalf until they find one that can resolve the supplied domain name into an IP address. </p>
-</li>
+<li>Just like all browsers know how to turn HTML and CSS into pretty pages, all browsers know how to 
+interpret JavaScript;  <strong>All browsers have built in JavaScript interpreters.</strong> <ul>
+<li>Check it out!  In Chrome right click on a page and click on the 'inspect'.  Then click on the 'console' tab.  You are now looking at a JavaScript Interpreter!  For fun, write the following: <code>alert('Leta is cool')</code>.</li>
 </ul>
-<p><strong>OK, I know this stuff can be confusing, but if you've made it this far, bear with me!</strong></p>
-<p><em>Let's go through an example to better understand how this works: Suppose we request the IP address of the domain name 'www.wikipedia.org'</em>:</p>
-<p>As previously explained, our computer will first send a request to the DNS Server (a cache server) specified in its network configuration settings.  Lets call this cache server Jane, since we'll be talking about it lots.  Our computer will ask Jane something like “Can you tell me the IP address of www.wikipedia.org?”. Usually the DNS server provided by our ISP will have a cache<sup id="fnref:4"><a class="footnote-ref" href="#fn:4" rel="footnote">4</a></sup> of frequently resolved domain names.  Assuming Jane has one, she'll search her cache for this domain name.  If Jane finds it she'll get back to us straight away with the desired IP address. Otherwise Jane will strip the host from the domain name and search her cache for a server with authority over the remaining name: <code>wikipedia.com</code>. If Jane find this server's IP in her cache she'll send our original request-“Can you tell me the IP address of www.wikipedia.org?”- to this server.  For now, lets assume Jane's cache doesn't contain 'wikipedia.com'.  Then Jane will again search her cache for the server with authority over the <code>com</code> domain.  (Notice that each time the authoritative DNS server strips of the leftmost word off the domain name.)  Finally, if Jane doesn't find this server's IP, she'll resort to contacting the <strong>DNS Root Servers</strong>.  Root servers are the Authoritative DNS Servers which reside at the top of the heiarchy, right above above top level DNS servers.  <em>(Cache servers, like Jane, are pre-configured with a list of root servers so that they always have someone to contact.)</em> In this case the root server would respond with a list of server IPs of the <code>com</code> domain.  Jane would then contact one of the servers from this list, and ask it to resolve <code>www.wikipedia.com</code>.  The <code>com</code> DNS server would give Jane some IPs of DNS servers with authority over the <code>wikipedia.com</code> domain.  Jane could then contact one of these servers, any of which could resolve <code>www.wikipedia.com</code>.  When Jane finally gets the translation she sends us back our desired IP address.  Jane will also keep (at least temporarily) a cache of the IP addresses that were just discovered: IPs of <code>com</code> domain servers, <code>wikipedia.com</code> domain servers and the IP address of <code>www.wikipedia.com</code>.  The following picture demontstrates this process:<sup id="fnref:5"><a class="footnote-ref" href="#fn:5" rel="footnote">5</a></sup></p>
-<p><img alt="Pelican" src="../images/example_lookup.png" /></p>
-<p><em>Cool Trick: you can actually bypass the whole Domain Name Resolution Process by typing in the IP address of the computer you wish to communicate with.</em></p>
-<h2>Routing</h2>
-<p>Once we know the IP address of the computer we want to talk to, how does our request make its way to that computer?  </p>
-<p>The answer, is <strong>routers</strong>.  Routers connect</p>
-<p>Routers are connected between networks to control the flow of messages between them. The main responsibilitis of a router are to ensure messages get sent where they are intended, and to ensure messages don't get sent into networks where they weren't intended.  But how does it do this?  </p>
-<p>Well, each router usually knows about the IP addresses within its sub-networks but not about the IP addresses in networks above it (similar to the DNS system!).  At a high level, we can imagine that a request arrives at its destination IP address by first travelling up this hierarchy of routers until a router that knows about the destination's IP address is reached. At this point the request would begin to travel back down the chain in the direction of the desired computer. </p>
-<p><strong>Although this gives us a nice idea of how routing works, in reality there's a bit more to it.</strong> The picture I painted seems to imply that the computer at the ‘top’ of this chain is all knowing -i.e. it knows all the IP addresses of every computer below it- and that is not the case. Each router has a configuration table which lists patterns of IP addresses, and rules to follow based on those patterns. The router will scan the destination address and match that IP address against the patterns in its table. When the router finds the category that the IP fits into, it follows the related instructions to go in a specific direction. Before actually sending out information in this direction, the router will check to see if that direction is satisfactory (i.e. flow is OK there, and nothing seems broken). If all is well it will go ahead. Otherwise it will check the configuration table for an alternate route. Because many different routes exist between two computers on the internet, a request made to google.com one minute might take a completely different route than the next minute. And that's part of the beauty of routing, is that its adaptable and can act accordingly.</p>
-<p>In order for routers to do their job, they are also performing <strong>Network Address Translations</strong> (NAT).  Remember last time how I mentioned that your personal computer's public IP is your router's IP?  Well, your router has to translate all of the traffic coming from your local network, re-addressing it with its own IP address.  Then the router has to keep track of which incoming messages (all of which are addressed to <em>its</em> IP address!) are meant for which computer in its local Network.  Even more complicated, routers may have to deal with situations where a private IP in your local network overlaps with a public IP address somewhere in the internet.  In some cases this might cause issues, but other times your router may successfully create a 'lookup table' to keep track of which computer is which, and translate IP addresses to compensate.</p>
-<h3>Thanks Again</h3>
-<p>Well, thats it (for now!) on how the internet works.  I hope that if you've made it this far you've enjoyed the journey.  As always, feel free to reach out to me if you have any questions!  I am no expert, but if there's something I can help you understand I'd be happy to do so!</p>
-<div class="footnote">
-<hr />
-<ol>
-<li id="fn:1">
-<p>URL stands for Uniform Resource Locator and refers to the web address used to locate a web page on the World Wide Web.&#160;<a class="footnote-backref" href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
-<li id="fn:2">
-<p>The word <em>distributed</em> in this context just means that the database is stored over many computers, as opposed to a single database on a single computer.  &#160;<a class="footnote-backref" href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
-</li>
-<li id="fn:3">
-<p>Of course, you can override this setting if you'd like to use some other Domain Name System Server.&#160;<a class="footnote-backref" href="#fnref:3" rev="footnote" title="Jump back to footnote 3 in the text">&#8617;</a></p>
-</li>
-<li id="fn:4">
-<p>A <strong>cache</strong> is just a fancy word for data that is stored on a machine.  Usually this data is the result of a computation or process that it previously performed, so that if it needs the result again it can provide it more quickly. &#160;<a class="footnote-backref" href="#fnref:4" rev="footnote" title="Jump back to footnote 4 in the text">&#8617;</a></p>
-</li>
-<li id="fn:5">
-<p>I got this great image from the wikipedia page on the Domain Name System.  You can find it <a href="https://en.wikipedia.org/wiki/Domain_Name_System#/media/File:An_example_of_theoretical_DNS_recursion.svg">here</a>.&#160;<a class="footnote-backref" href="#fnref:5" rev="footnote" title="Jump back to footnote 5 in the text">&#8617;</a></p>
-</li>
+<li>Python interpreters aren't currently built into browsers.  It's not that they <em>couldn't be</em> it's just that they <em>aren't</em>.  If I wanted to write frontend logic in Python I'd have two choices: <ol>
+<li>Write a browser plugin to be able to interpret Python, and prompt users to install it to view my web app. <em>(This type of thing has been done in order to run Java on the frontend! Remember those annoying Java plugin installation promps?)</em></li>
+<li>Compile my Python code down to JavaScript before sending it to the client.  This is a bit of a hack, though, because technically javaScript is still what would be running on the client side.</li>
 </ol>
-</div><p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
+</li>
+</ul>
+<h4>Where do HTML and CSS fit in?</h4>
+<ul>
+<li>Often HTML and CSS are considered frontend.  The reason being is that, like JavaScript, they are interpreted by your browser.</li>
+<li>I consider HTML to be backend only in the context of a template that will be compiled by a template enginge.  In this case one is writting an HTML page with added template language logic which will render more HTML depending on the data that is fed into it. </li>
+<li>To me, this falls under the backend umbrella because the templatign engine will turn this template into a finished HTML file on the surver side before sending the final HTML file to the client.</li>
+<li>Some people agree with me on this distinction, others disagree (and that's OK!)</li>
+</ul>
+<h4>Further readings</h4>
+<p>If you're curious to know a little more, specifically about why / how JavaScript became the only language built into browsers, I recommend reading <a href="https://www.reddit.com/r/learnprogramming/comments/3frml2/why_is_javascript_the_only_frontend_programming/?st=iv70e8ah&amp;sh=d65bf9be">this</a> thread on reddit.  I found it to be well explained and pretty thorough! </p><p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
 
     Tagged: 
     <a href="http://lmontopo.github.io/tag/web.html">Web </a>
@@ -117,6 +94,33 @@
 
                 <hr  class="gradient"/>
 
+
+        
+
+
+            <article>
+                <a href="http://lmontopo.github.io/how-the-internet-works-2.html"><h3 class="article-title">How the Internet Works: Domain Names and Routing</h3></a>
+<h6 class="subheader" title="2015-09-14T05:00:00-04:00">Mon 14 September 2015
+</h6>
+
+
+<p>This blog post is a continuation of my previous post <a href="http://lmontopo.github.io/how-the-internet-works.html">How the Internet Works</a>.  Here, I hope to answer the following questions: </p>
+<ul>
+<li>
+<p><strong>Since we don't usually specify the IP address of the computer we wish to connect with, how does our computer successfully connect with it?</strong> </p>
+</li>
+<li>
+<p><strong>Assuming the IP ...</strong></p></li></ul><p class="subheader">Category: <a href="http://lmontopo.github.io/category/blog.html">Blog</a>
+
+    Tagged: 
+    <a href="http://lmontopo.github.io/tag/web.html">Web </a>
+</p>
+
+
+
+                <a class="button radius secondary small right" href="http://lmontopo.github.io/how-the-internet-works-2.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
 
         
 
